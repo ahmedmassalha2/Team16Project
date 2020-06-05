@@ -21,7 +21,8 @@ public class Teacher extends User {
 		this.user = user;
 	}
 	
-	public String getPrivelage() {
+	public String getPrivelage() 
+	{
 		return privelage;
 	}
 	public void setPrivelage(String privelage) {

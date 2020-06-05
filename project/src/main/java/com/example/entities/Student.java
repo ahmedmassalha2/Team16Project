@@ -59,6 +59,7 @@ public class Student extends User {
 		this.user = user;
 		this.privelage = privelage;
 		
+		
 
 	}
 	
