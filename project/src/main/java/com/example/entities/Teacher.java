@@ -20,6 +20,7 @@ public class Teacher extends User {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	public String getPrivelage() {
 		return privelage;
 	}

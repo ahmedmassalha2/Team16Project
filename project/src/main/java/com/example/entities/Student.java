@@ -58,6 +58,7 @@ public class Student extends User {
 		super(username, password);
 		this.user = user;
 		this.privelage = privelage;
+		
 
 	}
 	
