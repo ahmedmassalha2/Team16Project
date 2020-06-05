@@ -54,6 +54,7 @@ public class Student extends User {
 	public void setGrades(List<checkedExam> grades) {
 		this.grades = grades;
 	}
+	
 	public Student(String username, String password, User user, String privelage) {
 		super(username, password);
 		this.user = user;
