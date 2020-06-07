@@ -64,6 +64,7 @@ public class Teacher {
 		return exams;
 	}
 	public void setExams(List<Exam> exams) {
+		
 		this.exams = exams;
 	}
 
