@@ -1,27 +1,50 @@
 package com.example.entities;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Principal {
 	
-	private User user;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
 	private String privelage;
-	public User getUser() {
-		return user;
+	
+	private String username;
+	private String password;
+	public Principal(int id, String privelage, String username, String password) {
+		super();
+		this.id = id;
+		this.privelage = privelage;
+		this.username = username;
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getPrivelage() {
 		return privelage;
 	}
 	public void setPrivelage(String privelage) {
 		this.privelage = privelage;
 	}
-	public Principal(User user, String privelage) {
-		super();
-		this.user = user;
-		this.privelage = privelage;
-	}
+
 
 	public Principal() {
 		
