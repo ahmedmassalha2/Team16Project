@@ -22,6 +22,7 @@ public class Teacher {
 	private int id;
 	private String privelage;
 	
+	
 	@ManyToMany
 	@JoinTable(name="Courses_Teachers",
 			joinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id"),

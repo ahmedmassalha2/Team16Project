@@ -11,6 +11,7 @@ public class Principal {
 	private int id;
 	
 	private String privelage;
+	
 	private String username;
 	private String password;
 	public Principal(int id, String privelage, String username, String password) {

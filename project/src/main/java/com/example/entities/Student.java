@@ -19,6 +19,7 @@ public class Student {
 	private int id;
 	private String privelage;
 	
+	
 	@ManyToMany
 	@JoinTable(name="Student_Courses",
 	joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
