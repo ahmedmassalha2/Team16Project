@@ -13,36 +13,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "course")
 public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	private String Cnumber;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
 	private List<Exam> exams;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
 	private List<checkedExam> checked_Exams;
-	
+
 	@ManyToMany
-	@JoinTable(
-			name="Course_Student",
-			joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id")
-	)
+	@JoinTable(name = "Course_Student", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
 	private List<Student> students;
-	//check in student and teacher
+
 	@ManyToMany
-	@JoinTable(
-			name="Course_Teacher",
-			joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id")
-	)
+	@JoinTable(name = "Course_Teacher", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id"))
 	private List<Teacher> teachers;
 
 	public Course(String name, String cnumber) {
@@ -97,5 +90,22 @@ public class Course {
 	public void setChecked_Exams(List<checkedExam> checked_Exams) {
 		this.checked_Exams = checked_Exams;
 	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+	public List<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(List<Teacher> teachers) {
+		this.teachers = teachers;
+	}
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.project;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -53,9 +54,37 @@ public class App {
 	}
 
 	private static void initializeData() throws Exception {
-		Random random = new Random();
 		Course c1 = new Course("hedva","00");
 		session.save(c1);
+		
+		Subject s1 = new Subject("math","00");
+		session.save(s1);
+		
+		Question question = new Question("test question","000",s1);
+		session.save(question);
+		Answer a1 = new Answer("test", false, question);
+		Answer a2 = new Answer("today", false, question);
+		Answer a3 = new Answer("tomorrow", false, question);
+		Answer a4 = new Answer("yet", true, question);
+		session.save(a1);
+		session.save(a2);
+		session.save(a3);
+		session.save(a4);
+		
+		Teacher teacher = new Teacher("teacher", "malki gr", "123");
+		
+		List<Question> list = new ArrayList<Question>();
+		list.add(question);
+		teacher.addCourses(c1);
+		session.save(teacher);
+		
+		Teacher teacher2 = new Teacher("teacher", "wefwef gr", "123");
+		Course c2 = new Course("dqw","00");
+		session.save(c2);
+		teacher2.addCourses(c2);
+		session.save(teacher2);
+		
+
 	}
 
 	public static <T> List<T> getAll(Class<T> object) {
@@ -72,8 +101,13 @@ public class App {
 		List<Course> c = getAll(Course.class);
 		for(Course course : c) {
 			System.out.println(course.getName());
+			System.out.println(course.getTeachers().size());
 		}
-
+		List<Teacher> t = getAll(Teacher.class);
+		for(Teacher teacher : t) {
+			System.out.println(teacher.getUsername());
+			System.out.println(teacher.getCourses().size());
+		}
 
 		System.out.format("\n\n");
 		System.out.println("Done!");
