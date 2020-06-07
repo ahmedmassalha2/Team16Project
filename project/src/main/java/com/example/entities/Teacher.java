@@ -2,7 +2,6 @@ package com.example.entities;
 
 import java.util.List;
 
-import javax.persistence.OneToMany;
 
 public class Teacher extends User {
 	
