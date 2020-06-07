@@ -3,10 +3,31 @@ package com.example.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Course")
 public class Course {
 	private int id;
 	private String name;
 	private String Cnumber;
+	
+
+	@ManyToMany
+	private List<Teacher> teachers;
+	
+	public List<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(List<Teacher> teachers) {
+		this.teachers = teachers;
+	}
+
 	private List<Exam> exams;
 	private List<checkedExam> checked_Exams;
 

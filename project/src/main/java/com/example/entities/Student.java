@@ -3,32 +3,54 @@ package com.example.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-public class Student extends User {
+@Entity
+public class Student {
 	
-	private User user;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String privelage;
-	/*
-	@ManyToMany(mappedBy = "studentList", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, 
-			targetEntity = Course.class)
-	*/
-	private List<Course> courses;
 	
-	/*
-	@ManyToMany(mappedBy = "studentList", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, 
-			targetEntity = Exam.class)
-	*/
+	@ManyToMany
+	@JoinTable(name="Student_Courses",
+	joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
+	private List<Course> courses;
+
+	
+	@ManyToMany
+	@JoinTable(name="Student_Exams",
+	joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "exam_id", referencedColumnName = "id"))
+	
 	private List<Exam> exams;
 	
-	//@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
 	private List<checkedExam> grades;
-	
-	public User getUser() {
-		return user;
+	private String username;
+	private String password;
+	public String getUsername() {
+		return username;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getPrivelage() {
 		return privelage;
@@ -55,15 +77,16 @@ public class Student extends User {
 		this.grades = grades;
 	}
 	
-	public Student(String username, String password, User user, String privelage) {
-		super(username, password);
-		this.user = user;
-		this.privelage = privelage;
-		
-		
 
-	}
 	
+	public Student(int id, String privelage, String username, String password) {
+		super();
+		this.id = id;
+		this.privelage = privelage;
+		this.username = username;
+		this.password = password;
+	}
+
 	public Student() {
 		
 	}
