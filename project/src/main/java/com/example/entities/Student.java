@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -21,17 +20,10 @@ public class Student {
 	
 	
 	@ManyToMany
-	@JoinTable(name="Student_Courses",
-	joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
 	private List<Course> courses;
 
 	
-	@ManyToMany
-	@JoinTable(name="Student_Exams",
-	joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "exam_id", referencedColumnName = "id"))
-	
+	@ManyToMany	
 	private List<Exam> exams;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student")

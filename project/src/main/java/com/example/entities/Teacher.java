@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,14 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
+
 @Entity
-@Table(name = "Teacher")
+@Table(name = "teacher")
 public class Teacher {
 	
 	@Id
@@ -25,10 +26,7 @@ public class Teacher {
 	private String privelage;
 	
 	
-	@ManyToMany
-	@JoinTable(name="Courses_Teachers",
-			joinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
+	@ManyToMany()
 	private List<Course> courses;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
@@ -63,6 +61,13 @@ public class Teacher {
 	public void setCourses(Course courses) {
 		this.courses.add(courses);
 	}
+	
+	public void addCourses(Course... courses_) {
+		for (Course course : courses_) {
+			this.courses.add(course);
+			course.getTeachers().add(this); 
+		}
+	}
 	public List<Exam> getExams() {
 		return exams;
 	}
@@ -71,12 +76,12 @@ public class Teacher {
 		this.exams = exams;
 	}
 
-	public Teacher(int id, String privelage, String username, String password) {
-		super();
-		this.id = id;
+	public Teacher( String privelage, String username, String password) {
+
 		this.privelage = privelage;
 		this.username = username;
 		this.password = password;
+		this.courses = new ArrayList<Course>();
 	}
 
 	public Teacher() {
