@@ -36,7 +36,7 @@ public class Course {
 			inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id")
 	)
 	private List<Student> students;
-	
+	//check in student and teacher
 	@ManyToMany
 	@JoinTable(
 			name="Course_Teacher",
