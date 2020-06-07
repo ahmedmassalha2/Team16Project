@@ -2,6 +2,7 @@ package com.example.entities;
 
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 //import com.example.entities.Course;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "Teacher")
