@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "question")
@@ -29,14 +31,14 @@ public class Question {
 	@Column(name = "question_number")
 	private String number;
 	private String subjectNumber;
-
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "question")
 	private List<Answer> answers;
-	
+	@JsonIgnore
 	@ManyToMany(
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
 			targetEntity = checkedExam.class
@@ -47,7 +49,7 @@ public class Question {
 		inverseJoinColumns = @JoinColumn(name = "exam_id")
 			)
 	private List<Exam> exams;
-	
+	@JsonIgnore
 	@ManyToMany(
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
 			targetEntity = checkedExam.class

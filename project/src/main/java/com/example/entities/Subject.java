@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Subject {
 	@Id
@@ -20,6 +22,7 @@ public class Subject {
 	private String name;
 	@Column(name = "subject_number")
 	private String Snumber;
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "subject")
 	private List<Question> questions;
 

@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "student")
 public class Student {
@@ -21,12 +23,12 @@ public class Student {
 	
 	private String idNum;
 	private String privelage;
-
+	@JsonIgnore
 	@ManyToMany()
 	private List<Course> courses;
 
 
-
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
 	private List<checkedExam> grades;
 	private String username;
