@@ -11,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "checkedexam")
 public class checkedExam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +28,9 @@ public class checkedExam {
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
 	
-	@ManyToMany
+	@ManyToMany()
 	private List<Question> questions;
+	
 	private String timeString;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -101,7 +104,12 @@ public class checkedExam {
 	public void setDiscreption(String discreption) {
 		this.discreption = discreption;
 	}
-	
+	public void addQuestions(Question... questionslst) {
+		for (Question ga : questionslst) {
+			questions.add(ga);
+			ga.getCheckedExams().add(this); 
+		}
+	}
 	
 
 
