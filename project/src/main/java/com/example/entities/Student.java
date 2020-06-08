@@ -18,6 +18,8 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	private String idNum;
 	private String privelage;
 
 	@ManyToMany()
@@ -70,9 +72,10 @@ public class Student {
 		this.grades = grades;
 	}
 
-	public Student(int id, String privelage, String username, String password) {
+	public Student(String idNum, String privelage, String username, String password) {
 		super();
-		this.id = id;
+		//this.id = id;
+		this.idNum = idNum;
 		this.privelage = privelage;
 		this.username = username;
 		this.password = password;
