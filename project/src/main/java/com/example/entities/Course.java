@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "course")
 public class Course {
@@ -23,13 +25,13 @@ public class Course {
 	private int id;
 	private String name;
 	private String Cnumber;
-
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
 	private List<Exam> exams;
-
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
 	private List<checkedExam> checked_Exams;
-
+	@JsonIgnore
 	@ManyToMany(
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
 			targetEntity = Student.class
@@ -40,7 +42,7 @@ public class Course {
 		inverseJoinColumns = @JoinColumn(name = "student_id")
 			)
 	private List<Student> students;
-
+	@JsonIgnore
 	@ManyToMany(
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
 			targetEntity = Teacher.class

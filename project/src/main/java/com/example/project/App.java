@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -27,7 +28,8 @@ import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
 import com.example.entities.checkedExam;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Hello world!
@@ -54,13 +56,13 @@ public class App {
 	}
 
 	private static void initializeData() throws Exception {
-		Course c1 = new Course("hedva","00");
+		Course c1 = new Course("hedva", "00");
 		session.save(c1);
-		
-		Subject s1 = new Subject("math","00");
+
+		Subject s1 = new Subject("math", "00");
 		session.save(s1);
-		
-		Question question = new Question("1 + 1 = ?","000",s1);
+
+		Question question = new Question("1 + 1 = ?", "000", s1);
 		session.save(question);
 		Answer a1 = new Answer("1 + 1 = 2", false, question);
 		Answer a2 = new Answer("1 + 1 = 3", false, question);
@@ -70,8 +72,8 @@ public class App {
 		session.save(a2);
 		session.save(a3);
 		session.save(a4);
-		
-		Question question2 = new Question("1 * 6 = ?","000",s1);
+
+		Question question2 = new Question("1 * 6 = ?", "000", s1);
 		session.save(question2);
 		Answer a11 = new Answer("1 * 6 = 2", false, question2);
 		Answer a12 = new Answer("1 * 6 = 3", false, question2);
@@ -81,21 +83,19 @@ public class App {
 		session.save(a12);
 		session.save(a13);
 		session.save(a14);
-		
+
 		Teacher teacher = new Teacher("teacher", "malki gr", "123");
-		
+
 		List<Question> list = new ArrayList<Question>();
 		list.add(question);
 		list.add(question2);
 		teacher.addCourses(c1);
 		session.save(teacher);
-		
-		Exam exam = new Exam(teacher, s1, list,"1:00" , c1);
+
+		Exam exam = new Exam(teacher, s1, list, "1:00", c1);
 		session.save(exam);
-		
 
 		session.getTransaction().commit();
-		
 
 	}
 
@@ -111,41 +111,60 @@ public class App {
 
 	private static void printData() throws Exception {
 		List<Exam> exams = getAll(Exam.class);
-		for(Exam exam : exams) {
+		for (Exam exam : exams) {
 			System.out.println("Exam writen by: " + exam.getTeacher().getUsername());
 			System.out.println("time for exam: " + exam.getTimeString());
 			System.out.println("\n\nQuestions");
 			int i = 1;
-			for(Question question : exam.getQuestions()) {
-				System.out.print(i + ")"+question.getDiscription() + "\n");
-				for(Answer answer : question.getAnswers()) {
-					System.out.println("    "+answer.getAnString());
+			for (Question question : exam.getQuestions()) {
+				System.out.print(i + ")" + question.getDiscription() + "\n");
+				for (Answer answer : question.getAnswers()) {
+					System.out.println("    " + answer.getAnString());
 				}
 				i++;
 			}
-			
+
 		}
 
 		System.out.format("\n\n");
 		System.out.println("Done!");
+
 	}
 
-	public static void main(String[] args) {
-		try {
-			Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-			 SessionFactory sessionFactory = getSessionFactory();
-			session = sessionFactory.openSession();
-			session.beginTransaction();
-			initializeData();
-			printData();
-		} catch (Exception exception) {
-			if (session != null) {
-				session.getTransaction().rollback();
-			}
-			System.err.println("An error occured, changes have been rolled back.");
-			exception.printStackTrace();
-		} finally {
-			session.close();
+	public static void main(String[] args) throws Exception {
+		/*dataBase.getInstance();
+		session = dataBase.getSession();
+		initializeData();
+		printData();
+
+		String hql = "from Teacher WHERE username = :username and password = :password";
+		Query query = dataBase.getInstance().getSession().createQuery(hql);
+		query.setParameter("username", "malki gr");
+		query.setParameter("password","333");
+		if(query.list().size()!=0) {
+			Teacher results = (Teacher) query.list().get(0);
+			System.out.println(results.getUsername() + "\n" + results.getPassword());
 		}
+		else {
+			System.out.println("Username or password is wrong");
+		}
+		dataBase.closeSess();*/
+		Course c1 = new Course("122","1212");
+		Subject s1 = new Subject("math", "00");
+		Question question = new Question("1 + 1 = ?", "000", s1);
+		Answer a1 = new Answer("1 + 1 = 2", false, question);
+		Answer a2 = new Answer("1 + 1 = 3", false, question);
+		Answer a3 = new Answer("1 + 1 = 4", false, question);
+		Answer a4 = new Answer("1 + 1 = 5", true, question);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Answer> l=question.getAnswers(); 
+        try {
+            String json = mapper.writeValueAsString(question);
+            System.out.println("JSON = " + json);
+            Question question1 = new ObjectMapper().readValue(json, Question.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 	}
 }
