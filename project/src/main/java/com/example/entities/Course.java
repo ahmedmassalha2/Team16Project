@@ -30,12 +30,26 @@ public class Course {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
 	private List<checkedExam> checked_Exams;
 
-	@ManyToMany
-	@JoinTable(name = "Course_Student", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
+	@ManyToMany(
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+			targetEntity = Student.class
+		)
+	@JoinTable(
+		name="courses_students",
+		joinColumns = @JoinColumn(name = "course_id"),
+		inverseJoinColumns = @JoinColumn(name = "student_id")
+			)
 	private List<Student> students;
 
-	@ManyToMany
-	@JoinTable(name = "Course_Teacher", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "id"))
+	@ManyToMany(
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+			targetEntity = Teacher.class
+		)
+	@JoinTable(
+		name="courses_teachers",
+		joinColumns = @JoinColumn(name = "course_id"),
+		inverseJoinColumns = @JoinColumn(name = "teacher_id")
+			)
 	private List<Teacher> teachers;
 
 	public Course(String name, String cnumber) {

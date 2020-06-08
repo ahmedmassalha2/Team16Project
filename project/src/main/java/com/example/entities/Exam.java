@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 @Entity
+@Table(name = "exam")
 public class Exam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,7 @@ public class Exam {
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
 	
-	@ManyToMany
+	@ManyToMany()
 	private List<Question> questions;
 	private String timeString;
 	
@@ -89,6 +91,12 @@ public class Exam {
 	public void setCourse(Course course) {
 		this.course = course;
 		this.course.getExams().add(this);
+	}
+	public void addQuestions(Question... questionslst) {
+		for (Question ga : questionslst) {
+			questions.add(ga);
+			ga.getExams().add(this); 
+		}
 	}
 
 }

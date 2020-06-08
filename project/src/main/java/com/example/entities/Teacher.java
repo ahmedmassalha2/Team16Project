@@ -31,6 +31,7 @@ public class Teacher {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
 	private List<Exam> exams;
+	
 	private String username;
 	private String password;
 	public String getUsername() {

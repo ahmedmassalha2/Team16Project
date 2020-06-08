@@ -60,29 +60,41 @@ public class App {
 		Subject s1 = new Subject("math","00");
 		session.save(s1);
 		
-		Question question = new Question("test question","000",s1);
+		Question question = new Question("1 + 1 = ?","000",s1);
 		session.save(question);
-		Answer a1 = new Answer("test", false, question);
-		Answer a2 = new Answer("today", false, question);
-		Answer a3 = new Answer("tomorrow", false, question);
-		Answer a4 = new Answer("yet", true, question);
+		Answer a1 = new Answer("1 + 1 = 2", false, question);
+		Answer a2 = new Answer("1 + 1 = 3", false, question);
+		Answer a3 = new Answer("1 + 1 = 4", false, question);
+		Answer a4 = new Answer("1 + 1 = 5", true, question);
 		session.save(a1);
 		session.save(a2);
 		session.save(a3);
 		session.save(a4);
 		
+		Question question2 = new Question("1 * 6 = ?","000",s1);
+		session.save(question2);
+		Answer a11 = new Answer("1 * 6 = 2", false, question2);
+		Answer a12 = new Answer("1 * 6 = 3", false, question2);
+		Answer a13 = new Answer("1 * 6 = 6", false, question2);
+		Answer a14 = new Answer("1 * 6 = 5", true, question2);
+		session.save(a11);
+		session.save(a12);
+		session.save(a13);
+		session.save(a14);
+		
 		Teacher teacher = new Teacher("teacher", "malki gr", "123");
 		
 		List<Question> list = new ArrayList<Question>();
 		list.add(question);
+		list.add(question2);
 		teacher.addCourses(c1);
 		session.save(teacher);
 		
-		Teacher teacher2 = new Teacher("teacher", "wefwef gr", "123");
-		Course c2 = new Course("dqw","00");
-		session.save(c2);
-		teacher2.addCourses(c2);
-		session.save(teacher2);
+		Exam exam = new Exam(teacher, s1, list,"1:00" , c1);
+		session.save(exam);
+		
+
+		session.getTransaction().commit();
 		
 
 	}
@@ -98,15 +110,20 @@ public class App {
 	}
 
 	private static void printData() throws Exception {
-		List<Course> c = getAll(Course.class);
-		for(Course course : c) {
-			System.out.println(course.getName());
-			System.out.println(course.getTeachers().size());
-		}
-		List<Teacher> t = getAll(Teacher.class);
-		for(Teacher teacher : t) {
-			System.out.println(teacher.getUsername());
-			System.out.println(teacher.getCourses().size());
+		List<Exam> exams = getAll(Exam.class);
+		for(Exam exam : exams) {
+			System.out.println("Exam writen by: " + exam.getTeacher().getUsername());
+			System.out.println("time for exam: " + exam.getTimeString());
+			System.out.println("\n\nQuestions");
+			int i = 1;
+			for(Question question : exam.getQuestions()) {
+				System.out.print(i + ")"+question.getDiscription() + "\n");
+				for(Answer answer : question.getAnswers()) {
+					System.out.println("    "+answer.getAnString());
+				}
+				i++;
+			}
+			
 		}
 
 		System.out.format("\n\n");

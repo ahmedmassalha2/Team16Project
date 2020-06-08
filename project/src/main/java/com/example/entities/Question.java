@@ -15,9 +15,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "question")
 public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,21 +37,28 @@ public class Question {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "question")
 	private List<Answer> answers;
 	
-	@ManyToMany
+	@ManyToMany(
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+			targetEntity = checkedExam.class
+		)
 	@JoinTable(
-			name="Question_Exam",
-			joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "exam_id", referencedColumnName = "id")
-	)
+		name="Question_Exam",
+		joinColumns = @JoinColumn(name = "question_id"),
+		inverseJoinColumns = @JoinColumn(name = "exam_id")
+			)
 	private List<Exam> exams;
 	
-	@ManyToMany
+	@ManyToMany(
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+			targetEntity = checkedExam.class
+		)
 	@JoinTable(
-			name="Question_CheckedExam",
-			joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "checkedexam_id", referencedColumnName = "id")
-	)
+		name="Question_CheckedExam",
+		joinColumns = @JoinColumn(name = "question_id"),
+		inverseJoinColumns = @JoinColumn(name = "checkedexam_id")
+			)
 	private List<checkedExam> checkedExams;
+	
 	public Question(String discription, String number, Subject subject) {
 		this.discription = discription;
 		this.subject = subject;
@@ -128,16 +137,5 @@ public class Question {
 	public void setCheckedExams(List<checkedExam> checkedExams) {
 		this.checkedExams = checkedExams;
 	}
-	public void addExams(Exam... examsLst) {
-		for (Exam ga : examsLst) {
-			exams.add(ga);
-			ga.getQuestions().add(this); 
-		}
-	}
-	public void addExams(checkedExam... examsLst) {
-		for (checkedExam ga : examsLst) {
-			checkedExams.add(ga);
-			ga.getQuestions().add(this); 
-		}
-	}
+
 }
