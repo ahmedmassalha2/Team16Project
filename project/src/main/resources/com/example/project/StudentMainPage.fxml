@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane layoutY="-2.0" prefHeight="400.0" prefWidth="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <Group>
+               <children>
+                  <Button fx:id="gradesBtn" layoutX="396.0" layoutY="226.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="162.0" text="GRADES" />
+                  <Button fx:id="enterExamBtn" layoutX="396.0" layoutY="136.0" mnemonicParsing="false" onAction="#enterExam" prefHeight="52.0" prefWidth="161.0" text="ENTER EXAM" />
+                  <Button fx:id="backBtn" layoutX="471.0" mnemonicParsing="false" onAction="#goBack" prefHeight="31.0" prefWidth="86.0" text="LOG OUT" />
+                  <Button fx:id="feedbackBtn" layoutX="396.0" layoutY="308.0" mnemonicParsing="false" onAction="#showFeedback" prefHeight="52.0" prefWidth="162.0" text="FEEDBACK" />
+                  <ImageView fitHeight="400.0" fitWidth="386.0" layoutY="2.0">
+                     <image>
+                        <Image url="@images/studentProfile.jpg" />
+                     </image>
+                  </ImageView>
+                  <TextField layoutX="397.0" layoutY="82.0" onAction="#studentName" />
+               </children>
+            </Group>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

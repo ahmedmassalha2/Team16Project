@@ -258,20 +258,8 @@ public class App {
 		session = dataBase.getSession();
 		initializeData();
 		printData();
-
-		String hql = "from Teacher WHERE username = :username and password = :password";
-		Query query = dataBase.getInstance().getSession().createQuery(hql);
-		query.setParameter("username", "malki gr");
-		query.setParameter("password","333");
-		if(query.list().size()!=0) {
-			Teacher results = (Teacher) query.list().get(0);
-			System.out.println(results.getUsername() + "\n" + results.getPassword());
-		}
-		else {
-			System.out.println("Username or password is wrong");
-		}
 		dataBase.closeSess();*/
-		Course c1 = new Course("122","1212");
+		/*Course c1 = new Course("122","1212");
 		Subject s1 = new Subject("math", "00");
 		Question question = new Question("1 + 1 = ?", "000", s1);
 		Answer a1 = new Answer("1 + 1 = 2", false, question);
@@ -287,6 +275,17 @@ public class App {
             Question question1 = new ObjectMapper().readValue(json, Question.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-        }
+        }*/
+		dataBase.getInstance();
+		session = dataBase.getSession();
+		/*Query query = session
+				.createQuery("from " + "Teacher where username = :username" + " where password = :password");
+		query.setParameter("username", "malki gr");
+		query.setParameter("password", "123");
+		List list = query.list();
+		System.out.println(list.size());*/
+		Principal principal = new Principal("Principal", "Ahmad Massalha", "1234");
+		session.save(principal);
+		dataBase.closeSess();
 	}
 }

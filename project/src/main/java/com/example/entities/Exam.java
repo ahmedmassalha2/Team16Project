@@ -45,6 +45,9 @@ public class Exam {
 		this.timeString = timeString;
 		setCourse(course_);
 	}
+	public Exam() {
+
+	}
 
 	public int getId() {
 		return id;
