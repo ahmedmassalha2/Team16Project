@@ -2,7 +2,8 @@ package com.example.project;
 
 import java.io.IOException;
 
-import com.example.controlers.logInControler;
+import com.example.ServerClientEntities.Instance;
+import com.example.ServerClientEntities.SimpleChatClient;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,9 @@ public class startApp extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		SimpleChatClient chatClient = new SimpleChatClient("localhost", Integer.valueOf(3333));
+		Instance.clientConsole = chatClient;
+		chatClient.openConnection();
 		stage.setTitle("Sign in page");
 		scene = new Scene(loadFXML("/com/example/project/logIn"));
 		stage.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
