@@ -122,6 +122,15 @@
 								<goal>java</goal>
 							</goals>
 							<configuration>
+								<mainClass>com.example.ServerClientEntities.EchoServer</mainClass>
+							</configuration>
+						</execution>
+						<execution>
+							<id>client</id>
+							<goals>
+								<goal>java</goal>
+							</goals>
+							<configuration>
 								<mainClass>com.example.project.startApp</mainClass>
 							</configuration>
 						</execution>
