@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import org.hibernate.Session;
 
+import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.example.project.dataBase;
 
@@ -56,7 +57,7 @@ public class logInControler implements Initializable {
 		if (!checkValid(user, paString, tyString))
 			return;
 
-		String q = "userExist@" + user + "@" + paString + "@from @" + tyString
+		String q = Command.accExist.ordinal() + "@" + user + "@" + paString + "@from @" + tyString
 				+ "@ WHERE username = :username and password = :password";
 		Instance.getClientConsole().sendToServer(q);
 		while (Instance.getClientConsole().getMessage() == null) {
