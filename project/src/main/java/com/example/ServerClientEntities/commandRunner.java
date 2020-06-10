@@ -15,7 +15,10 @@ public class commandRunner {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		String[] commandArr = command.split("@");
-		if (commandArr[0].equals("userExist")) {
+		Command command_ = Command.values()[Integer.valueOf(commandArr[0])];
+
+		switch (command_) {
+		case accExist:
 			String user = commandArr[1];
 			String paString = commandArr[2];
 
@@ -46,6 +49,9 @@ public class commandRunner {
 			}
 
 			return "";
+
+		default:
+			break;
 		}
 		return command;
 
