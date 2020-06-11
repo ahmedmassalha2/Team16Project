@@ -22,9 +22,10 @@
       </BorderPane>
       <AnchorPane layoutX="71.0" layoutY="-128.0" prefHeight="400.0" prefWidth="631.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ButtonBar layoutX="9.0" layoutY="160.0" prefHeight="46.0" prefWidth="541.0">
+            <ButtonBar layoutX="9.0" layoutY="32.0" prefHeight="46.0" prefWidth="541.0">
               <buttons>
                 <Button fx:id="myExamsBTN" mnemonicParsing="false" onAction="#showExamsList" text="My Exams" />
+                  <Button fx:id="showQues" mnemonicParsing="false" onAction="#showQuestions" text="Questions dataBase" />
               </buttons>
             </ButtonBar>
             <Text fx:id="usernameTXT" layoutX="8.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="237.0">

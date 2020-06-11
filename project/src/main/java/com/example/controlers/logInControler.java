@@ -83,7 +83,7 @@ public class logInControler implements Initializable {
 			}
 			if (loader.getController() instanceof teacherMainPageController) {
 				teacherMainPageController secController = loader.getController();
-				secController.init("Hello " + commandArr[1]);
+				secController.init(commandArr[1],commandArr[2]);
 			}
 			Scene scene = new Scene(Main);
 			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();

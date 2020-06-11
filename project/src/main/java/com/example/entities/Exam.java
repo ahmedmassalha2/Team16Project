@@ -31,12 +31,16 @@ public class Exam {
 	@JsonIgnore
 	@ManyToMany()
 	private List<Question> questions;
+	
 	private String timeString;
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	private Course course;
+	
+	private String teacherName;
+	private String subjectName;
 
 	public Exam(Teacher teacher, Subject subject, List<Question> questions, String timeString,Course course_) {
 		this.teacher = teacher;
@@ -44,6 +48,8 @@ public class Exam {
 		this.questions = questions;
 		this.timeString = timeString;
 		setCourse(course_);
+		setTeacherName(teacher.getUsername());
+		setSubjectName(subject.getName());
 	}
 	public Exam() {
 
@@ -103,5 +109,18 @@ public class Exam {
 			ga.getExams().add(this); 
 		}
 	}
+	public String getTeacherName() {
+		return teacherName;
+	}
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacher.getUsername();
+	}
+	public String getSubjectName() {
+		return subjectName;
+	}
+	public void setSubjectName(String subjectName) {
+		this.subjectName =subject.getName();
+	}
+	
 
 }

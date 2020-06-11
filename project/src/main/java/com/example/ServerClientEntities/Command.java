@@ -1,6 +1,8 @@
 package com.example.ServerClientEntities;
 
 public enum Command {
-	accExist
+	accExist,
+	teacherExams,
+	teacherQuestions
 
 }

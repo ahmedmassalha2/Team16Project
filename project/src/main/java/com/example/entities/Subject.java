@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,11 +28,24 @@ public class Subject {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "subject")
 	private List<Question> questions;
+	
+	@JsonIgnore
+	@ManyToMany(
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+			targetEntity = Teacher.class
+		)
+	@JoinTable(
+		name="subjects_teachers",
+		joinColumns = @JoinColumn(name = "subject_id"),
+		inverseJoinColumns = @JoinColumn(name = "teacher_id")
+			)
+	private List<Teacher> teachers;
 
 	public Subject(String name, String Snumber) {
 		this.name = name;
 		this.Snumber = Snumber;
 		this.questions = new ArrayList<Question>();
+		this.teachers = new ArrayList<Teacher>();
 	}
 
 	public Subject() {
@@ -66,6 +82,14 @@ public class Subject {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public List<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(List<Teacher> teachers) {
+		this.teachers = teachers;
 	}
 
 }
