@@ -74,6 +74,22 @@ public class Student {
 		this.grades = grades;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getIdNum() {
+		return idNum;
+	}
+
+	public void setIdNum(String idNum) {
+		this.idNum = idNum;
+	}
+
 	public Student(String idNum, String privelage, String username, String password) {
 		super();
 		//this.id = id;

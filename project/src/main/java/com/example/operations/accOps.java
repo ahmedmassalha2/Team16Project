@@ -25,19 +25,19 @@ public class accOps {
 				Student student = (Student) query.getSingleResult();
 				session.close();
 				if (student != null)
-					return "Student@" + student.getUsername();
+					return "Student@" + student.getUsername() + "@" +student.getPassword();
 			}
 			if (tyString.equals("Teacher")) {
 				Teacher teacher = (Teacher) query.getSingleResult();
 				session.close();
 				if (teacher != null)
-					return "Teacher@" + teacher.getUsername();
+					return "Teacher@" + teacher.getUsername() + "@" + teacher.getPassword();
 			}
 			if (tyString.equals("Principal")) {
 				Principal principal = (Principal) query.getSingleResult();
 				session.close();
 				if (principal != null)
-					return "Principal@" + principal.getUsername();
+					return "Principal@" + principal.getUsername() + "@" + principal.getPassword();
 			}
 			return "";
 		}

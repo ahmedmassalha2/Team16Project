@@ -174,19 +174,22 @@ public class App {
 		list.add(question);
 		list.add(question2);
 		teacher.addCourses(c1);
+		teacher.addSubjects(s1);
 		session.save(teacher);
 
 		
 		List<Question> list2 = new ArrayList<Question>();
 		list2.add(question3);
 		list2.add(question4);
-		teacher.addCourses(c2);
+		teacher2.addCourses(c2);
+		teacher2.addSubjects(s2);
 		session.save(teacher2);
 		
 		List<Question> list3 = new ArrayList<Question>();
 		list3.add(question5);
 		list3.add(question6);
-		teacher.addCourses(c3);
+		teacher3.addCourses(c3);
+		teacher3.addSubjects(s2);
 		session.save(teacher3);
 		
 		Exam exam = new Exam(teacher, s1, list,"1:00" , c1);
@@ -276,16 +279,34 @@ public class App {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }*/
-		dataBase.getInstance();
-		session = dataBase.getSession();
+		/*dataBase.getInstance();
+		session = dataBase.getSession();*/
 		/*Query query = session
 				.createQuery("from " + "Teacher where username = :username" + " where password = :password");
 		query.setParameter("username", "malki gr");
 		query.setParameter("password", "123");
 		List list = query.list();
 		System.out.println(list.size());*/
-		Principal principal = new Principal("Principal", "Ahmad Massalha", "1234");
+		/*Principal principal = new Principal("Principal", "Ahmad Massalha", "1234");
 		session.save(principal);
-		dataBase.closeSess();
+		dataBase.closeSess();*/
+		session = dataBase.getInstance().getSession();
+		initializeData() ;
+		
+		/*Query query = session.createQuery("from Teacher where username = :username and password = :password");
+		query.setParameter("username", "sholy weinter");
+		query.setParameter("password", "123");
+		List list = query.list();
+		if (list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			List<Exam> l = teacher.getExams();
+			for (Exam exam : l) {
+				System.out.println(exam.getTimeString());
+			}
+			ObjectMapper mapper = new ObjectMapper();
+
+			String json = mapper.writeValueAsString(l);
+			System.out.println("JSON = " + json);
+		}*/
 	}
 }
