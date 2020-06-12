@@ -18,9 +18,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 public class teacherExamList implements Initializable {
 	ObservableList<String> list = FXCollections.observableArrayList();
@@ -28,6 +32,18 @@ public class teacherExamList implements Initializable {
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
 	@FXML // fx:id="showExambtn"
 	private Button showExambtn; // Value injected by FXMLLoader
+	@FXML // fx:id="backBTN"
+	private Button backBTN; // Value injected by FXMLLoader
+
+	@FXML
+	void back(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherMainPage.fxml"));
+		Scene scene = new Scene(loader.load());
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Exams list");
+		Window.setScene(scene);
+		Window.show();
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

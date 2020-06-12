@@ -22,23 +22,17 @@ public class Subject {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name = "subject_name")
 	private String name;
 	@Column(name = "subject_number")
 	private String Snumber;
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "subject")
 	private List<Question> questions;
-	
+
 	@JsonIgnore
-	@ManyToMany(
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-			targetEntity = Teacher.class
-		)
-	@JoinTable(
-		name="subjects_teachers",
-		joinColumns = @JoinColumn(name = "subject_id"),
-		inverseJoinColumns = @JoinColumn(name = "teacher_id")
-			)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = Teacher.class)
+	@JoinTable(name = "subjects_teachers", joinColumns = @JoinColumn(name = "subject_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
 	private List<Teacher> teachers;
 
 	public Subject(String name, String Snumber) {

@@ -190,6 +190,7 @@ public class App {
 		list3.add(question6);
 		teacher3.addCourses(c3);
 		teacher3.addSubjects(s2);
+		teacher3.addSubjects(s1);
 		session.save(teacher3);
 		
 		Exam exam = new Exam(teacher, s1, list,"1:00" , c1);
@@ -292,6 +293,7 @@ public class App {
 		dataBase.closeSess();*/
 		session = dataBase.getInstance().getSession();
 		initializeData() ;
+		session.close();
 		
 		/*Query query = session.createQuery("from Teacher where username = :username and password = :password");
 		query.setParameter("username", "sholy weinter");

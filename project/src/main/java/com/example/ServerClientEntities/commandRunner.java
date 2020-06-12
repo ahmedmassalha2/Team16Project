@@ -25,6 +25,10 @@ public class commandRunner {
 
 		case teacherQuestions:
 			return teacherOps.getQuestions(commandArr[1], commandArr[2]);
+		case teachQuesSubj:
+			return teacherOps.getQuestionsSubject(commandArr[1], commandArr[2], commandArr[3]);
+		case teacherSubjects:
+			return teacherOps.getTeacherSubjects(commandArr[1], commandArr[2]);
 		}
 
 		return command;

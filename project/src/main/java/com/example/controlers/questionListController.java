@@ -21,23 +21,29 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class questionListController {
+	String userString;
+	String paString;
 	ObservableList<String> list = FXCollections.observableArrayList();
 	@FXML // fx:id="questionsList"
 	private ListView<String> questionsList; // Value injected by FXMLLoader
 
 	@FXML // fx:id="showBTN"
 	private Button showBTN; // Value injected by FXMLLoader
-
+	@FXML // fx:id="filter"
+	private ComboBox<String> filter; // Value injected by FXMLLoader
 	@FXML // fx:id="errorTXT"
 	private Text errorTXT; // Value injected by FXMLLoader
 
 	@FXML // fx:id="backbutton"
 	private Button backbutton; // Value injected by FXMLLoader
+	@FXML // fx:id="loadbtn"
+	private Button loadbtn; // Value injected by FXMLLoader
 
 	@FXML
 	void back_(ActionEvent event) throws IOException {
@@ -50,11 +56,56 @@ public class questionListController {
 	}
 
 	@FXML
-	void loadQ(ActionEvent event) {
+	void refresh(ActionEvent event) throws IOException {
+		String selection = filter.getSelectionModel().getSelectedItem();
+		if (selection.equals("All")) {
+			loadQuestions(userString, paString);
+			return;
+		} else {
+			Instance.getClientConsole().setMessage(null);
+			Instance.getClientConsole().sendToServer(
+					Command.teachQuesSubj.ordinal() + "@" + userString + "@" + paString + "@" + selection);
+			while (Instance.getClientConsole().getMessage() == null) {
+				System.out.println("waiting for server");
+			}
+			String json = Instance.getClientConsole().getMessage().toString();
+			if (json.equals("")) {
+				questionsList.getItems().removeAll(questionsList.getItems());
+				return;
+			}
+			List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
+			questionsList.getItems().removeAll(questionsList.getItems());
+			questionsList.getItems().addAll(l);
+		}
 
 	}
 
 	public void init(String username, String password) throws IOException {
+		userString = username;
+		paString = password;
+		loadQuestions(username, password);
+
+		Instance.getClientConsole().setMessage(null);
+		while (Instance.getClientConsole().getMessage() != null) {
+			System.out.println("waiting for server");
+		}
+		loadSubjects(username, password);
+
+	}
+
+	public void loadSubjects(String username, String password) throws IOException {
+		Instance.getClientConsole().sendToServer(Command.teacherSubjects.ordinal() + "@" + username + "@" + password);
+		while (Instance.getClientConsole().getMessage() == null) {
+			System.out.println("waiting for server");
+		}
+		String json = Instance.getClientConsole().getMessage().toString();
+		List<String> ll = new ObjectMapper().readValue(json, ArrayList.class);
+		filter.getItems().removeAll(filter.getItems());
+		filter.getItems().addAll(ll);
+		filter.getSelectionModel().select(0);
+	}
+
+	public void loadQuestions(String username, String password) throws IOException {
 		Instance.getClientConsole().setMessage(null);
 		Instance.getClientConsole().sendToServer(Command.teacherQuestions.ordinal() + "@" + username + "@" + password);
 		while (Instance.getClientConsole().getMessage() == null) {
@@ -62,7 +113,13 @@ public class questionListController {
 		}
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
+		questionsList.getItems().removeAll(questionsList.getItems());
 		questionsList.getItems().addAll(l);
+	}
+
+	@FXML
+	void loadQ(ActionEvent event) {
+
 	}
 
 }
