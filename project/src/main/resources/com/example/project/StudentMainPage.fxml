@@ -28,12 +28,13 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Text>
-                  <Text fontSmoothingType="LCD" layoutX="206.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student of the FUTUR">
+                  <Text fontSmoothingType="LCD" layoutX="415.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student of the FUTUR">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
                   <Button fx:id="backBtn" layoutX="1.0" layoutY="4.0" mnemonicParsing="false" onAction="#goBack" prefHeight="31.0" prefWidth="86.0" text="LOG OUT" />
+                  <Button fx:id="quotesBtn" layoutX="230.0" layoutY="6.0" mnemonicParsing="false" onAction="#showQuotes" prefHeight="39.0" prefWidth="110.0" text="DAILY QUOTES" />
                </children>
             </Group>
          </center>

@@ -4,14 +4,23 @@
 
 package com.example.controlers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.example.project.App;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class StudentPageController implements Initializable {
 
@@ -29,6 +38,9 @@ public class StudentPageController implements Initializable {
 
 	@FXML // fx:id="usernameTXT"
 	private Text usernameTXT; // Value injected by FXMLLoader
+	
+    @FXML // fx:id="quotesBtn"
+    private Button quotesBtn; // Value injected by FXMLLoader
 
 	@FXML
 	void enterExam(ActionEvent event) {
@@ -38,6 +50,8 @@ public class StudentPageController implements Initializable {
 	@FXML
 	void goBack(ActionEvent event) {
 
+		Platform.exit();
+        System.exit(0);
 	}
 
 	@FXML
@@ -49,6 +63,20 @@ public class StudentPageController implements Initializable {
 	void showGrades(ActionEvent event) {
 
 	}
+	
+    @FXML
+    void showQuotes(ActionEvent event) throws IOException {
+
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMotivationPage.fxml"));
+		Parent Main = loader.load();
+		//teacherExamList secController = loader.getController();
+		//secController.init(username, password);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Daily Motivation");
+		Window.setScene(scene);
+		Window.show();
+    }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
