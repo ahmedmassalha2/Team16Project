@@ -26,6 +26,7 @@
               <buttons>
                 <Button fx:id="myExamsBTN" mnemonicParsing="false" onAction="#showExamsList" text="My Exams" />
                   <Button fx:id="showQues" mnemonicParsing="false" onAction="#showQuestions" text="Questions dataBase" />
+                  <Button fx:id="signoutBTN" mnemonicParsing="false" onAction="#signOut" text="Sign out" />
               </buttons>
             </ButtonBar>
             <Text fx:id="usernameTXT" layoutX="8.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="237.0">

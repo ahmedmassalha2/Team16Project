@@ -23,6 +23,7 @@ public class teacherOps {
 		query.setParameter("username", user);
 		query.setParameter("password", paString);
 		List list = query.list();
+
 		if (list.size() != 0) {
 			Teacher teacher = (Teacher) query.getSingleResult();
 			List<Exam> l = teacher.getExams();
@@ -38,9 +39,11 @@ public class teacherOps {
 
 			String json = mapper.writeValueAsString(examsdisc);
 			System.out.println("JSON = " + json);
+			session.close();
 			return json;
 
 		}
+		session.close();
 		return "";
 	}
 
@@ -60,6 +63,7 @@ public class teacherOps {
 				query = session.createQuery("from Question where subjectNumber = :subjectNumber");
 				query.setParameter("subjectNumber", suString);
 				list = query.list();
+
 				for (int i = 0; i < list.size(); i++) {
 					Question question = (Question) list.get(i);
 					System.out.println(question.getDiscription());
@@ -68,17 +72,98 @@ public class teacherOps {
 				}
 
 			}
+
 			if (!questions.isEmpty()) {
 				ObjectMapper mapper = new ObjectMapper();
 
 				String json = mapper.writeValueAsString(questions);
 				System.out.println("JSON = " + json);
+				session.close();
 				return json;
 			}
+			session.close();
 			return "";
 		}
 
 		return "";
+	}
+
+	public static String getQuestionsSubject(String user, String paString, String subject)
+			throws JsonProcessingException {
+
+		Teacher teacher = getTeacher(user, paString);
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		for (Subject s : teacher.getSubjects()) {
+			if (s.getName().equals(subject)) {
+
+				Query query = session.createQuery("from Question where subjectNumber = :subjectNumber");
+				query.setParameter("subjectNumber", s.getSnumber());
+				List list = query.list();
+
+				if (list.size() != 0) {
+					List<String> questions = new ArrayList<String>();
+					for (int i = 0; i < list.size(); i++) {
+						Question question = (Question) list.get(i);
+						System.out.println(question.getDiscription());
+						String queString = "Id: " + question.getId() + "\n" + question.getDiscription();
+						questions.add(queString);
+					}
+					if (!questions.isEmpty()) {
+						ObjectMapper mapper = new ObjectMapper();
+
+						String json = mapper.writeValueAsString(questions);
+						System.out.println("JSON = " + json);
+						session.close();
+						return json;
+					}
+					session.close();
+					return "";
+				}
+			}
+		}
+
+		return "";
+	}
+
+	public static String getTeacherSubjects(String user, String paString) throws JsonProcessingException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username and password = :password");
+		query.setParameter("username", user);
+		query.setParameter("password", paString);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			ObjectMapper mapper = new ObjectMapper();
+			List<String> subjs = new ArrayList<String>();
+			subjs.add("All");
+			for (Subject s : teacher.getSubjects()) {
+				subjs.add(s.getName());
+			}
+			String json = mapper.writeValueAsString(subjs);
+			System.out.println("JSON = " + json);
+			session.close();
+			return json;
+		}
+		session.close();
+		return null;
+	}
+
+	public static Teacher getTeacher(String user, String paString) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username and password = :password");
+		query.setParameter("username", user);
+		query.setParameter("password", paString);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			return teacher;
+		}
+		return null;
 	}
 
 }

@@ -6,16 +6,12 @@ package com.example.controlers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 
-import org.hibernate.Session;
+import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
-import com.example.project.dataBase;
 
-import antlr.debug.Event;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,7 +22,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -37,12 +35,12 @@ public class logInControler implements Initializable {
 	private TextField userName; // Value injected by FXMLLoader
 
 	@FXML // fx:id="Password"
-	private TextField Password; // Value injected by FXMLLoader
+	private PasswordField Password; // Value injected by FXMLLoader
 
 	@FXML // fx:id="logInBtn"
 	private Button logInBtn; // Value injected by FXMLLoader
 	@FXML // fx:id="selectionbtns"
-	private ChoiceBox<String> selectionbtns; // Value injected by FXMLLoader
+	private ComboBox<String> selectionbtns; // Value injected by FXMLLoader
 	@FXML // fx:id="errorTXT"
 	private TextField errorTXT; // Value injected by FXMLLoader
 
@@ -66,7 +64,8 @@ public class logInControler implements Initializable {
 		}
 		String reString = Instance.getClientConsole().getMessage().toString();
 		if (reString.equals(""))
-			System.out.println("user not found");
+			errorTXT.setText("User not found");
+
 		else {
 			goTo(event, "/com/example/project/" + getController(tyString) + ".fxml", reString);
 		}
@@ -83,7 +82,7 @@ public class logInControler implements Initializable {
 			}
 			if (loader.getController() instanceof teacherMainPageController) {
 				teacherMainPageController secController = loader.getController();
-				secController.init(commandArr[1],commandArr[2]);
+				secController.init(commandArr[1], commandArr[2]);
 			}
 			Scene scene = new Scene(Main);
 			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -130,14 +129,15 @@ public class logInControler implements Initializable {
 	}
 
 	private int isValid(String user, String paString) {
-		String tyString = selectionbtns.getSelectionModel().getSelectedItem();
-		tyString = getClass(tyString);
-
-		dataBase.getInstance();
-		Session session = dataBase.getSession();
-		String hql = "from " + "Teacher  where username = :username";
-		List result = session.createQuery(hql).setString("username", user).setString("password", paString).list();
-
+		/*
+		 * String tyString = selectionbtns.getSelectionModel().getSelectedItem();
+		 * tyString = getClass(tyString);
+		 * 
+		 * dataBase.getInstance(); Session session = dataBase.getSession(); String hql =
+		 * "from " + "Teacher  where username = :username"; List result =
+		 * session.createQuery(hql).setString("username", user).setString("password",
+		 * paString).list();
+		 */
 		return 1;
 	}
 

@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.example.ServerClientEntities.Instance;
+
 import javafx.fxml.Initializable;
 
 public class teacherMainPageController implements Initializable {
@@ -27,6 +29,8 @@ public class teacherMainPageController implements Initializable {
 	private Button myExamsBTN; // Value injected by FXMLLoader
 	@FXML // fx:id="showQues"
 	private Button showQues; // Value injected by FXMLLoader
+	@FXML // fx:id="signoutBTN"
+	private Button signoutBTN; // Value injected by FXMLLoader
 
 	@FXML
 	void showExamsList(ActionEvent event) throws IOException {
@@ -54,6 +58,11 @@ public class teacherMainPageController implements Initializable {
 		Window.setTitle("Questions list");
 		Window.setScene(scene);
 		Window.show();
+	}
+
+	@FXML
+	void signOut(ActionEvent event) throws IOException {
+		Instance.getClientConsole().closeConnection();
 	}
 
 	@Override

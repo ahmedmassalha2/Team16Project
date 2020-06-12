@@ -2,14 +2,16 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.logInControler">
+<AnchorPane prefHeight="400.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.logInControler">
    <children>
       <BorderPane prefHeight="486.0" prefWidth="613.3333333333334" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -26,11 +28,14 @@
                <center>
                   <Group>
                      <children>
-                        <TextField fx:id="userName" layoutX="-12.0" layoutY="15.0" promptText="user name" />
-                        <TextField fx:id="Password" layoutX="-12.0" layoutY="48.0" promptText="password" />
-                        <Button fx:id="logInBtn" layoutX="-9.0" layoutY="85.0" mnemonicParsing="false" onAction="#logIn" text="sign in" />
-                        <ChoiceBox fx:id="selectionbtns" layoutX="46.0" layoutY="85.0" prefHeight="25.0" prefWidth="91.0" />
-                        <TextField fx:id="errorTXT" blendMode="MULTIPLY" editable="false" layoutX="-10.0" layoutY="113.0" />
+                        <TextField fx:id="userName" layoutX="-3.0" layoutY="21.0" promptText="user name" />
+                        <Button fx:id="logInBtn" layoutX="38.0" layoutY="110.0" mnemonicParsing="false" onAction="#logIn" text="sign in" />
+                        <TextField fx:id="errorTXT" blendMode="MULTIPLY" editable="false" layoutX="-10.0" layoutY="137.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></TextField>
+                        <ComboBox fx:id="selectionbtns" layoutX="1.0" layoutY="83.0" prefHeight="25.0" prefWidth="142.0" promptText="Select you'r role" />
+                        <PasswordField fx:id="Password" layoutX="-3.0" layoutY="53.0" />
                      </children>
                   </Group>
                </center>

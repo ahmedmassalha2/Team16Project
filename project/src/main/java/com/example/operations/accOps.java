@@ -25,7 +25,7 @@ public class accOps {
 				Student student = (Student) query.getSingleResult();
 				session.close();
 				if (student != null)
-					return "Student@" + student.getUsername() + "@" +student.getPassword();
+					return "Student@" + student.getUsername() + "@" + student.getPassword();
 			}
 			if (tyString.equals("Teacher")) {
 				Teacher teacher = (Teacher) query.getSingleResult();
@@ -39,9 +39,10 @@ public class accOps {
 				if (principal != null)
 					return "Principal@" + principal.getUsername() + "@" + principal.getPassword();
 			}
+			session.close();
 			return "";
 		}
-
+		session.close();
 		return "";
 	}
 }
