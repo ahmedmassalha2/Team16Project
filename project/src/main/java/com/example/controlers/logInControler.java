@@ -33,7 +33,7 @@ public class logInControler implements Initializable {
 	ObservableList<String> list = FXCollections.observableArrayList();
 	@FXML // fx:id="userName"
 	private TextField userName; // Value injected by FXMLLoader
-
+	//hide password
 	@FXML // fx:id="Password"
 	private PasswordField Password; // Value injected by FXMLLoader
 
