@@ -201,8 +201,8 @@ public class App {
 		
 		Exam exam3 = new Exam(teacher3, s2, list3, "1:00" , c3);
 		session.save(exam3);
-
-
+		Principal principal = new Principal("principal","Ahmed Massalha","123");
+		session.save(principal);
 		session.getTransaction().commit();
 
 	}
