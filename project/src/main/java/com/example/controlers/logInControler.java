@@ -162,6 +162,8 @@ public class logInControler implements Initializable {
 			return "teacherMainPage";
 		if (type.equals("Student"))
 			return "StudentMainPage";
+		if(type.equals("Principal"))
+			return "PrincipalMainPage";
 
 		return "";
 	}
