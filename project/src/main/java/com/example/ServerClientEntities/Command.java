@@ -5,6 +5,9 @@ public enum Command {
 	teacherExams,
 	teacherQuestions,
 	teacherSubjects,
-	teachQuesSubj
+	teachQuesSubj,
+	teacherToDo,
+	teachAddToDo,
+	teachDellToDo
 
 }

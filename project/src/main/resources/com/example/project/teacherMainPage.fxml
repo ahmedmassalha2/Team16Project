@@ -13,6 +13,7 @@
    <children>
       <AnchorPane prefHeight="402.6666666666667" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+
             <BorderPane prefHeight="402.6666666666667" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <AnchorPane prefHeight="402.6666666666667" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -56,6 +57,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
+
          </children>
       </AnchorPane>
    </children>

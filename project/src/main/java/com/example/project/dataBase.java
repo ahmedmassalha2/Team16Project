@@ -25,6 +25,7 @@ import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
 import com.example.entities.checkedExam;
+import com.example.entities.todoItem;
 
 public class dataBase {
 	private static dataBase instance = null;
@@ -43,6 +44,7 @@ public class dataBase {
 		configuration.addAnnotatedClass(Student.class);
 		configuration.addAnnotatedClass(Subject.class);
 		configuration.addAnnotatedClass(Teacher.class);
+		configuration.addAnnotatedClass(todoItem.class);
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
 		return configuration.buildSessionFactory(serviceRegistry);
@@ -72,6 +74,8 @@ public class dataBase {
 	}
 
 	public static Session getSession() {
+		if (session != null && session.isOpen())
+			return session;
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 		return session;
