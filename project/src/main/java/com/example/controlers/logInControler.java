@@ -98,14 +98,17 @@ public class logInControler implements Initializable {
 	private boolean checkValid(String user, String paString, String tyString) {
 		errorTXT.setText("");
 		if (user.isBlank()) {
+			errorTXT.setVisible(true);
 			errorTXT.setText("Please fill user name");
 			return false;
 		}
 		if (paString.isBlank()) {
+			errorTXT.setVisible(true);
 			errorTXT.setText("Please fill password");
 			return false;
 		}
 		if (tyString.equals("")) {
+			errorTXT.setVisible(true);
 			errorTXT.setText("Select your role");
 			return false;
 		}
