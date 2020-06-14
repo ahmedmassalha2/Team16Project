@@ -1,49 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.questionListController">
+
+<AnchorPane prefHeight="437.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.questionListController">
    <children>
-      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="532.0" prefWidth="631.3333333333334" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <AnchorPane layoutX="-54.0" layoutY="-24.0" prefHeight="522.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox alignment="TOP_CENTER" layoutX="53.0" layoutY="35.0" prefHeight="522.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Questions List" wrappingWidth="179.13671875">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <ListView fx:id="questionsList" prefHeight="373.0" prefWidth="556.0" />
-                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
-                           <buttons>
-                              <ButtonBar prefHeight="40.0" prefWidth="579.0">
-                                 <buttons>
-                                    <Button fx:id="showBTN" mnemonicParsing="false" onAction="#loadQ" prefHeight="25.0" prefWidth="154.0" text="show question" />
-                                    <ComboBox fx:id="filter" onAction="#refresh" prefWidth="150.0" promptText="Filter" />
-                                 </buttons>
-                              </ButtonBar>
-                           </buttons>
-                        </ButtonBar>
-                        <Text fx:id="errorTXT" fill="#030000" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="312.13671875">
-                           <font>
-                              <Font size="29.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="backbutton1" mnemonicParsing="false" onAction="#back_" text="Back" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
+      <Text layoutX="203.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions List" wrappingWidth="179.13671875">
+         <font>
+            <Font name="Monotype Corsiva" size="30.0" />
+         </font>
+      </Text>
+      <ListView fx:id="questionsList" layoutY="56.0" prefHeight="331.0" prefWidth="556.0" />
+      <Button fx:id="showBTN" layoutX="382.0" layoutY="395.0" mnemonicParsing="false" onAction="#loadQ" prefHeight="17.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="show question">
+         <font>
+            <Font name="Monotype Corsiva" size="16.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <ComboBox fx:id="filter" layoutX="400.0" layoutY="14.0" onAction="#refresh" prefHeight="33.0" prefWidth="150.0" promptText="Filter" style="-fx-background-radius: 30;">
+         <effect>
+            <DropShadow />
+         </effect>
+      </ComboBox>
+      <Text fx:id="errorTXT" fill="#030000" layoutX="14.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="312.13671875">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <Button fx:id="backbutton1" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#back_" prefHeight="15.0" prefWidth="57.0" style="-fx-background-radius: 30;" text="Back">
+         <font>
+            <Font name="Monotype Corsiva" size="15.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
