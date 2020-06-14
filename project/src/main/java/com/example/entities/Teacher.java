@@ -34,6 +34,9 @@ public class Teacher {
 	@JsonIgnore
 	@ManyToMany()
 	private List<Subject> subjects;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+	private List<todoItem> todoList;
 
 	private String username;
 	private String password;
@@ -117,6 +120,16 @@ public class Teacher {
 		this.courses = courses;
 	}
 
+	public List<todoItem> getTodoList() {
+		return todoList;
+	}
+
+	public void setTodoList(List<todoItem> todoList) {
+		this.todoList = todoList;
+	}
+	public void addTodoItem(todoItem item) {
+		todoList.add(item);
+	}
 	public Teacher(String privelage, String username, String password) {
 
 		this.privelage = privelage;
@@ -124,6 +137,7 @@ public class Teacher {
 		this.password = password;
 		this.courses = new ArrayList<Course>();
 		this.subjects = new ArrayList<Subject>();
+		this.todoList = new ArrayList<todoItem>();
 	}
 
 	public Teacher() {

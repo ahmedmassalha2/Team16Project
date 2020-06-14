@@ -29,6 +29,8 @@ public class teacherMainPageController implements Initializable {
 	private Button myExamsBTN; // Value injected by FXMLLoader
 	@FXML // fx:id="showQues"
 	private Button showQues; // Value injected by FXMLLoader
+	@FXML // fx:id="todoBtn"
+	private Button todoBtn; // Value injected by FXMLLoader
 	@FXML // fx:id="signoutBTN"
 	private Button signoutBTN; // Value injected by FXMLLoader
 
@@ -75,6 +77,20 @@ public class teacherMainPageController implements Initializable {
 		teacherMainPageController.username = disc;
 		teacherMainPageController.password = password;
 		usernameTXT.setText(disc);
+	}
+
+	@FXML
+	void showToDo(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/todoList.fxml"));
+		Parent Main = loader.load();
+		todoListController secController = loader.getController();
+
+		secController.init(username, password);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("ToDo list");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 }
