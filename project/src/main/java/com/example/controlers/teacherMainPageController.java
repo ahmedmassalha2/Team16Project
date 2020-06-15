@@ -85,7 +85,7 @@ public class teacherMainPageController implements Initializable {
 		Parent Main = loader.load();
 		todoListController secController = loader.getController();
 
-		secController.init(username, password);
+		secController.init(username, password,"Teacher");
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("ToDo list");

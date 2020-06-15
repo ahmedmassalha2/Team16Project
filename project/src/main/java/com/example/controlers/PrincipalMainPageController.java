@@ -21,28 +21,34 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class PrincipalMainPageController implements Initializable{
-	
+
+public class PrincipalMainPageController implements Initializable {
+
+
 	static String password = "";
 	static String username = "";
-	   @FXML // fx:id="examsBtn"
-	    private Button examsBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="examsBtn"
+	private Button examsBtn; // Value injected by FXMLLoader
 
-	    @FXML // fx:id="questionsBtn"
-	    private Button questionsBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="questionsBtn"
+	private Button questionsBtn; // Value injected by FXMLLoader
 
-	    @FXML // fx:id="usrNameBtn"
-	    private Text usrNameBtn; // Value injected by FXMLLoader
-	    @FXML // fx:id="logoutBtn"
-	    private Button logoutBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="usrNameBtn"
+	private Text usrNameBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="logoutBtn"
+	private Button logoutBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="todoBTN"
+	private Button todoBTN; // Value injected by FXMLLoader
 
-	    @FXML
-	    void logOut(ActionEvent event) {
-	    	
-	    	Platform.exit();
-	        System.exit(0);
+	@FXML
+	void logOut(ActionEvent event) {
 
-	    }
+		Platform.exit();
+		System.exit(0);
+
+	}
+
+
 
 	    @FXML
 	    void showExams(ActionEvent event) throws IOException {
@@ -58,24 +64,38 @@ public class PrincipalMainPageController implements Initializable{
 			Window.setTitle("Exams list");
 			Window.setScene(scene);
 			Window.show();
+      }
 
-	    }
 
-	    @FXML
-	    void showQuestions(ActionEvent event) {
+	@FXML
+	void showQuestions(ActionEvent event) {
 
-	    }
-    @Override
+	}
+
+	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		usrNameBtn.setText(username);
 
 	}
 
-	public void init(String disc, String password) {
+	public void init(String disc, String Password) {
 		PrincipalMainPageController.username = disc;
-		PrincipalMainPageController.password = password;
+		PrincipalMainPageController.password = Password;
 		usrNameBtn.setText(disc);
 	}
 
+	@FXML
+	void todoList(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/todoList.fxml"));
+		Parent Main = loader.load();
+		todoListController secController = loader.getController();
+
+		secController.init(username, password,"Principal");
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("ToDo list");
+		Window.setScene(scene);
+		Window.show();
+	}
 }

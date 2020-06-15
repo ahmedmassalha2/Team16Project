@@ -1,5 +1,9 @@
 package com.example.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,10 +20,13 @@ public class Principal {
 
 	private String username;
 	private String password;
+	@ElementCollection
+	private List<String> todoList;
 
 	public Principal(String privelage, String username, String password) {
 		this.privelage = privelage;
 		this.username = username;
+		this.todoList = new ArrayList<String>();
 		this.password = password;
 	}
 
@@ -53,6 +60,18 @@ public class Principal {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<String> getTodoList() {
+		return todoList;
+	}
+
+	public void setTodoList(List<String> todoList) {
+		this.todoList = todoList;
+	}
+
+	public void addTodoItem(String item) {
+		todoList.add(item);
 	}
 
 	public Principal() {

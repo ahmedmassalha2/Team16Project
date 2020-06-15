@@ -9,6 +9,13 @@ public enum Command {
 	teacherToDo,
 	teachAddToDo,
 	teachDellToDo,
+	princToDo,
+	princAddToDo,
+	princDellToDo,
+	StuToDo,
+	StuAddToDo,
+	StuDellToDo,
 	getAllExams
+
 
 }

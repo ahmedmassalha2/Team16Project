@@ -6,6 +6,8 @@ import javax.persistence.criteria.CriteriaBuilder.Case;
 
 import com.example.operations.ExamOps;
 import com.example.operations.accOps;
+import com.example.operations.princOps;
+import com.example.operations.stuOps;
 import com.example.operations.teacherOps;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,8 +38,21 @@ public class commandRunner {
 			return teacherOps.addToDo(commandArr[1], commandArr[2], commandArr[3]);
 		case teachDellToDo:
 			return teacherOps.DellToDo(commandArr[1], commandArr[2], commandArr[3]);
+		case princToDo:
+			return princOps.getToDo(commandArr[1], commandArr[2]);
+		case princAddToDo:
+			return princOps.addToDo(commandArr[1], commandArr[2], commandArr[3]);
+		case princDellToDo:
+			return princOps.DellToDo(commandArr[1], commandArr[2], commandArr[3]);
+		case StuToDo:
+			return stuOps.getToDo(commandArr[1], commandArr[2]);
+		case StuAddToDo:
+			return stuOps.addToDo(commandArr[1], commandArr[2], commandArr[3]);
+		case StuDellToDo:
+			return stuOps.DellToDo(commandArr[1], commandArr[2], commandArr[3]);
 		case getAllExams:
 			return ExamOps.getExamsList();
+
 		}
 
 		return command;

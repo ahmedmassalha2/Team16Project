@@ -46,9 +46,10 @@ public class todoListController {
 		addItemToList(userString, paString);
 	}
 
-	public void init(String username, String password) throws IOException {
+	public void init(String username, String password, String Role) throws IOException {
 		userString = username;
 		paString = password;
+		this.role = Role;
 		loadList(username, password);
 
 		Instance.getClientConsole().setMessage(null);
@@ -58,9 +59,43 @@ public class todoListController {
 
 	}
 
+	public int getCommandToDo() {
+		if (role.equals("Teacher"))
+			return Command.teacherToDo.ordinal();
+		if (role.equals("Principal"))
+			return Command.princToDo.ordinal();
+		if (role.equals("Student"))
+			return Command.StuToDo.ordinal();
+
+		return -1;
+	}
+
+	public int getCommandDellToDo() {
+		if (role.equals("Teacher"))
+			return Command.teachDellToDo.ordinal();
+		if (role.equals("Principal"))
+			return Command.princDellToDo.ordinal();
+		if (role.equals("Student"))
+			return Command.StuDellToDo.ordinal();
+
+		return -1;
+	}
+
+	public int getCommandADDToDo() {
+		if (role.equals("Teacher"))
+			return Command.teachAddToDo.ordinal();
+		if (role.equals("Principal"))
+			return Command.princAddToDo.ordinal();
+		if (role.equals("Student"))
+			return Command.StuAddToDo.ordinal();
+
+		return -1;
+	}
+
 	public void loadList(String username, String password) throws IOException {
+		int command = getCommandToDo();
 		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(Command.teacherToDo.ordinal() + "@" + username + "@" + password);
+		Instance.getClientConsole().sendToServer(command + "@" + username + "@" + password);
 		while (Instance.getClientConsole().getMessage() == null) {
 			System.out.println("waiting for server");
 		}
@@ -71,9 +106,9 @@ public class todoListController {
 	}
 
 	public void addItemToList(String username, String password) throws IOException {
+		int command = getCommandADDToDo();
 		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(
-				Command.teachAddToDo.ordinal() + "@" + username + "@" + password + "@" + textItem.getText());
+		Instance.getClientConsole().sendToServer(command + "@" + username + "@" + password + "@" + textItem.getText());
 		while ((Instance.getClientConsole().getMessage()) == null) {
 			System.out.println("waiting for server");
 		}
@@ -83,10 +118,10 @@ public class todoListController {
 
 	@FXML
 	void doneToDoItem(ActionEvent event) throws IOException {
-		String selected=myTodoItems.getSelectionModel().getSelectedItem();
+		int command = getCommandDellToDo();
+		String selected = myTodoItems.getSelectionModel().getSelectedItem();
 		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(
-				Command.teachDellToDo.ordinal() + "@" + userString + "@" + paString + "@" + selected);
+		Instance.getClientConsole().sendToServer(command + "@" + userString + "@" + paString + "@" + selected);
 		while ((Instance.getClientConsole().getMessage()) == null) {
 			System.out.println("waiting for server");
 		}
@@ -95,11 +130,22 @@ public class todoListController {
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherMainPage.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(getFxml()));
 		Scene scene = new Scene(loader.load());
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Exams list");
+		Window.setTitle("Main page");
 		Window.setScene(scene);
 		Window.show();
+	}
+
+	public String getFxml() {
+		if (role.equals("Teacher"))
+			return "/com/example/project/teacherMainPage.fxml";
+		if (role.equals("Principal"))
+			return "/com/example/project/PrincipalMainPage.fxml";
+		if (role.equals("Student"))
+			return "/com/example/project/StudentMainPage.fxml";
+
+		return "";
 	}
 }
