@@ -40,6 +40,14 @@
                   <DropShadow />
                </effect>
             </Button>
+            <Button fx:id="todoBTN" layoutX="184.0" layoutY="271.0" mnemonicParsing="false" onAction="#todoList" prefHeight="47.0" prefWidth="155.0" style="-fx-background-radius: 30;" text="ToDo list">
+               <font>
+                  <Font name="Monotype Corsiva" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
          </children>
       </AnchorPane>
    </children>
