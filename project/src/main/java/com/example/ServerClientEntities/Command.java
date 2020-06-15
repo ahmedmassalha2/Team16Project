@@ -8,6 +8,12 @@ public enum Command {
 	teachQuesSubj,
 	teacherToDo,
 	teachAddToDo,
-	teachDellToDo
+	teachDellToDo,
+	princToDo,
+	princAddToDo,
+	princDellToDo,
+	StuToDo,
+	StuAddToDo,
+	StuDellToDo
 
 }

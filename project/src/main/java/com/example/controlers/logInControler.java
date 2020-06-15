@@ -33,7 +33,7 @@ public class logInControler implements Initializable {
 	ObservableList<String> list = FXCollections.observableArrayList();
 	@FXML // fx:id="userName"
 	private TextField userName; // Value injected by FXMLLoader
-	//hide password
+	// hide password
 	@FXML // fx:id="Password"
 	private PasswordField Password; // Value injected by FXMLLoader
 
@@ -78,16 +78,20 @@ public class logInControler implements Initializable {
 			Parent Main = loader.load();
 			if (loader.getController() instanceof StudentPageController) {
 				StudentPageController secController = loader.getController();
-				secController.init(commandArr[1]);
+				secController.init(commandArr[1], commandArr[2]);
 			}
 			if (loader.getController() instanceof teacherMainPageController) {
 				teacherMainPageController secController = loader.getController();
 				secController.init(commandArr[1], commandArr[2]);
 			}
+			if (loader.getController() instanceof PrincipalMainPageController) {
+				PrincipalMainPageController secController = loader.getController();
+				secController.init(commandArr[1], commandArr[2]);
+			}
 			Scene scene = new Scene(Main);
 			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Window.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
-			Window.setTitle(commandArr[0] + " page");
+			Window.setTitle("Main page");
 			Window.setScene(scene);
 			Window.show();
 		} catch (IOException e) {
