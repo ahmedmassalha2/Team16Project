@@ -52,6 +52,8 @@ public class commandRunner {
 			return stuOps.DellToDo(commandArr[1], commandArr[2], commandArr[3]);
 		case getAllExams:
 			return ExamOps.getExamsList();
+		case getSubjNumber:
+			return teacherOps.getSubNumber(commandArr[1]);
 
 		}
 

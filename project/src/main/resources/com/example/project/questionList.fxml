@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="437.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.questionListController">
    <children>
       <Text layoutX="203.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions List" wrappingWidth="179.13671875">
@@ -38,6 +37,14 @@
       <Button fx:id="backbutton1" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#back_" prefHeight="15.0" prefWidth="57.0" style="-fx-background-radius: 30;" text="Back">
          <font>
             <Font name="Monotype Corsiva" size="15.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <Button fx:id="addQBTN" layoutX="209.0" layoutY="395.0" mnemonicParsing="false" onAction="#addQuestion" prefHeight="17.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Add question">
+         <font>
+            <Font name="Monotype Corsiva" size="16.0" />
          </font>
          <effect>
             <DropShadow />
