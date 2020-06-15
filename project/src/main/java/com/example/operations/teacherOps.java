@@ -170,38 +170,32 @@ public class teacherOps {
 	public static String getToDo(String user, String paString) throws JsonProcessingException {
 		Teacher teacher = getTeacher(user, paString);
 		System.out.println(teacher.getUsername());
-		List<todoItem> items = teacher.getTodoList();
-		List<String> it = new ArrayList<String>();
-		for (todoItem i : items) {
-			System.out.println(i.getTodoString());
-			it.add(i.getTodoString());
-		}
+		List<String> items = teacher.getTodoList();
+
 		ObjectMapper mapper = new ObjectMapper();
-		String json = mapper.writeValueAsString(it);
+		String json = mapper.writeValueAsString(items);
 		dataBase.closeSess();
 		System.out.println("JSON = " + json);
 		return json;
 	}
 
-	public static String addToDo(String user, String paString, String item) throws JsonProcessingException {
+	public static String addToDo(String user, String paString, String item) {
 		Teacher teacher = getTeacher(user, paString);
 		Session session = dataBase.getSession();
-		todoItem todo = new todoItem(item, false);
-		session.save(todo);
-		todo.setTeacher(teacher);
-		teacher.addTodoItem(todo);
+		teacher.addTodoItem(item);
 		session.update(teacher);
 		session.getTransaction().commit();
 		session.close();
 
 		return "added";
 	}
+
 	public static String DellToDo(String user, String paString, String item) throws JsonProcessingException {
 		Teacher teacher = getTeacher(user, paString);
 		Session session = dataBase.getSession();
-		int i=0;
-		for(todoItem it:teacher.getTodoList()) {
-			if(it.getTodoString().equals(item)) {
+		int i = 0;
+		for (String it : teacher.getTodoList()) {
+			if (it.equals(item)) {
 				teacher.getTodoList().remove(i);
 				break;
 			}

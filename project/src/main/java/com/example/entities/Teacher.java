@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 //import com.example.entities.Course;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,9 +35,12 @@ public class Teacher {
 	@JsonIgnore
 	@ManyToMany()
 	private List<Subject> subjects;
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
-	private List<todoItem> todoList;
+	private List<todoItem> todoList;*/
+	
+	@ElementCollection
+	private List<String> todoList;
 
 	private String username;
 	private String password;
@@ -120,14 +124,14 @@ public class Teacher {
 		this.courses = courses;
 	}
 
-	public List<todoItem> getTodoList() {
+	public List<String> getTodoList() {
 		return todoList;
 	}
 
-	public void setTodoList(List<todoItem> todoList) {
+	public void setTodoList(List<String> todoList) {
 		this.todoList = todoList;
 	}
-	public void addTodoItem(todoItem item) {
+	public void addTodoItem(String item) {
 		todoList.add(item);
 	}
 	public Teacher(String privelage, String username, String password) {
@@ -137,7 +141,7 @@ public class Teacher {
 		this.password = password;
 		this.courses = new ArrayList<Course>();
 		this.subjects = new ArrayList<Subject>();
-		this.todoList = new ArrayList<todoItem>();
+		this.todoList = new ArrayList<String>();
 	}
 
 	public Teacher() {

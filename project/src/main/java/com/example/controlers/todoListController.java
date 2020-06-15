@@ -77,7 +77,7 @@ public class todoListController {
 		while ((Instance.getClientConsole().getMessage()) == null) {
 			System.out.println("waiting for server");
 		}
-
+		textItem.setText("");
 		loadList(username, password);
 	}
 
