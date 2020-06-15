@@ -21,9 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
 public class PrincipalMainPageController implements Initializable {
-
 
 	static String password = "";
 	static String username = "";
@@ -48,24 +46,21 @@ public class PrincipalMainPageController implements Initializable {
 
 	}
 
+	@FXML
+	void showExams(ActionEvent event) throws IOException {
 
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalExamsList.fxml"));
+		Parent Main = loader.load();
+		PrincipalExamsListController secController = loader.getController();
 
-	    @FXML
-	    void showExams(ActionEvent event) throws IOException {
-	    	
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalExamsList.fxml"));
-			Parent Main = loader.load();
-			PrincipalExamsListController secController = loader.getController();
-
-			ExamOps p = new ExamOps();
-			secController.init(p.getExamsList());
-			Scene scene = new Scene(Main);
-			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			Window.setTitle("Exams list");
-			Window.setScene(scene);
-			Window.show();
-      }
-
+		ExamOps p = new ExamOps();
+		secController.init(p.getExamsList());
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Exams list");
+		Window.setScene(scene);
+		Window.show();
+	}
 
 	@FXML
 	void showQuestions(ActionEvent event) {
@@ -91,7 +86,7 @@ public class PrincipalMainPageController implements Initializable {
 		Parent Main = loader.load();
 		todoListController secController = loader.getController();
 
-		secController.init(username, password,"Principal");
+		secController.init(username, password, "Principal");
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("ToDo list");

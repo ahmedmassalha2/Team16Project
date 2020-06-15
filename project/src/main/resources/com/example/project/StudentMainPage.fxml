@@ -71,6 +71,14 @@
                      <font>
                         <Font name="Monotype Corsiva" size="13.0" />
                      </font></Button>
+                  <Button fx:id="todoBTN" layoutX="329.0" layoutY="305.0" mnemonicParsing="false" onAction="#todoList" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="ToDo list">
+                     <font>
+                        <Font name="Monotype Corsiva" size="18.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
                </children>
             </Group>
          </center>
