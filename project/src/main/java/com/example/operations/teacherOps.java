@@ -207,6 +207,7 @@ public class teacherOps {
 
 		return "removed";
 	}
+
 	public static String getTeachers() throws JsonProcessingException {
 		dataBase.getInstance();
 		ObjectMapper mapper = new ObjectMapper();
@@ -223,4 +224,23 @@ public class teacherOps {
 	}
 		
 	
+
+
+	public static String getSubNumber(String subject) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Subject where subject_name = :subject_name");
+		query.setParameter("subject_name", subject);
+		
+		List list = query.list();
+
+		if (list.size() != 0) {
+			Subject subj = (Subject) query.getSingleResult();
+			return subj.getSnumber();
+		}
+
+		return "";
+
+	}
+
 }

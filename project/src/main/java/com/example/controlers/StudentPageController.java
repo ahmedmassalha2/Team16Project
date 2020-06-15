@@ -24,7 +24,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StudentPageController implements Initializable {
-   
+	static String password = "";
+	static String username = "";
 	@FXML // fx:id="gradesBtn"
 	private Button gradesBtn; // Value injected by FXMLLoader
 
@@ -39,9 +40,11 @@ public class StudentPageController implements Initializable {
 
 	@FXML // fx:id="usernameTXT"
 	private Text usernameTXT; // Value injected by FXMLLoader
-	
-    @FXML // fx:id="quotesBtn"
-    private Button quotesBtn; // Value injected by FXMLLoader
+
+	@FXML // fx:id="quotesBtn"
+	private Button quotesBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="todoBTN"
+	private Button todoBTN; // Value injected by FXMLLoader
 
 	@FXML
 	void enterExam(ActionEvent event) {
@@ -52,7 +55,7 @@ public class StudentPageController implements Initializable {
 	void goBack(ActionEvent event) {
 
 		Platform.exit();
-        System.exit(0);
+		System.exit(0);
 	}
 
 	@FXML
@@ -64,20 +67,34 @@ public class StudentPageController implements Initializable {
 	void showGrades(ActionEvent event) {
 
 	}
-	
-    @FXML
-    void showQuotes(ActionEvent event) throws IOException {
 
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMotivationPage.fxml"));
+	@FXML
+	void showQuotes(ActionEvent event) throws IOException {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMotivationPage.fxml"));
 		Parent Main = loader.load();
-		//teacherExamList secController = loader.getController();
-		//secController.init(username, password);
+		// teacherExamList secController = loader.getController();
+		// secController.init(username, password);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Daily Motivation");
 		Window.setScene(scene);
 		Window.show();
-    }
+	}
+
+	@FXML
+	void todoList(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/todoList.fxml"));
+		Parent Main = loader.load();
+		todoListController secController = loader.getController();
+
+		secController.init(username, password, "Student");
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("ToDo list");
+		Window.setScene(scene);
+		Window.show();
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -85,7 +102,9 @@ public class StudentPageController implements Initializable {
 
 	}
 
-	public void init(String disc) {
+	public void init(String disc, String Password) {
+		StudentPageController.username = disc;
+		StudentPageController.password = Password;
 		usernameTXT.setText(disc);
 	}
 

@@ -1,3 +1,4 @@
+
 package com.example.ServerClientEntities;
 
 public enum Command {
@@ -9,7 +10,16 @@ public enum Command {
 	teacherToDo,
 	teachAddToDo,
 	teachDellToDo,
+	princToDo,
+	princAddToDo,
+	princDellToDo,
+	StuToDo,
+	StuAddToDo,
+	StuDellToDo,
 	getAllExams,
-	getTeachers
+	getSubjNumber,
+  getTeachers
+
 
 }
+

@@ -1,8 +1,10 @@
 package com.example.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,19 +22,20 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String idNum;
 	private String privelage;
 	@JsonIgnore
 	@ManyToMany()
 	private List<Course> courses;
 
-
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
 	private List<checkedExam> grades;
 	private String username;
 	private String password;
+	@ElementCollection
+	private List<String> todoList;
 
 	public String getUsername() {
 		return username;
@@ -90,13 +93,26 @@ public class Student {
 		this.idNum = idNum;
 	}
 
+	public List<String> getTodoList() {
+		return todoList;
+	}
+
+	public void setTodoList(List<String> todoList) {
+		this.todoList = todoList;
+	}
+
+	public void addTodoItem(String item) {
+		todoList.add(item);
+	}
+
 	public Student(String idNum, String privelage, String username, String password) {
 		super();
-		//this.id = id;
+		// this.id = id;
 		this.idNum = idNum;
 		this.privelage = privelage;
 		this.username = username;
 		this.password = password;
+		this.todoList = new ArrayList<String>();
 	}
 
 	public Student() {
