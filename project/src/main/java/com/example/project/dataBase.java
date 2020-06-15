@@ -44,7 +44,7 @@ public class dataBase {
 		configuration.addAnnotatedClass(Student.class);
 		configuration.addAnnotatedClass(Subject.class);
 		configuration.addAnnotatedClass(Teacher.class);
-		//configuration.addAnnotatedClass(todoItem.class);
+		// configuration.addAnnotatedClass(todoItem.class);
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
 		return configuration.buildSessionFactory(serviceRegistry);
@@ -55,6 +55,7 @@ public class dataBase {
 		sessionFactory = getSessionFactory();
 	}
 
+//get all entities from class
 	public static <T> List<T> getAll(Class<T> object) {
 		getSession();
 		CriteriaBuilder builder = session.getCriteriaBuilder();
