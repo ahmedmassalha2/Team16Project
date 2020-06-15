@@ -1,3 +1,4 @@
+
 package com.example.ServerClientEntities;
 
 import java.sql.SQLException;
@@ -54,6 +55,8 @@ public class commandRunner {
 			return ExamOps.getExamsList();
 		case getSubjNumber:
 			return teacherOps.getSubNumber(commandArr[1]);
+		case getTeachers:
+			return teacherOps.getTeachers();
 
 		}
 
@@ -62,3 +65,4 @@ public class commandRunner {
 	}
 
 }
+

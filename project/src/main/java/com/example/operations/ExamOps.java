@@ -13,32 +13,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExamOps {
-	
-	
-	public static String getExamsList() throws JsonProcessingException{
-		
-		dataBase.getInstance();
-		
-		ObjectMapper mapper = new ObjectMapper();
 
-		//String json = mapper.writeValueAsString(examsdisc);
-		//System.out.println("JSON = " + json);
-		
-		//return json;
-		
-		//Teacher teacher = (Teacher) query.getSingleResult();
-	//	List<Exam> l = teacher.getExams();
+	public static String getExamsList() throws JsonProcessingException {
+
+		dataBase.getInstance();
+		ObjectMapper mapper = new ObjectMapper();
 		List<String> examsdisc = new ArrayList<String>();
 		for (Exam exam : dataBase.getAll(Exam.class)) {
 
-			String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
-					+ " writen by " + exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString()
-					+ " hours";
+			String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName() + " writen by "
+					+ exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString() + " hours";
 			examsdisc.add(discString);
 		}
 		dataBase.closeSess();
 		return mapper.writeValueAsString(examsdisc);
 	}
-	
 
 }
