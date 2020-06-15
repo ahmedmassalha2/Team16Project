@@ -21,14 +21,14 @@
                         <Image url="@images/white.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="gradesBtn" layoutX="322.0" layoutY="223.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="GRADES">
+                  <Button fx:id="gradesBtn" layoutX="322.0" layoutY="178.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="GRADES">
                      <font>
                         <Font name="Monotype Corsiva" size="18.0" />
                      </font>
                      <effect>
                         <DropShadow />
                      </effect></Button>
-                  <Button fx:id="enterExamBtn" layoutX="323.0" layoutY="161.0" mnemonicParsing="false" onAction="#enterExam" prefHeight="52.0" prefWidth="161.0" style="-fx-background-radius: 30;" text="ENTER EXAM">
+                  <Button fx:id="enterExamBtn" layoutX="323.0" layoutY="115.0" mnemonicParsing="false" onAction="#enterExam" prefHeight="52.0" prefWidth="161.0" style="-fx-background-radius: 30;" text="ENTER EXAM">
                      <font>
                         <Font name="Monotype Corsiva" size="18.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Image url="@images/university-students-with-books-cartoon-style-male-vector-15694547.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="feedbackBtn" layoutX="322.0" layoutY="285.0" mnemonicParsing="false" onAction="#showFeedback" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="FEEDBACK">
+                  <Button fx:id="feedbackBtn" layoutX="322.0" layoutY="241.0" mnemonicParsing="false" onAction="#showFeedback" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="FEEDBACK">
                      <font>
                         <Font name="Monotype Corsiva" size="18.0" />
                      </font>
@@ -71,14 +71,6 @@
                      <font>
                         <Font name="Monotype Corsiva" size="13.0" />
                      </font></Button>
-                  <Button fx:id="todoBTN" layoutX="324.0" layoutY="101.0" mnemonicParsing="false" onAction="#todoList" prefHeight="52.0" prefWidth="161.0" style="-fx-background-radius: 30;" text="ToDo list">
-                     <font>
-                        <Font name="Monotype Corsiva" size="18.0" />
-                     </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </Button>
                </children>
             </Group>
          </center>

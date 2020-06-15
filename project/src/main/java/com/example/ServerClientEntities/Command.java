@@ -15,7 +15,8 @@ public enum Command {
 	StuToDo,
 	StuAddToDo,
 	StuDellToDo,
-	getAllExams
+	getAllExams,
+	getSubjNumber
 
 
 }

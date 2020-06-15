@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -44,13 +45,15 @@ public class questionListController {
 	private Button backbutton; // Value injected by FXMLLoader
 	@FXML // fx:id="loadbtn"
 	private Button loadbtn; // Value injected by FXMLLoader
+    @FXML // fx:id="addQBTN"
+    private Button addQBTN; // Value injected by FXMLLoader
 
 	@FXML
 	void back_(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherMainPage.fxml"));
 		Scene scene = new Scene(loader.load());
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Exams list");
+		Window.setTitle("Main page");
 		Window.setScene(scene);
 		Window.show();
 	}
@@ -116,7 +119,19 @@ public class questionListController {
 		questionsList.getItems().removeAll(questionsList.getItems());
 		questionsList.getItems().addAll(l);
 	}
-
+    @FXML
+    void addQuestion(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/addQuestion.fxml"));
+		Parent Main = loader.load();
+		addQuestionController secController = loader.getController();
+		secController.init(userString, paString);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
+		Window.setTitle("Main page");
+		Window.setScene(scene);
+		Window.show();
+    }
 	@FXML
 	void loadQ(ActionEvent event) {
 
