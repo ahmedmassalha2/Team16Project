@@ -1,16 +1,25 @@
 package com.example.controlers;
 
+import java.io.IOException;
 //import java.awt.Button;
 //import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.example.operations.ExamOps;
+import com.example.operations.PrincipalOps;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class PrincipalMainPageController implements Initializable{
 	
@@ -36,7 +45,19 @@ public class PrincipalMainPageController implements Initializable{
 	    }
 
 	    @FXML
-	    void showExams(ActionEvent event) {
+	    void showExams(ActionEvent event) throws IOException {
+	    	
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalExamsList.fxml"));
+			Parent Main = loader.load();
+			PrincipalExamsListController secController = loader.getController();
+
+			ExamOps p = new ExamOps();
+			secController.init(p.getExamsList());
+			Scene scene = new Scene(Main);
+			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Window.setTitle("Exams list");
+			Window.setScene(scene);
+			Window.show();
 
 	    }
 
