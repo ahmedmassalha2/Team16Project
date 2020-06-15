@@ -207,4 +207,20 @@ public class teacherOps {
 
 		return "removed";
 	}
+	public static String getTeachers() throws JsonProcessingException {
+		dataBase.getInstance();
+		ObjectMapper mapper = new ObjectMapper();
+		List<String> teachersNames = new ArrayList<String>();
+		teachersNames.add("ALL");
+		for (Teacher t : dataBase.getAll(Teacher.class)) {
+
+			String discString = "" + t.getUsername();
+			teachersNames.add(discString);
+		}
+		System.out.println("Teachers: "+teachersNames);
+		dataBase.closeSess();
+		return mapper.writeValueAsString(teachersNames);
+	}
+		
+	
 }

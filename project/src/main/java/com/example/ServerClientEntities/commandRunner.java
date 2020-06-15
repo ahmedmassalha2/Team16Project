@@ -38,6 +38,8 @@ public class commandRunner {
 			return teacherOps.DellToDo(commandArr[1], commandArr[2], commandArr[3]);
 		case getAllExams:
 			return ExamOps.getExamsList();
+		case getTeachers:
+			return teacherOps.getTeachers();
 		}
 
 		return command;

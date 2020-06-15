@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -33,6 +34,23 @@ public class PrincipalExamsListController implements Initializable {
 	@FXML // fx:id="examShowBtn"
 	private Button examShowBtn; // Value injected by FXMLLoader
 
+	@FXML
+	private ComboBox<String> filterBtn;
+
+	@FXML
+	void filterFunc(ActionEvent event) throws IOException{
+		String selection = filterBtn.getSelectionModel().getSelectedItem();
+		if (selection.equals("TEACHER")) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalTeacherExamFilter.fxml"));
+			Scene scene = new Scene(loader.load());
+			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Window.setTitle("Teacher Filter");
+			Window.setScene(scene);
+			Window.show();
+		}
+		
+
+	}
 
 	@FXML
 	void goBack(ActionEvent event) throws IOException {
@@ -46,8 +64,6 @@ public class PrincipalExamsListController implements Initializable {
 
 	}
 
-
-
 	@FXML
 	void showExam(ActionEvent event) {
 
@@ -56,14 +72,20 @@ public class PrincipalExamsListController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		List<String> ll = new ArrayList<String>();
+		ll.add("ALL");
+		ll.add("TEACHER");
+		ll.add("SUBJECT");
+		filterBtn.getItems().removeAll(filterBtn.getItems());
+		filterBtn.getItems().addAll(ll);
+		filterBtn.getSelectionModel().select(0);
 
 	}
 
 	public void init(String examsList1) throws IOException {
 
 		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole()
-				.sendToServer(""+Command.getAllExams.ordinal());
+		Instance.getClientConsole().sendToServer("" + Command.getAllExams.ordinal());
 		while (Instance.getClientConsole().getMessage() == null) {
 			System.out.println("waiting for server");
 

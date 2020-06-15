@@ -9,6 +9,7 @@ public enum Command {
 	teacherToDo,
 	teachAddToDo,
 	teachDellToDo,
-	getAllExams
+	getAllExams,
+	getTeachers
 
 }
