@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,9 +36,16 @@ public class Question {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "question")
-	private List<Answer> answers;
+	//@JsonIgnore
+	//@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "question")
+	@Column(name = "right_answer")
+	private String rightAnswer;
+	
+	@ElementCollection
+	private List<String> answers;
+	
+	
+
 	@JsonIgnore
 	@ManyToMany(
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
@@ -66,7 +74,7 @@ public class Question {
 		this.subject = subject;
 		this.number = number;
 		this.subjectNumber = subject.getSnumber();
-		this.answers = new ArrayList<Answer>();
+		this.answers = new ArrayList<String>();
 		this.subject.getQuestions().add(this);
 		this.checkedExams = new ArrayList<checkedExam>();
 		this.exams = new ArrayList<Exam>();
@@ -116,13 +124,13 @@ public class Question {
 		this.subject = subject;
 	}
 
-	public List<Answer> getAnswers() {
+	public List<String> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<Answer> answers) {
+	/*public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
-	}
+	}*/
 
 	public List<Exam> getExams() {
 		return exams;
@@ -138,6 +146,26 @@ public class Question {
 
 	public void setCheckedExams(List<checkedExam> checkedExams) {
 		this.checkedExams = checkedExams;
+	}
+	public String getRightAnswer() {
+		return rightAnswer;
+	}
+
+	public void setRightAnswer(String rightAnswer) {
+		this.rightAnswer = rightAnswer;
+	}
+
+	public void setAnswers(List<String> fourAnswers) {
+		this.answers= fourAnswers;
+	}
+	
+	public void addAnswer(String answer) {
+		this.answers.add(answer);
+	}
+	
+	public void updateAnswer(String answer, int index) {
+		this.answers.set(index, answer);
+		
 	}
 
 }

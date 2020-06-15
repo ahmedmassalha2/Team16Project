@@ -30,7 +30,7 @@ public class Answer {
 		super();
 		this.anString = anString;
 		this.is_right = is_right;
-		setQuestion(q);
+	//	setQuestion(q);
 	}
 
 	public Answer() {
@@ -57,10 +57,10 @@ public class Answer {
 		return question;
 	}
 
-	public void setQuestion(Question question) {
+/*	public void setQuestion(Question question) {
 		this.question = question;
 		this.question.getAnswers().add(this);
-	}
+	}*/
 
 	public boolean isIs_right() {
 		return is_right;
