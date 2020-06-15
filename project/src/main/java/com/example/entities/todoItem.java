@@ -17,7 +17,7 @@ public class todoItem {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
-	
+	//what to do
 	private String todoString;
 	private boolean isDone;
 

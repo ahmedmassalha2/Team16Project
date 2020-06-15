@@ -40,7 +40,7 @@
                               <DropShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="signoutBTN" layoutX="399.0" layoutY="184.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="143.0" style="-fx-background-radius: 30;" text="Sign out">
+                        <Button fx:id="signoutBTN" layoutX="399.0" layoutY="227.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="143.0" style="-fx-background-radius: 30;" text="Sign out">
                            <font>
                               <Font name="Monotype Corsiva" size="17.0" />
                            </font>
@@ -53,6 +53,14 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Text>
+                        <Button fx:id="todoBtn" layoutX="399.0" layoutY="184.0" mnemonicParsing="false" onAction="#showToDo" prefHeight="34.0" prefWidth="143.0" style="-fx-background-radius: 30;" text="ToDo list">
+                           <font>
+                              <Font name="Monotype Corsiva" size="17.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Button>
                      </children>
                   </AnchorPane>
                </children>
