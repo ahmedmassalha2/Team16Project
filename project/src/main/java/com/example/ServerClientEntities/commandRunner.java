@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.persistence.criteria.CriteriaBuilder.Case;
 
+import com.example.operations.ExamOps;
 import com.example.operations.accOps;
 import com.example.operations.princOps;
 import com.example.operations.stuOps;
@@ -49,6 +50,9 @@ public class commandRunner {
 			return stuOps.addToDo(commandArr[1], commandArr[2], commandArr[3]);
 		case StuDellToDo:
 			return stuOps.DellToDo(commandArr[1], commandArr[2], commandArr[3]);
+		case getAllExams:
+			return ExamOps.getExamsList();
+
 		}
 
 		return command;

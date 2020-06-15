@@ -14,6 +14,8 @@ public enum Command {
 	princDellToDo,
 	StuToDo,
 	StuAddToDo,
-	StuDellToDo
+	StuDellToDo,
+	getAllExams
+
 
 }
