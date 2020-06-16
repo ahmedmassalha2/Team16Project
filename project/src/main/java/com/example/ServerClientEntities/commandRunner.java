@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder.Case;
 
 import com.example.operations.ExamOps;
 import com.example.operations.accOps;
+import com.example.operations.generalOps;
 import com.example.operations.princOps;
 import com.example.operations.stuOps;
 import com.example.operations.teacherOps;
@@ -57,7 +58,20 @@ public class commandRunner {
 			return teacherOps.getSubNumber(commandArr[1]);
 		case getTeachers:
 			return teacherOps.getTeachers();
+		case isQuestExist:
+			return teacherOps.questionExist(commandArr[1], commandArr[2]);
+		case addQ:
 
+			return teacherOps.addQuestion(commandArr[1], commandArr[2], commandArr[3], commandArr[4], commandArr[5],
+					commandArr[6], commandArr[7], commandArr[8]);
+		case getQUESTIONS:
+			return princOps.getQuestions();
+		case getSUBJS:
+			return princOps.getSubjects();
+		case GETQUESSUBJ:
+			return princOps.getQuestSubjs(commandArr[1]);
+		case getQ:
+			return generalOps.getQuestion(commandArr[1]);
 		}
 
 		return command;
@@ -65,4 +79,3 @@ public class commandRunner {
 	}
 
 }
-

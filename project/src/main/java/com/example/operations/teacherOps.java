@@ -218,29 +218,84 @@ public class teacherOps {
 			String discString = "" + t.getUsername();
 			teachersNames.add(discString);
 		}
-		System.out.println("Teachers: "+teachersNames);
+		System.out.println("Teachers: " + teachersNames);
 		dataBase.closeSess();
 		return mapper.writeValueAsString(teachersNames);
 	}
-		
-	
 
+	public static String questionExist(String qNumber, String sNumber) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery(
+				"from Question where question_number = :question_number and subjectNumber = :subjectNumber");
+		query.setParameter("question_number", qNumber);
+		query.setParameter("subjectNumber", sNumber);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			dataBase.closeSess();
+			return "exist";
+		}
+		dataBase.closeSess();
+		return "good";
+	}
 
 	public static String getSubNumber(String subject) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query = session.createQuery("from Subject where subject_name = :subject_name");
 		query.setParameter("subject_name", subject);
-		
+
 		List list = query.list();
 
 		if (list.size() != 0) {
 			Subject subj = (Subject) query.getSingleResult();
+			dataBase.closeSess();
 			return subj.getSnumber();
 		}
-
+		dataBase.closeSess();
 		return "";
 
+	}
+
+	public static String addQuestion(String discription, String subjNumber, String questionN, String an1, String an2,
+			String an3, String an4, String rAnsewr) {
+		Question question = new Question(discription, questionN, getSubject(subjNumber));
+		dataBase.closeSess();
+		question.setRightAnswer(rAnsewr);
+		question.addAnswers(an1, an2, an3, an4);
+		Session session = dataBase.getSession();
+		session.save(question);
+		session.getTransaction().commit();
+		session.close();
+		return "";
+	}
+
+	public static Subject getSubject(String sNumber) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Subject where subject_number = :subject_number");
+		query.setParameter("subject_number", sNumber);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			Subject subject = (Subject) query.getSingleResult();
+			return subject;
+		}
+		return null;
+	}
+	public static Subject getSubjectN(String name) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Subject where subject_name = :subject_name");
+		query.setParameter("subject_name", name);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			Subject subject = (Subject) query.getSingleResult();
+			return subject;
+		}
+		return null;
 	}
 
 }

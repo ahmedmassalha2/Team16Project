@@ -12,6 +12,7 @@ import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -76,22 +78,66 @@ public class addQuestionController {
 	private Text ErrorTXT; // Value injected by FXMLLoader
 
 	@FXML
-	void addQuestion(ActionEvent event) {
+	void addQuestion(ActionEvent event) throws IOException {
+		ErrorTXT.setText("");
+		String questionString = questionDisc.getText();
+		String subjNumber = Snumber;
+		String questNumber = questionN.getText();
+		if (!Instance.valQuestion(questionString, questNumber, subjNumber).equals("all good")) {
+			ErrorTXT.setText(Instance.valQuestion(questionString, questNumber, subjNumber));
+			return;
+		}
+		if (checkQuestion(questNumber, subjNumber) == -1) {
+			ErrorTXT.setText("question exists, you can edit it in the question list");
+			return;
+		}
+		String an1 = ans1.getText();
+		if (an1.isBlank()) {
+			ErrorTXT.setText("Must fill first answer");
+			return;
+		}
+		String an2 = ans2.getText();
+		if (an2.isBlank()) {
+			ErrorTXT.setText("Must fill second answer");
+			return;
+		}
+		String an3 = ans3.getText();
+		if (an3.isBlank()) {
+			ErrorTXT.setText("Must fill third answer");
+			return;
+		}
+		String an4 = ans4.getText();
+		if (an4.isBlank()) {
+			ErrorTXT.setText("Must fill fourth answer");
+			return;
+		}
+		if (tglG.getSelectedToggle() == null) {
+			ErrorTXT.setText("Select the right answer!");
+			return;
+		}
+		String rAnswer = getRAns();
+		String arg = Command.addQ.ordinal() + "@" + questionString + "@" + subjNumber + "@" + questNumber + "@" + an1
+				+ "@" + an2 + "@" + an3 + "@" + an4 + "@" + rAnswer;
+		addQuestion(arg);
+		back(event);
 
 	}
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherMainPage.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/questionList.fxml"));
 		Scene scene = new Scene(loader.load());
+		questionListController secController = loader.getController();
+		secController.loadData();
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Main page");
+		Window.setTitle("Question List");
 		Window.setScene(scene);
 		Window.show();
 	}
 
 	@FXML
 	void getSNumber(ActionEvent event) throws IOException {
+		Instance.getClientConsole().setMessage(null);
 		Instance.getClientConsole().sendToServer(
 				Command.getSubjNumber.ordinal() + "@" + filterCombo.getSelectionModel().getSelectedItem());
 		while (Instance.getClientConsole().getMessage() == null) {
@@ -107,6 +153,7 @@ public class addQuestionController {
 	}
 
 	public void loadSubjects(String username, String password) throws IOException {
+		Instance.getClientConsole().setMessage(null);
 		Instance.getClientConsole().sendToServer(Command.teacherSubjects.ordinal() + "@" + username + "@" + password);
 		while (Instance.getClientConsole().getMessage() == null) {
 			System.out.println("waiting for server");
@@ -116,5 +163,40 @@ public class addQuestionController {
 		filterCombo.getItems().removeAll(filterCombo.getItems());
 		filterCombo.getItems().addAll(ll);
 		filterCombo.getSelectionModel().select(0);
+	}
+
+	int checkQuestion(String qNumber, String subjNumber) throws IOException {
+		Instance.getClientConsole().setMessage(null);
+		Instance.getClientConsole().sendToServer(Command.isQuestExist.ordinal() + "@" + qNumber + "@" + subjNumber);
+		while (Instance.getClientConsole().getMessage() == null) {
+			System.out.println("waiting for server to check if question exists");
+		}
+		if (Instance.getClientConsole().getMessage().equals("good")) {
+			Instance.getClientConsole().setMessage(null);
+			return 1;
+		}
+		Instance.getClientConsole().setMessage(null);
+		return -1;
+	}
+
+	String getRAns() {
+		ObservableList<Toggle> ans = tglG.getToggles();
+		if (ans.get(0).isSelected())
+			return ans1.getText();
+		if (ans.get(1).isSelected())
+			return ans2.getText();
+		if (ans.get(2).isSelected())
+			return ans3.getText();
+		if (ans.get(3).isSelected())
+			return ans4.getText();
+		return "";
+	}
+
+	void addQuestion(String arg) throws IOException {
+		Instance.getClientConsole().setMessage(null);
+		Instance.getClientConsole().sendToServer(arg);
+		while (Instance.getClientConsole().getMessage() == null) {
+			System.out.println("waiting for server");
+		}
 	}
 }
