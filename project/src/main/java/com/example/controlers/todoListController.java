@@ -51,12 +51,6 @@ public class todoListController {
 		paString = password;
 		this.role = Role;
 		loadList(username, password);
-
-		Instance.getClientConsole().setMessage(null);
-		while (Instance.getClientConsole().getMessage() != null) {
-			System.out.println("waiting for server");
-		}
-
 	}
 
 	public int getCommandToDo() {
@@ -94,11 +88,7 @@ public class todoListController {
 
 	public void loadList(String username, String password) throws IOException {
 		int command = getCommandToDo();
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(command + "@" + username + "@" + password);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(command + "@" + username + "@" + password);
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		myTodoItems.getItems().removeAll(myTodoItems.getItems());
@@ -107,11 +97,7 @@ public class todoListController {
 
 	public void addItemToList(String username, String password) throws IOException {
 		int command = getCommandADDToDo();
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(command + "@" + username + "@" + password + "@" + textItem.getText());
-		while ((Instance.getClientConsole().getMessage()) == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(command + "@" + username + "@" + password + "@" + textItem.getText());
 		textItem.setText("");
 		loadList(username, password);
 	}
@@ -120,11 +106,7 @@ public class todoListController {
 	void doneToDoItem(ActionEvent event) throws IOException {
 		int command = getCommandDellToDo();
 		String selected = myTodoItems.getSelectionModel().getSelectedItem();
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(command + "@" + userString + "@" + paString + "@" + selected);
-		while ((Instance.getClientConsole().getMessage()) == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(command + "@" + userString + "@" + paString + "@" + selected);
 		loadList(userString, paString);
 	}
 

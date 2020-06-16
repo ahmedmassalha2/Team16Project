@@ -46,7 +46,7 @@ public class logInControler implements Initializable {
 
 	@FXML
 	void logIn(ActionEvent event) throws IOException {
-		Instance.getClientConsole().setMessage(null);
+		// Instance.getClientConsole().setMessage(null);
 		String user = userName.getText();
 		String paString = Password.getText();
 		String tyString = selectionbtns.getSelectionModel().getSelectedItem();
@@ -55,13 +55,9 @@ public class logInControler implements Initializable {
 		if (!checkValid(user, paString, tyString))
 			return;
 
-		String q = Command.accExist.ordinal() + "@" + user + "@" + paString + "@from @" + tyString
-				+ "@ WHERE username = :username and password = :password";
-		Instance.getClientConsole().sendToServer(q);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
+		Instance.sendMessage(Command.accExist.ordinal() + "@" + user + "@" + paString + "@from @" + tyString
+				+ "@ WHERE username = :username and password = :password");
 
-		}
 		String reString = Instance.getClientConsole().getMessage().toString();
 		if (reString.equals(""))
 			errorTXT.setText("User not found");
@@ -133,19 +129,6 @@ public class logInControler implements Initializable {
 		// TODO Auto-generated method stub
 		loadData();
 
-	}
-
-	private int isValid(String user, String paString) {
-		/*
-		 * String tyString = selectionbtns.getSelectionModel().getSelectedItem();
-		 * tyString = getClass(tyString);
-		 * 
-		 * dataBase.getInstance(); Session session = dataBase.getSession(); String hql =
-		 * "from " + "Teacher  where username = :username"; List result =
-		 * session.createQuery(hql).setString("username", user).setString("password",
-		 * paString).list();
-		 */
-		return 1;
 	}
 
 	private String getClass(String clas) {

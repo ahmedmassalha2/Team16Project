@@ -52,13 +52,7 @@ public class teacherExamList implements Initializable {
 	}
 
 	public void init(String teacherName, String teacherPass) throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole()
-				.sendToServer(Command.teacherExams.ordinal() + "@" + teacherName + "@" + teacherPass);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-
-		}
+		Instance.sendMessage(Command.teacherExams.ordinal() + "@" + teacherName + "@" + teacherPass);
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		ExamsList.getItems().addAll(l);

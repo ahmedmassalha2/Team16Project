@@ -137,12 +137,8 @@ public class addQuestionController {
 
 	@FXML
 	void getSNumber(ActionEvent event) throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(
-				Command.getSubjNumber.ordinal() + "@" + filterCombo.getSelectionModel().getSelectedItem());
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(Command.getSubjNumber.ordinal() + "@" + filterCombo.getSelectionModel().getSelectedItem());
+
 		Snumber = Instance.getClientConsole().getMessage().toString();
 	}
 
@@ -153,24 +149,17 @@ public class addQuestionController {
 	}
 
 	public void loadSubjects(String username, String password) throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(Command.teacherSubjects.ordinal() + "@" + username + "@" + password);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(Command.teacherSubjects.ordinal() + "@" + username + "@" + password);
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> ll = new ObjectMapper().readValue(json, ArrayList.class);
 		filterCombo.getItems().removeAll(filterCombo.getItems());
 		filterCombo.getItems().addAll(ll);
 		filterCombo.getSelectionModel().select(0);
+
 	}
 
 	int checkQuestion(String qNumber, String subjNumber) throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(Command.isQuestExist.ordinal() + "@" + qNumber + "@" + subjNumber);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server to check if question exists");
-		}
+		Instance.sendMessage(Command.isQuestExist.ordinal() + "@" + qNumber + "@" + subjNumber);
 		if (Instance.getClientConsole().getMessage().equals("good")) {
 			Instance.getClientConsole().setMessage(null);
 			return 1;
@@ -193,10 +182,7 @@ public class addQuestionController {
 	}
 
 	void addQuestion(String arg) throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(arg);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(arg);
+
 	}
 }
