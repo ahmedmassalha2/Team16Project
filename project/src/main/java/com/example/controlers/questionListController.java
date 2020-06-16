@@ -28,8 +28,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class questionListController {
-	String userString;
-	String paString;
+	static String userString;
+	static String paString;
 	ObservableList<String> list = FXCollections.observableArrayList();
 	@FXML // fx:id="questionsList"
 	private ListView<String> questionsList; // Value injected by FXMLLoader
@@ -45,8 +45,8 @@ public class questionListController {
 	private Button backbutton; // Value injected by FXMLLoader
 	@FXML // fx:id="loadbtn"
 	private Button loadbtn; // Value injected by FXMLLoader
-    @FXML // fx:id="addQBTN"
-    private Button addQBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="addQBTN"
+	private Button addQBTN; // Value injected by FXMLLoader
 
 	@FXML
 	void back_(ActionEvent event) throws IOException {
@@ -84,16 +84,22 @@ public class questionListController {
 	}
 
 	public void init(String username, String password) throws IOException {
-		userString = username;
-		paString = password;
-		loadQuestions(username, password);
+		questionListController.userString = username;
+		questionListController.paString = password;
+		loadData();
+
+	}
+
+	public void loadData() throws IOException {
+		Instance.getClientConsole().setMessage(null);
+		loadQuestions(userString, paString);
 
 		Instance.getClientConsole().setMessage(null);
 		while (Instance.getClientConsole().getMessage() != null) {
 			System.out.println("waiting for server");
 		}
-		loadSubjects(username, password);
-
+		loadSubjects(userString, paString);
+		Instance.getClientConsole().setMessage(null);
 	}
 
 	public void loadSubjects(String username, String password) throws IOException {
@@ -110,6 +116,9 @@ public class questionListController {
 
 	public void loadQuestions(String username, String password) throws IOException {
 		Instance.getClientConsole().setMessage(null);
+		while (Instance.getClientConsole().getMessage() != null) {
+			System.out.println("waiting for server");
+		}
 		Instance.getClientConsole().sendToServer(Command.teacherQuestions.ordinal() + "@" + username + "@" + password);
 		while (Instance.getClientConsole().getMessage() == null) {
 			System.out.println("waiting for server");
@@ -119,22 +128,42 @@ public class questionListController {
 		questionsList.getItems().removeAll(questionsList.getItems());
 		questionsList.getItems().addAll(l);
 	}
-    @FXML
-    void addQuestion(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/addQuestion.fxml"));
+
+	@FXML
+	void addQuestion(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/addQuestion.fxml"));
 		Parent Main = loader.load();
 		addQuestionController secController = loader.getController();
 		secController.init(userString, paString);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
-		Window.setTitle("Main page");
+		Window.setTitle("Add question page");
 		Window.setScene(scene);
 		Window.show();
-    }
-	@FXML
-	void loadQ(ActionEvent event) {
+	}
 
+	@FXML
+	void loadQ(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/viewORupdateQuestion.fxml"));
+		Parent Main = loader.load();
+		viewORUpdateQuestController secController = loader.getController();
+		Instance.getClientConsole().setMessage(null);
+		while (Instance.getClientConsole().getMessage() != null) {
+			System.out.println("waiting for server");
+		}
+		String id = questionsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[1];
+		Instance.getClientConsole().sendToServer(Command.getQ.ordinal() + "@" + id);
+		while (Instance.getClientConsole().getMessage() == null) {
+			System.out.println("waiting for server");
+		}
+		secController.init(Instance.getClientConsole().getMessage().toString(), userString, paString);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
+		Window.setTitle("View or update question");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 }

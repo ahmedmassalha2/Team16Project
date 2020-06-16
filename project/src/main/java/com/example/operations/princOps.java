@@ -1,11 +1,14 @@
 package com.example.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.example.entities.Principal;
+import com.example.entities.Question;
+import com.example.entities.Subject;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,5 +67,33 @@ public class princOps {
 		session.close();
 
 		return "removed";
+	}
+	public static String getQuestSubjs(String subN) throws JsonProcessingException {
+		Subject subject = teacherOps.getSubject(subN);
+		List<String> quests = new ArrayList<String>();
+		for(Question question : subject.getQuestions()) {
+			String queString = "Id: " + question.getId() + "\n" + question.getDiscription();
+			quests.add(queString);
+		}
+		dataBase.closeSess();
+		return generalOps.getJsonString(quests);
+	}
+	public static String getQuestions() {
+		try {
+			return generalOps.getQuestions();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+	public static String getSubjects() {
+		try {
+			return generalOps.getSubjects();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 }

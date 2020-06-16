@@ -63,8 +63,14 @@ public class PrincipalMainPageController implements Initializable {
 	}
 
 	@FXML
-	void showQuestions(ActionEvent event) {
-
+	void showQuestions(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/princQuestionList.fxml"));
+		Parent Main = loader.load();
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Questions list");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@Override

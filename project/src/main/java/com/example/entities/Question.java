@@ -20,7 +20,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "question")
 public class Question {
@@ -28,7 +27,7 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String discription;
-	
+
 	@Column(name = "question_number")
 	private String number;
 	private String subjectNumber;
@@ -36,39 +35,24 @@ public class Question {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-	//@JsonIgnore
-	//@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "question")
+	// @JsonIgnore
+	// @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy =
+	// "question")
 	@Column(name = "right_answer")
 	private String rightAnswer;
-	
+
 	@ElementCollection
 	private List<String> answers;
-	
-	
 
 	@JsonIgnore
-	@ManyToMany(
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-			targetEntity = checkedExam.class
-		)
-	@JoinTable(
-		name="Question_Exam",
-		joinColumns = @JoinColumn(name = "question_id"),
-		inverseJoinColumns = @JoinColumn(name = "exam_id")
-			)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = checkedExam.class)
+	@JoinTable(name = "Question_Exam", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "exam_id"))
 	private List<Exam> exams;
 	@JsonIgnore
-	@ManyToMany(
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-			targetEntity = checkedExam.class
-		)
-	@JoinTable(
-		name="Question_CheckedExam",
-		joinColumns = @JoinColumn(name = "question_id"),
-		inverseJoinColumns = @JoinColumn(name = "checkedexam_id")
-			)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = checkedExam.class)
+	@JoinTable(name = "Question_CheckedExam", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "checkedexam_id"))
 	private List<checkedExam> checkedExams;
-	
+
 	public Question(String discription, String number, Subject subject) {
 		this.discription = discription;
 		this.subject = subject;
@@ -128,9 +112,9 @@ public class Question {
 		return answers;
 	}
 
-	/*public void setAnswers(List<Answer> answers) {
-		this.answers = answers;
-	}*/
+	/*
+	 * public void setAnswers(List<Answer> answers) { this.answers = answers; }
+	 */
 
 	public List<Exam> getExams() {
 		return exams;
@@ -147,6 +131,7 @@ public class Question {
 	public void setCheckedExams(List<checkedExam> checkedExams) {
 		this.checkedExams = checkedExams;
 	}
+
 	public String getRightAnswer() {
 		return rightAnswer;
 	}
@@ -156,16 +141,21 @@ public class Question {
 	}
 
 	public void setAnswers(List<String> fourAnswers) {
-		this.answers= fourAnswers;
+		this.answers = fourAnswers;
 	}
-	
+
 	public void addAnswer(String answer) {
 		this.answers.add(answer);
 	}
-	
+
 	public void updateAnswer(String answer, int index) {
 		this.answers.set(index, answer);
-		
+
+	}
+
+	public void addAnswers(String... _answers) {
+		for (String a : _answers)
+			this.answers.add(a);
 	}
 
 }
