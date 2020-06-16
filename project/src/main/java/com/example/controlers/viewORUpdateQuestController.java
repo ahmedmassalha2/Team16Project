@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.entities.Question;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +34,7 @@ import javafx.stage.Stage;
 public class viewORUpdateQuestController {
 	static String password = "";
 	static String username = "";
+	Question quest;
 	@FXML // fx:id="questionDisc"
 	private TextArea questionDisc; // Value injected by FXMLLoader
 
@@ -78,6 +80,11 @@ public class viewORUpdateQuestController {
 	@FXML // fx:id="ErrorTXT"
 	private Text ErrorTXT; // Value injected by FXMLLoader
 
+	// @FXML // fx:id="deletBTN"
+	// private Button deletBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="subjName"
+	private TextField subjName; // Value injected by FXMLLoader
+
 	@FXML
 	void addQuestion(ActionEvent event) {
 
@@ -106,14 +113,19 @@ public class viewORUpdateQuestController {
 		List<String> l = new ObjectMapper().readValue(data, ArrayList.class);
 		questionDisc.setText(l.get(0));
 		// to add in filter
-		loadSubjects(disc, password);
-		filterCombo.getSelectionModel().select(l.get(1));
+		// loadSubjects(disc, password);
+		subjName.setText(l.get(1));
 		questionN.setText(l.get(2));
 		ans1.setText(l.get(3));
 		ans2.setText(l.get(4));
 		ans3.setText(l.get(5));
 		ans4.setText(l.get(6));
 		setRightAns(l.get(7));
+		quest = new Question();
+		quest.setDiscription(questionDisc.getText());
+		quest.setNumber(questionN.getText());
+		Instance.sendMessage(Command.getSubjNumber.ordinal() + "@" + subjName.getText());
+		quest.setSubjectNumber(Instance.getClientConsole().getMessage().toString());
 	}
 
 	public void setRightAns(String answer) {
@@ -130,11 +142,7 @@ public class viewORUpdateQuestController {
 	}
 
 	public void loadSubjects(String username, String password) throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(Command.teacherSubjects.ordinal() + "@" + username + "@" + password);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(Command.teacherSubjects.ordinal() + "@" + username + "@" + password);
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> ll = new ObjectMapper().readValue(json, ArrayList.class);
 		ll.remove("All");
@@ -143,4 +151,9 @@ public class viewORUpdateQuestController {
 		filterCombo.getSelectionModel().select(0);
 	}
 
+	/*
+	 * @FXML void deleteQuestion(ActionEvent event) {
+	 * Instance.sendMessage(Command.teacherSubjects.ordinal() + "@" + username + "@"
+	 * + password); }
+	 */
 }

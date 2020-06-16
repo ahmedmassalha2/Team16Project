@@ -1,5 +1,6 @@
 package com.example.ServerClientEntities;
 
+import java.io.IOException;
 
 public class Instance {
 	public static SimpleChatClient clientConsole;
@@ -23,7 +24,7 @@ public class Instance {
 		if (qNumber.length() != 3) {
 			return ("question number must be 3 digits.");
 		}
-		if(sNumber.isBlank()) {
+		if (sNumber.isBlank()) {
 			return ("Select subject");
 		}
 		return "all good";
@@ -37,4 +38,13 @@ public class Instance {
 		return true;
 	}
 
+	public static void sendMessage(String msg) throws IOException {
+		clientConsole.setMessage(null);
+		while (clientConsole.getMessage() != null) {
+			System.out.println("waiting for server");
+		}
+		clientConsole.sendToServer(msg);
+		while (clientConsole.getMessage() == null)
+			System.out.println("waiting for server");
+	}
 }

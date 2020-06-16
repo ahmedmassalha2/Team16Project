@@ -75,17 +75,10 @@ public class princQuestionListController implements Initializable {
 			loadQuestions();
 			return;
 		}
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer(Command.getSubjNumber.ordinal() + "@" + selection);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage(Command.getSubjNumber.ordinal() + "@" + selection);
 		selection = Instance.getClientConsole().getMessage().toString();
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer("" + Command.GETQUESSUBJ.ordinal() + "@" + selection);
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		
+		Instance.sendMessage("" + Command.GETQUESSUBJ.ordinal() + "@" + selection);
 		String json = Instance.getClientConsole().getMessage().toString();
 		if (json.equals("")) {
 			questionsList.getItems().removeAll(questionsList.getItems());
@@ -98,21 +91,12 @@ public class princQuestionListController implements Initializable {
 
 	public void loadData() throws IOException {
 		loadQuestions();
-
-		Instance.getClientConsole().setMessage(null);
-		while (Instance.getClientConsole().getMessage() != null) {
-			System.out.println("waiting for server");
-		}
 		loadSubjects();
-		Instance.getClientConsole().setMessage(null);
+
 	}
 
 	public void loadSubjects() throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		Instance.getClientConsole().sendToServer("" + Command.getSUBJS.ordinal());
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage("" + Command.getSUBJS.ordinal());
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> ll = new ArrayList<String>();
 		ll.add("ALL");
@@ -124,14 +108,7 @@ public class princQuestionListController implements Initializable {
 	}
 
 	public void loadQuestions() throws IOException {
-		Instance.getClientConsole().setMessage(null);
-		while (Instance.getClientConsole().getMessage() != null) {
-			System.out.println("waiting for server");
-		}
-		Instance.getClientConsole().sendToServer("" + Command.getQUESTIONS.ordinal());
-		while (Instance.getClientConsole().getMessage() == null) {
-			System.out.println("waiting for server");
-		}
+		Instance.sendMessage("" + Command.getQUESTIONS.ordinal());
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		questionsList.getItems().removeAll(questionsList.getItems());
