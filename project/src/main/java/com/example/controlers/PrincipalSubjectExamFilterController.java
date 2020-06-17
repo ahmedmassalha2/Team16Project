@@ -39,7 +39,7 @@ public class PrincipalSubjectExamFilterController implements Initializable {
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalExamsList.fxml"));
 		Parent Main = loader.load();
 		PrincipalExamsListController secController = loader.getController();
