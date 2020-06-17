@@ -47,6 +47,8 @@ public class teacherOps {
 		session.close();
 		return "";
 	}
+	
+	
 
 	public static String getQuestions(String user, String paString) throws JsonProcessingException {
 
@@ -296,6 +298,33 @@ public class teacherOps {
 			return subject;
 		}
 		return null;
+	}
+	public static String getExamsByUsrName(String user) throws JsonProcessingException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username");
+		query.setParameter("username", user);
+		List list = query.list();
+		if(list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			List<Exam> l = teacher.getExams();
+			List<String> examsdisc = new ArrayList<String>();
+			for (Exam exam : l) {
+
+				String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
+						+ " writen by " + exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString()
+						+ " hours";
+				examsdisc.add(discString);
+			}
+			ObjectMapper mapper = new ObjectMapper();
+			String json = mapper.writeValueAsString(examsdisc);
+			System.out.println("JSON = " + json);
+			session.close();
+			return json;
+
+		}
+		session.close();
+		return "";
 	}
 
 }

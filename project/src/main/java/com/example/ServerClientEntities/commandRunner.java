@@ -72,6 +72,12 @@ public class commandRunner {
 			return princOps.getQuestSubjs(commandArr[1]);
 		case getQ:
 			return generalOps.getQuestion(commandArr[1]);
+		case TeacherExamsByUsrName:
+			return teacherOps.getExamsByUsrName(commandArr[1]);
+		case ExamsBySubject:
+			return ExamOps.getExamsBySubject(commandArr[1]);
+		case getSubjectName:
+			return ExamOps.getSubjectName();
 		}
 
 		return command;

@@ -52,7 +52,6 @@ public class PrincipalMainPageController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalExamsList.fxml"));
 		Parent Main = loader.load();
 		PrincipalExamsListController secController = loader.getController();
-
 		ExamOps p = new ExamOps();
 		secController.init(p.getExamsList());
 		Scene scene = new Scene(Main);
