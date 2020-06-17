@@ -59,8 +59,10 @@ public class logInControler implements Initializable {
 				+ "@ WHERE username = :username and password = :password");
 
 		String reString = Instance.getClientConsole().getMessage().toString();
-		if (reString.equals(""))
+		if (reString.equals("")) {
+			errorTXT.setVisible(true);
 			errorTXT.setText("User not found");
+		}
 
 		else {
 			goTo(event, "/com/example/project/" + getController(tyString) + ".fxml", reString);

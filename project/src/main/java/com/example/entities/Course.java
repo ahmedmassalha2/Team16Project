@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -53,10 +54,16 @@ public class Course {
 		inverseJoinColumns = @JoinColumn(name = "teacher_id")
 			)
 	private List<Teacher> teachers;
+	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "subject_id")
+	private Subject subject;
 
-	public Course(String name, String cnumber) {
+	public Course(String name, String cnumber,Subject subject) {
 		this.name = name;
 		Cnumber = cnumber;
+		this.subject = subject;
 		this.exams = new ArrayList<Exam>();
 		this.checked_Exams = new ArrayList<checkedExam>();
 		this.students = new ArrayList<Student>();
@@ -121,6 +128,14 @@ public class Course {
 
 	public void setTeachers(List<Teacher> teachers) {
 		this.teachers = teachers;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
 	}
 
 

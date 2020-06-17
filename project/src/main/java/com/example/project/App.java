@@ -52,22 +52,21 @@ public class App {
 	}
 
 	private static void initializeData() throws Exception {
-		Course c1 = new Course("hedva", "00");
-		session.save(c1);
 
 		Subject s1 = new Subject("math", "00");
 		session.save(s1);
 
-		Course c2 = new Course("Introduction to CS", "01");
-		session.save(c2);
 		Subject s2 = new Subject("CS", "01");
 		session.save(s2);
 
-		Course c3 = new Course("Data Structures", "02");
+		Course c3 = new Course("Data Structures", "02", s2);
 		session.save(c3);
 		// Subject s3 = new Subject("CS_Semester B","02");
 		session.save(s2);
-
+		Course c1 = new Course("hedva", "00", s1);
+		session.save(c1);
+		Course c2 = new Course("Introduction to CS", "01", s2);
+		session.save(c2);
 		Question question = new Question("1 + 1 = ?", "000", s1);
 
 		session.save(question);
@@ -76,7 +75,7 @@ public class App {
 		answers.add("1 + 1 = 3");
 		answers.add("1 + 1 = 4");
 		answers.add("1 + 1 = 5");
-		//session.save(answers);
+		// session.save(answers);
 		question.setAnswers(answers);
 		question.setRightAnswer("1 + 1 = 2");
 		session.save(question);
@@ -95,7 +94,7 @@ public class App {
 		answers2.add("1 * 6 = 3");
 		answers2.add("1 * 6 = 6");
 		answers2.add("1 * 6 = 5");
-		//session.save(answers2);
+		// session.save(answers2);
 		question2.setAnswers(answers2);
 		question2.setRightAnswer("1 * 6 = 6");
 		session.save(question2);
@@ -113,7 +112,7 @@ public class App {
 		answers3.add("Will not enter the condition at all");
 		answers3.add("Will enter the condition always");
 		answers3.add("Will enter the condition at 90% of times");
-	//	session.save(answers3);
+		// session.save(answers3);
 		question3.setAnswers(answers3);
 		question3.setRightAnswer("Will enter the condition always");
 		session.save(question3);
@@ -133,7 +132,7 @@ public class App {
 		answers4.add("Will not loop at all");
 		answers4.add("Will loop sometimes");
 		answers4.add("Will loop at 90% of times");
-		//session.save(answers4);
+		// session.save(answers4);
 		question4.setAnswers(answers4);
 		question4.setRightAnswer("Will loop forever");
 		session.save(question4);
@@ -152,7 +151,7 @@ public class App {
 		answers5.add("O(1)");
 		answers5.add("O(nlogn)");
 		answers5.add("O(logn)");
-		//session.save(answers5);
+		// session.save(answers5);
 		question5.setAnswers(answers5);
 		question5.setRightAnswer("O(nlogn)");
 		session.save(question5);
@@ -171,7 +170,7 @@ public class App {
 		answers6.add("O(2^n)");
 		answers6.add("O(n^2)");
 		answers6.add("O(n)");
-		//session.save(answers6);
+		// session.save(answers6);
 		question6.setAnswers(answers6);
 		question6.setRightAnswer("O(logn)");
 		session.save(question6);

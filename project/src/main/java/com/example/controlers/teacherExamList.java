@@ -21,12 +21,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class teacherExamList implements Initializable {
+	String useString = "";
+	String passString = "";
 	ObservableList<String> list = FXCollections.observableArrayList();
 	@FXML // fx:id="ExamsList"
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
@@ -34,6 +37,8 @@ public class teacherExamList implements Initializable {
 	private Button showExambtn; // Value injected by FXMLLoader
 	@FXML // fx:id="backBTN"
 	private Button backBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="createExamBTN"
+	private Button createExamBTN; // Value injected by FXMLLoader
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
@@ -52,6 +57,8 @@ public class teacherExamList implements Initializable {
 	}
 
 	public void init(String teacherName, String teacherPass) throws IOException {
+		useString = teacherName;
+		passString = teacherPass;
 		Instance.sendMessage(Command.teacherExams.ordinal() + "@" + teacherName + "@" + teacherPass);
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
@@ -62,4 +69,20 @@ public class teacherExamList implements Initializable {
 	void showExam(ActionEvent event) {
 		System.out.println(ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
 	}
+
+	@FXML
+	void createExam(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCreation.fxml"));
+		Parent Main = loader.load();
+		examCreateController secController = loader.getController();
+
+		secController.init(useString, passString);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Create exam main page");
+		Window.setScene(scene);
+		Window.show();
+	}
+
+
 }

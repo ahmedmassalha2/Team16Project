@@ -1,11 +1,15 @@
 package com.example.operations;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.example.ServerClientEntities.Command;
+import com.example.ServerClientEntities.Instance;
+import com.example.ServerClientEntities.commandRunner;
 import com.example.entities.Course;
 import com.example.entities.Exam;
 import com.example.entities.Question;
@@ -153,7 +157,29 @@ public class teacherOps {
 		session.close();
 		return null;
 	}
+	public static String getTeacherCourses(String user, String paString) throws JsonProcessingException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username and password = :password");
+		query.setParameter("username", user);
+		query.setParameter("password", paString);
+		List list = query.list();
 
+		if (list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			ObjectMapper mapper = new ObjectMapper();
+			List<String> courses = new ArrayList<String>();
+			for (Course c : teacher.getCourses()) {
+				courses.add(c.getName());
+			}
+			String json = mapper.writeValueAsString(courses);
+			System.out.println("JSON = " + json);
+			session.close();
+			return json;
+		}
+		session.close();
+		return null;
+	}
 	public static Teacher getTeacher(String user, String paString) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
@@ -260,9 +286,15 @@ public class teacherOps {
 
 	}
 
-	public static String addQuestion(String discription, String subjNumber, String questionN, String an1, String an2,
-			String an3, String an4, String rAnsewr) {
-		Question question = new Question(discription, questionN, getSubject(subjNumber));
+	public static String addQuestion(String discription, String subjNumber, String an1, String an2, String an3,
+			String an4, String rAnsewr) throws JsonProcessingException, SQLException {
+		String qNString = "";
+		do {
+			qNString = Instance.getQN();
+
+		} while ((commandRunner.run(Command.isQuestExist.ordinal() + "@" + qNString + "@" + subjNumber))
+				.equals("exist"));
+		Question question = new Question(discription, qNString, getSubject(subjNumber));
 		dataBase.closeSess();
 		question.setRightAnswer(rAnsewr);
 		question.addAnswers(an1, an2, an3, an4);
@@ -286,6 +318,7 @@ public class teacherOps {
 		}
 		return null;
 	}
+
 	public static Subject getSubjectN(String name) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
