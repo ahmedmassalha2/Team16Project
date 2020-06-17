@@ -34,12 +34,17 @@ public class Subject {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = Teacher.class)
 	@JoinTable(name = "subjects_teachers", joinColumns = @JoinColumn(name = "subject_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
 	private List<Teacher> teachers;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
+	private List<Course> courses;
 
 	public Subject(String name, String Snumber) {
 		this.name = name;
 		this.Snumber = Snumber;
 		this.questions = new ArrayList<Question>();
 		this.teachers = new ArrayList<Teacher>();
+		this.courses = new ArrayList<Course>();
 	}
 
 	public Subject() {
@@ -84,6 +89,14 @@ public class Subject {
 
 	public void setTeachers(List<Teacher> teachers) {
 		this.teachers = teachers;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 
 }

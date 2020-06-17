@@ -1,6 +1,10 @@
 package com.example.ServerClientEntities;
 
 import java.io.IOException;
+import java.util.Random;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 
 public class Instance {
 	public static SimpleChatClient clientConsole;
@@ -13,16 +17,10 @@ public class Instance {
 		Instance.clientConsole = clientConsole;
 	}
 
-	public static String valQuestion(String disc, String qNumber, String sNumber) {
+	public static String valQuestion(String disc, String sNumber) {
 		if (disc.isBlank()) {
 			return ("Fill question discription.");
 
-		}
-		if (!Instance.containCH(qNumber)) {
-			return ("question number must contain only digits");
-		}
-		if (qNumber.length() != 3) {
-			return ("question number must be 3 digits.");
 		}
 		if (sNumber.isBlank()) {
 			return ("Select subject");
@@ -47,4 +45,14 @@ public class Instance {
 		while (clientConsole.getMessage() == null)
 			System.out.println("waiting for server");
 	}
+
+	public static String getQN() {
+		Random rand = new Random();
+		int rand_int1 = rand.nextInt(9);
+		int rand_int2 = rand.nextInt(9);
+		int rand_int3 = rand.nextInt(9);
+		return "" + rand_int1 + rand_int2 + rand_int3;
+
+	}
+
 }

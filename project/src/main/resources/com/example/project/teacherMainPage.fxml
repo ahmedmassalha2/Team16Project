@@ -24,25 +24,25 @@
                               <Image url="@images/teacher-3679814_960_720.jpg" />
                            </image>
                         </ImageView>
-                      <Button fx:id="myExamsBTN" layoutX="399.0" layoutY="93.0" mnemonicParsing="false" onAction="#showExamsList" prefHeight="34.0" prefWidth="143.0" style="-fx-background-radius: 30;" text="My Exams">
+                      <Button fx:id="myExamsBTN" layoutX="399.0" layoutY="93.0" mnemonicParsing="false" onAction="#showExamsList" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="My Exams">
                            <font>
-                              <Font name="Monotype Corsiva" size="17.0" />
+                              <Font name="Arial" size="14.0" />
                            </font>
                            <effect>
                               <DropShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="showQues" layoutX="400.0" layoutY="140.0" mnemonicParsing="false" onAction="#showQuestions" style="-fx-background-radius: 30;" text="Questions dataBase">
+                        <Button fx:id="showQues" layoutX="400.0" layoutY="140.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Questions dataBase">
                            <font>
-                              <Font name="Monotype Corsiva" size="17.0" />
+                              <Font name="Arial" size="14.0" />
                            </font>
                            <effect>
                               <DropShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="signoutBTN" layoutX="399.0" layoutY="227.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="143.0" style="-fx-background-radius: 30;" text="Sign out">
+                        <Button fx:id="signoutBTN" layoutX="399.0" layoutY="227.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Sign out">
                            <font>
-                              <Font name="Monotype Corsiva" size="17.0" />
+                              <Font name="Arial" size="14.0" />
                            </font>
                            <effect>
                               <DropShadow />
@@ -53,9 +53,9 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Text>
-                        <Button fx:id="todoBtn" layoutX="399.0" layoutY="184.0" mnemonicParsing="false" onAction="#showToDo" prefHeight="34.0" prefWidth="143.0" style="-fx-background-radius: 30;" text="ToDo list">
+                        <Button fx:id="todoBtn" layoutX="399.0" layoutY="184.0" mnemonicParsing="false" onAction="#showToDo" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="ToDo list">
                            <font>
-                              <Font name="Monotype Corsiva" size="17.0" />
+                              <Font name="Arial" size="14.0" />
                            </font>
                            <effect>
                               <DropShadow />

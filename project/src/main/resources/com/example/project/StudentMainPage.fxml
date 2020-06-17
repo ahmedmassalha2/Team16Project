@@ -23,14 +23,14 @@
                   </ImageView>
                   <Button fx:id="gradesBtn" layoutX="322.0" layoutY="178.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="GRADES">
                      <font>
-                        <Font name="Monotype Corsiva" size="18.0" />
+                        <Font name="Arial" size="14.0" />
                      </font>
                      <effect>
                         <DropShadow />
                      </effect></Button>
                   <Button fx:id="enterExamBtn" layoutX="323.0" layoutY="115.0" mnemonicParsing="false" onAction="#enterExam" prefHeight="52.0" prefWidth="161.0" style="-fx-background-radius: 30;" text="ENTER EXAM">
                      <font>
-                        <Font name="Monotype Corsiva" size="18.0" />
+                        <Font name="Arial" size="14.0" />
                      </font>
                      <effect>
                         <DropShadow />
@@ -42,38 +42,38 @@
                   </ImageView>
                   <Button fx:id="feedbackBtn" layoutX="322.0" layoutY="241.0" mnemonicParsing="false" onAction="#showFeedback" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="FEEDBACK">
                      <font>
-                        <Font name="Monotype Corsiva" size="18.0" />
+                        <Font name="Arial" size="14.0" />
                      </font>
                      <effect>
                         <DropShadow />
                      </effect></Button>
-                  <Text fx:id="usernameTXT" layoutX="403.0" layoutY="31.0" scaleY="2.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="147.33330249786377">
+                  <Text fx:id="usernameTXT" layoutX="335.0" layoutY="75.0" scaleY="2.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="147.33330249786377">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Text>
-                  <Text fontSmoothingType="LCD" layoutX="339.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student of the FUTUR">
+                  <Text fontSmoothingType="LCD" layoutX="339.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student of the FUTUR">
                      <font>
-                        <Font name="Monotype Corsiva" size="18.0" />
+                        <Font name="Arial" size="14.0" />
                      </font>
                   </Text>
                   <Button fx:id="backBtn" layoutX="1.0" layoutY="4.0" mnemonicParsing="false" onAction="#goBack" prefHeight="31.0" prefWidth="86.0" style="-fx-background-radius: 30;" text="LOG OUT">
                      <font>
-                        <Font name="Monotype Corsiva" size="14.0" />
+                        <Font name="Arial" size="14.0" />
                      </font>
                      <effect>
                         <DropShadow />
                      </effect></Button>
-                  <Button fx:id="quotesBtn" layoutX="251.0" layoutY="6.0" mnemonicParsing="false" onAction="#showQuotes" prefHeight="39.0" prefWidth="110.0" style="-fx-background-radius: 30;" text="DAILY QUOTES">
+                  <Button fx:id="quotesBtn" layoutX="251.0" layoutY="6.0" mnemonicParsing="false" onAction="#showQuotes" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 30;" text="DAILY QUOTES">
                      <effect>
                         <DropShadow />
                      </effect>
                      <font>
-                        <Font name="Monotype Corsiva" size="13.0" />
+                        <Font name="Arial Bold" size="13.0" />
                      </font></Button>
-                  <Button fx:id="todoBTN" layoutX="329.0" layoutY="305.0" mnemonicParsing="false" onAction="#todoList" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="ToDo list">
+                  <Button fx:id="todoBTN" layoutX="325.0" layoutY="305.0" mnemonicParsing="false" onAction="#todoList" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="ToDo list">
                      <font>
-                        <Font name="Monotype Corsiva" size="18.0" />
+                        <Font name="Arial" size="14.0" />
                      </font>
                      <effect>
                         <DropShadow />
