@@ -28,8 +28,8 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class teacherExamList implements Initializable {
-	String useString = "";
-	String passString = "";
+	static String useString = "";
+	static String passString = "";
 	ObservableList<String> list = FXCollections.observableArrayList();
 	@FXML // fx:id="ExamsList"
 	private ListView<String> ExamsList; // Value injected by FXMLLoader

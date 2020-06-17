@@ -11,6 +11,7 @@ import java.util.List;
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.example.entities.Question;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.x.protobuf.MysqlxSession.Reset;
 
@@ -21,6 +22,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
@@ -28,6 +33,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class examsQuestionsController {
 
@@ -73,28 +80,57 @@ public class examsQuestionsController {
 	private Button inserBTN; // Value injected by FXMLLoader
 	@FXML // fx:id="questionsFilt"
 	private ComboBox<String> questionsFilt; // Value injected by FXMLLoader
+	@FXML // fx:id="studentInfo"
+	private TextArea studentInfo; // Value injected by FXMLLoader
+
+	@FXML // fx:id="teacherInfo"
+	private TextArea teacherInfo; // Value injected by FXMLLoader
+
+	@FXML // fx:id="ErrorTXT"
+	private Text ErrorTXT; // Value injected by FXMLLoader
 	static int Current = 0;
 	static List<String> questDiscriptions = new ArrayList<String>();
+	static List<String> studentsInfo = new ArrayList<String>();
+	static List<String> teachersInfo = new ArrayList<String>();
 	static List<String> questIDs = new ArrayList<String>();
 	static List<ArrayList<String>> answers = new ArrayList<ArrayList<String>>();
 	static String sName = "";
 	static String sNumber = "";
 	static String userString;
 	static String paString;
+	static String Id = "";
 
 	@FXML
 	void changeCurrUpper(ActionEvent event) {
-		if (Current + 1 >= questDiscriptions.size())
+		if (Current + 1 > questDiscriptions.size())
 			return;
+		if (Current + 1 == questDiscriptions.size()) {
+			Current += 1;
+			reset();
+			return;
+		}
 		Current += 1;
+		viewQuest();
 		System.out.println(Current);
 	}
 
 	@FXML
-	void changeCurrDowner(ActionEvent event) {
-		if (Current - 1 < 0)
+	void changeCurrDowner(ActionEvent event) throws IOException {
+		if (Current - 1 < 0) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCreation.fxml"));
+			Parent Main = loader.load();
+			examCreateController secController = loader.getController();
+			secController.filFilter(examCreateController.userString, examCreateController.paString);
+			secController.setSelection(examCreateController.selection);
+			Scene scene = new Scene(Main);
+			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Window.setTitle("Questions list");
+			Window.setScene(scene);
+			Window.show();
 			return;
+		}
 		Current -= 1;
+		viewQuest();
 		System.out.println(Current);
 	}
 
@@ -104,6 +140,8 @@ public class examsQuestionsController {
 			questDiscriptions.clear();
 			questIDs.clear();
 			answers.clear();
+			teachersInfo.clear();
+			studentsInfo.clear();
 			sName = subName;
 			sNumber = SubNumber;
 		}
@@ -111,6 +149,7 @@ public class examsQuestionsController {
 	}
 
 	public void loadQuestionList() throws IOException {
+
 		Instance.sendMessage(Command.teachQuesSubj.ordinal() + "@" + userString + "@" + paString + "@" + sName);
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
@@ -126,6 +165,7 @@ public class examsQuestionsController {
 	@FXML
 	void getQuestion(ActionEvent event) throws IOException {
 		reset();
+		ErrorTXT.setVisible(false);
 		String id = questionsFilt.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[1];
 		Instance.sendMessage(Command.getQ.ordinal() + "@" + id);
 		List<String> l = new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(),
@@ -161,10 +201,39 @@ public class examsQuestionsController {
 		selc2.setSelected(false);
 		selc3.setSelected(false);
 		selc4.setSelected(false);
+		teacherInfo.setText("");
+		studentInfo.setText("");
 	}
 
 	@FXML
 	void insert(ActionEvent event) {
+		if (!(questionsFilt.getSelectionModel().getSelectedIndex() >= 0)) {
+			ErrorTXT.setVisible(true);
+			return;
+		}
+		questDiscriptions.add(questionDisc.getText());
+		questIDs.add(Id);
+		List<String> anStrings = new ArrayList<String>();
+		anStrings.add(ans1.getText());
+		anStrings.add(ans2.getText());
+		anStrings.add(ans3.getText());
+		anStrings.add(ans4.getText());
+		answers.add((ArrayList<String>) anStrings);
+		teachersInfo.add(teacherInfo.getText());
+		studentsInfo.add(studentInfo.getText());
+		changeCurrUpper(null);
+	}
+
+	public void viewQuest() {
+		questionDisc.setText(questDiscriptions.get(Current));
+		Id = questIDs.get(Current);
+		List<String> anStrings = answers.get(Current);
+		ans1.setText(anStrings.get(0));
+		ans2.setText(anStrings.get(1));
+		ans3.setText(anStrings.get(2));
+		ans4.setText(anStrings.get(3));
+		teacherInfo.setText(teachersInfo.get(Current));
+		studentInfo.setText(studentsInfo.get(Current));
 
 	}
 }

@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.entities.checkedExam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.event.ActionEvent;
@@ -29,10 +30,11 @@ import javafx.stage.Stage;
 public class examCreateController implements Initializable {
 	static String userString;
 	static String paString;
+	static String selection;
 	@FXML // fx:id="coursesFilt"
 	private ComboBox<String> coursesFilt; // Value injected by FXMLLoader
-	String subName = "";
-	String subNum = "";
+	static String subName = "";
+	static String subNum = "";
 	@FXML // fx:id="durationTXT"
 	private TextField durationTXT; // Value injected by FXMLLoader
 
@@ -44,24 +46,42 @@ public class examCreateController implements Initializable {
 	@FXML // fx:id="subjName"
 	private Text subjName; // Value injected by FXMLLoader
 
-	@FXML
-	void cancel(ActionEvent event) {
+	@FXML // fx:id="finishBTN"
+	private Button finishBTN; // Value injected by FXMLLoader
 
+	@FXML
+	void cancel(ActionEvent event) throws IOException {
+		reset();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherExamsList.fxml"));
+		Parent Main = loader.load();
+		teacherExamList secController = loader.getController();
+		secController.init(teacherExamList.useString, teacherExamList.passString);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Questions list");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@FXML
 	void getCourseInfo(ActionEvent event) throws IOException {
-		Instance.sendMessage(
-				Command.getCourseSubject.ordinal() + "@" + coursesFilt.getSelectionModel().getSelectedItem());
+		selection = coursesFilt.getSelectionModel().getSelectedItem();
+		getSubjectName();
+	}
+
+	public void getSubjectName() throws IOException {
+		Instance.sendMessage(Command.getCourseSubject.ordinal() + "@" + selection);
 		String[] argStrings = Instance.getClientConsole().getMessage().toString().split("@");
 		subName = argStrings[0];
 		subNum = argStrings[1];
 		subjName.setText("Exam in: " + subName);
-
 	}
 
 	@FXML
 	void insertQuestions(ActionEvent event) throws IOException {
+		if (!check()) {
+			return;
+		}
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examQuestions.fxml"));
 		Parent Main = loader.load();
 		examsQuestionsController secController = loader.getController();
@@ -88,9 +108,32 @@ public class examCreateController implements Initializable {
 		coursesFilt.getItems().addAll(l);
 	}
 
+	public boolean check() {
+		if (!(coursesFilt.getSelectionModel().getSelectedIndex() >= 0)) {
+			System.out.println("empty");
+			return false;
+		}
+		
+
+		return true;
+	}
+    @FXML
+    void finish(ActionEvent event) {
+    	//if()
+    }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setSelection(String select) {
+		coursesFilt.getSelectionModel().select(select);
+		subjName.setText("Exam in: " + subName);
+	}
+
+	public static void reset() {
+		userString = "";
+		paString = "";
 	}
 }
