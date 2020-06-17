@@ -48,6 +48,15 @@ public class PrincipalExamsListController implements Initializable {
 			Window.setScene(scene);
 			Window.show();
 		}
+		if(selection.equals("SUBJECT")) {
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalSubjectExamFilter.fxml"));
+			Scene scene = new Scene(loader.load());
+			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Window.setTitle("Subject Filter");
+			Window.setScene(scene);
+			Window.show();
+		}
 		
 
 	}

@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.operations.ExamOps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.event.ActionEvent;
@@ -17,13 +18,20 @@ import javafx.event.ActionEvent;
  */
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 public class PrincipalTeacherExamFilterController implements Initializable {
 
+	static String userString;
+	static String paString;
 	@FXML // fx:id="showExambtn"
 	private Button showExambtn; // Value injected by FXMLLoader
 
@@ -37,7 +45,17 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
 
 	@FXML
-	void back(ActionEvent event) {
+	void back(ActionEvent event) throws IOException {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalExamsList.fxml"));
+		Parent Main = loader.load();
+		PrincipalExamsListController secController = loader.getController();
+		ExamOps p = new ExamOps();
+		secController.init(p.getExamsList());
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setScene(scene);
+		Window.show();
 
 	}
 
@@ -47,7 +65,27 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 	}
 
 	@FXML
-	void showFilter(ActionEvent event) {
+	void showFilter(ActionEvent event) throws IOException {
+
+		String selection = filterBtn.getSelectionModel().getSelectedItem();
+
+		if (selection.equals("ALL")) {
+			System.out.println("Entered");
+			loadAll();
+		} else {
+
+			Instance.sendMessage(Command.TeacherExamsByUsrName.ordinal() + "@" + selection);
+			String json = Instance.getClientConsole().getMessage().toString();
+			if (json.equals("")) {
+				ExamsList.getItems().removeAll(ExamsList.getItems());
+				return;
+			}
+
+			List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
+			ExamsList.getItems().removeAll(ExamsList.getItems());
+			ExamsList.getItems().addAll(l);
+
+		}
 
 	}
 
@@ -56,14 +94,14 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 		// TODO Auto-generated method stub
 		Instance.getClientConsole().setMessage(null);
 		try {
-			Instance.getClientConsole().sendToServer(""+Command.getTeachers.ordinal());
+			Instance.getClientConsole().sendToServer("" + Command.getTeachers.ordinal());
 			while (Instance.getClientConsole().getMessage() == null) {
 				System.out.println("waiting for server");
 			}
 			String json = Instance.getClientConsole().getMessage().toString();
-			System.out.println("json: "+json);
+			System.out.println("json: " + json);
 			List<String> ll = new ObjectMapper().readValue(json, ArrayList.class);
-			System.out.println("ll: "+ll);
+			System.out.println("ll: " + ll);
 			filterBtn.getItems().removeAll(filterBtn.getItems());
 			filterBtn.getItems().addAll(ll);
 			filterBtn.getSelectionModel().select(0);
@@ -74,7 +112,7 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 		}
 
 	}
-	
+
 	public void loadAll() throws IOException {
 		Instance.getClientConsole().setMessage(null);
 		Instance.getClientConsole().sendToServer("" + Command.getAllExams.ordinal());
