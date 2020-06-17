@@ -59,13 +59,16 @@ public class Question {
 		this.number = number;
 		this.subjectNumber = subject.getSnumber();
 		this.answers = new ArrayList<String>();
-		this.subject.getQuestions().add(this);
 		this.checkedExams = new ArrayList<checkedExam>();
 		this.exams = new ArrayList<Exam>();
+		this.subject.getQuestions().add(this);
+
 	}
 
 	public Question() {
-
+		this.answers = new ArrayList<String>();
+		this.checkedExams = new ArrayList<checkedExam>();
+		this.exams = new ArrayList<Exam>();
 	}
 
 	public int getId() {

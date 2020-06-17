@@ -28,6 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -35,6 +36,8 @@ public class viewORUpdateQuestController {
 	static String password = "";
 	static String username = "";
 	Question quest;
+	String newRight = " ";
+	String subjN = "";
 	@FXML // fx:id="questionDisc"
 	private TextArea questionDisc; // Value injected by FXMLLoader
 
@@ -80,14 +83,19 @@ public class viewORUpdateQuestController {
 	@FXML // fx:id="ErrorTXT"
 	private Text ErrorTXT; // Value injected by FXMLLoader
 
-	// @FXML // fx:id="deletBTN"
-	// private Button deletBTN; // Value injected by FXMLLoader
-	@FXML // fx:id="subjName"
-	private TextField subjName; // Value injected by FXMLLoader
+	@FXML // fx:id="deletBTN"
+	private Button deletBTN; // Value injected by FXMLLoader
 
 	@FXML
-	void addQuestion(ActionEvent event) {
-
+	void addQuestion(ActionEvent event) throws IOException {
+		if (!isChanged()) {
+			ErrorTXT.setText("Question is unchanged");
+			return;
+		}
+		String arg = Command.addQ.ordinal() + "@" + questionDisc.getText() + "@" + subjN + "@" + ans1.getText() + "@"
+				+ ans2.getText() + "@" + ans3.getText() + "@" + ans4.getText() + "@" + newRight;
+		Instance.sendMessage(arg);
+		back(event);
 	}
 
 	@FXML
@@ -97,14 +105,15 @@ public class viewORUpdateQuestController {
 		questionListController secController = loader.getController();
 		secController.loadData();
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Main page");
+		Window.setTitle("Question list");
 		Window.setScene(scene);
 		Window.show();
 	}
 
 	@FXML
-	void getSNumber(ActionEvent event) {
-
+	void getSNumber(ActionEvent event) throws IOException {
+		Instance.sendMessage(Command.getSubjNumber.ordinal() + "@" + filterCombo.getSelectionModel().getSelectedItem());
+		subjN = Instance.getClientConsole().getMessage().toString();
 	}
 
 	public void init(String data, String disc, String password) throws IOException {
@@ -112,20 +121,24 @@ public class viewORUpdateQuestController {
 		viewORUpdateQuestController.password = password;
 		List<String> l = new ObjectMapper().readValue(data, ArrayList.class);
 		questionDisc.setText(l.get(0));
-		// to add in filter
-		// loadSubjects(disc, password);
-		subjName.setText(l.get(1));
+		loadSubjects(disc, password);
+		// subjName.setText(l.get(1));
+		filterCombo.getSelectionModel().select(l.get(1));
 		questionN.setText(l.get(2));
 		ans1.setText(l.get(3));
 		ans2.setText(l.get(4));
 		ans3.setText(l.get(5));
 		ans4.setText(l.get(6));
 		setRightAns(l.get(7));
+		newRight = l.get(7);
 		quest = new Question();
+		quest.setRightAnswer(l.get(7));
 		quest.setDiscription(questionDisc.getText());
 		quest.setNumber(questionN.getText());
-		Instance.sendMessage(Command.getSubjNumber.ordinal() + "@" + subjName.getText());
+		quest.addAnswers(ans1.getText(), ans2.getText(), ans3.getText(), ans4.getText());
+		getSNumber(null);
 		quest.setSubjectNumber(Instance.getClientConsole().getMessage().toString());
+		subjN = quest.getSubjectNumber();
 	}
 
 	public void setRightAns(String answer) {
@@ -146,14 +159,48 @@ public class viewORUpdateQuestController {
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> ll = new ObjectMapper().readValue(json, ArrayList.class);
 		ll.remove("All");
-		filterCombo.getItems().removeAll(filterCombo.getItems());
+		// filterCombo.getItems().removeAll(filterCombo.getItems());
 		filterCombo.getItems().addAll(ll);
 		filterCombo.getSelectionModel().select(0);
 	}
 
-	/*
-	 * @FXML void deleteQuestion(ActionEvent event) {
-	 * Instance.sendMessage(Command.teacherSubjects.ordinal() + "@" + username + "@"
-	 * + password); }
-	 */
+	@FXML
+	void deleteQuestion(ActionEvent event) throws IOException {
+		Instance.sendMessage(Command.DELLQ.ordinal() + "@" + quest.getSubjectNumber()+"@"+quest.getNumber());
+		back(event);
+	}
+
+	@FXML
+	void setNewRight(ActionEvent event) {
+		ObservableList<Toggle> ans = tglG.getToggles();
+		if (ans.get(0).isSelected())
+			newRight = ans1.getText();
+		if (ans.get(1).isSelected())
+			newRight = ans2.getText();
+		if (ans.get(2).isSelected())
+			newRight = ans3.getText();
+		if (ans.get(3).isSelected())
+			newRight = ans4.getText();
+
+		return;
+	}
+
+	public boolean isChanged() {
+		if (!quest.getDiscription().equals(questionDisc.getText()))
+			return true;
+		if (!ans1.getText().equals(quest.getAnswers().get(0)))
+			return true;
+		if (!ans2.getText().equals(quest.getAnswers().get(1)))
+			return true;
+		if (!ans3.getText().equals(quest.getAnswers().get(2)))
+			return true;
+		if (!ans4.getText().equals(quest.getAnswers().get(3)))
+			return true;
+		if (!newRight.equals(quest.getRightAnswer()))
+			return true;
+		if (!quest.getSubjectNumber().equals(subjN))
+			return true;
+		return false;
+
+	}
 }

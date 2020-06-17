@@ -65,9 +65,6 @@ public class addQuestionController {
 	@FXML // fx:id="filterCombo"
 	private ComboBox<String> filterCombo; // Value injected by FXMLLoader
 
-	@FXML // fx:id="questionN"
-	private TextField questionN; // Value injected by FXMLLoader
-
 	@FXML // fx:id="backBTN"
 	private Button backBTN; // Value injected by FXMLLoader
 
@@ -82,15 +79,15 @@ public class addQuestionController {
 		ErrorTXT.setText("");
 		String questionString = questionDisc.getText();
 		String subjNumber = Snumber;
-		String questNumber = questionN.getText();
-		if (!Instance.valQuestion(questionString, questNumber, subjNumber).equals("all good")) {
-			ErrorTXT.setText(Instance.valQuestion(questionString, questNumber, subjNumber));
+		if (!Instance.valQuestion(questionString, subjNumber).equals("all good")) {
+			ErrorTXT.setText(Instance.valQuestion(questionString, subjNumber));
 			return;
 		}
-		if (checkQuestion(questNumber, subjNumber) == -1) {
-			ErrorTXT.setText("question exists, you can edit it in the question list");
-			return;
-		}
+		/*
+		 * if (checkQuestion(questNumber, subjNumber) == -1) {
+		 * ErrorTXT.setText("question exists, you can edit it in the question list");
+		 * return; }
+		 */
 		String an1 = ans1.getText();
 		if (an1.isBlank()) {
 			ErrorTXT.setText("Must fill first answer");
@@ -116,8 +113,8 @@ public class addQuestionController {
 			return;
 		}
 		String rAnswer = getRAns();
-		String arg = Command.addQ.ordinal() + "@" + questionString + "@" + subjNumber + "@" + questNumber + "@" + an1
-				+ "@" + an2 + "@" + an3 + "@" + an4 + "@" + rAnswer;
+		String arg = Command.addQ.ordinal() + "@" + questionString + "@" + subjNumber + "@" + an1 + "@" + an2 + "@"
+				+ an3 + "@" + an4 + "@" + rAnswer;
 		addQuestion(arg);
 		back(event);
 

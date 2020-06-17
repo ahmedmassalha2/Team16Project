@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.example.entities.Course;
 import com.example.entities.Question;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
@@ -59,6 +60,42 @@ public class generalOps {
 			return getJsonString(questionData);
 
 		}
+		return "";
+	}
+
+	public static String deleteQuestion(String subjectNumber, String questionNumber) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery(
+				"from Question where question_number = :question_number and subjectNumber = :subjectNumber");
+		query.setParameter("question_number", questionNumber);
+		query.setParameter("subjectNumber", subjectNumber);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			session.delete(session.get(Question.class, ((Question) query.getSingleResult()).getId()));
+			session.getTransaction().commit();
+
+			return "delted";
+		}
+		session.close();
+		return "good";
+	}
+
+	public static String getSubjectByCourse(String courseName) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Course where name = :name");
+		query.setParameter("name", courseName);
+
+		List list = query.list();
+
+		if (list.size() != 0) {
+			
+			Course course = (Course) query.getSingleResult();
+			return course.getSubject().getName() + "@"+ course.getSubject().getSnumber();
+		}
+		session.close();
 		return "";
 	}
 

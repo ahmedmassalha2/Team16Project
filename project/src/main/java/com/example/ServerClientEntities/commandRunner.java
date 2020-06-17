@@ -34,6 +34,8 @@ public class commandRunner {
 			return teacherOps.getQuestionsSubject(commandArr[1], commandArr[2], commandArr[3]);
 		case teacherSubjects:
 			return teacherOps.getTeacherSubjects(commandArr[1], commandArr[2]);
+		case teacherCourses:
+			return teacherOps.getTeacherCourses(commandArr[1], commandArr[2]);
 		case teacherToDo:
 			return teacherOps.getToDo(commandArr[1], commandArr[2]);
 		case teachAddToDo:
@@ -61,9 +63,8 @@ public class commandRunner {
 		case isQuestExist:
 			return teacherOps.questionExist(commandArr[1], commandArr[2]);
 		case addQ:
-
 			return teacherOps.addQuestion(commandArr[1], commandArr[2], commandArr[3], commandArr[4], commandArr[5],
-					commandArr[6], commandArr[7], commandArr[8]);
+					commandArr[6], commandArr[7]);
 		case getQUESTIONS:
 			return princOps.getQuestions();
 		case getSUBJS:
@@ -72,6 +73,10 @@ public class commandRunner {
 			return princOps.getQuestSubjs(commandArr[1]);
 		case getQ:
 			return generalOps.getQuestion(commandArr[1]);
+		case DELLQ:
+			return generalOps.deleteQuestion(commandArr[1], commandArr[2]);
+		case getCourseSubject:
+			return generalOps.getSubjectByCourse(commandArr[1]);
 		}
 
 		return command;
