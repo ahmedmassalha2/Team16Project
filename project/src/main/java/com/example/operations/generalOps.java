@@ -91,10 +91,13 @@ public class generalOps {
 		List list = query.list();
 
 		if (list.size() != 0) {
-			
+
 			Course course = (Course) query.getSingleResult();
+      String ret = course.getSubject().getName() + "@"+ course.getSubject().getSnumber();
+
 			session.close();
-			return course.getSubject().getName() + "@"+ course.getSubject().getSnumber();
+			return ret;
+
 		}
 		session.close();
 		return "";

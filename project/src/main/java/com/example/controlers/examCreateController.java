@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.example.entities.checkedExam;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.event.ActionEvent;
@@ -21,7 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import javafx.scene.text.Text;
@@ -37,10 +38,15 @@ public class examCreateController implements Initializable {
 	static String subNum = "";
 	@FXML // fx:id="durationTXT"
 	private TextField durationTXT; // Value injected by FXMLLoader
-
+	@FXML // fx:id="errorTXT"
+	private Text errorTXT; // Value injected by FXMLLoader
 	@FXML // fx:id="insertQ"
 	private Button insertQ; // Value injected by FXMLLoader
+	@FXML // fx:id="techNotations"
+	private TextArea techNotations; // Value injected by FXMLLoader
 
+	@FXML // fx:id="studNotations"
+	private TextArea studNotations; // Value injected by FXMLLoader
 	@FXML // fx:id="cancelBTN"
 	private Button cancelBTN; // Value injected by FXMLLoader
 	@FXML // fx:id="subjName"
@@ -48,6 +54,11 @@ public class examCreateController implements Initializable {
 
 	@FXML // fx:id="finishBTN"
 	private Button finishBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="submitBTN"
+	private Button submitBTN; // Value injected by FXMLLoader
+	static String Duration = "";
+	static String stInfo = "";
+	static String techInfo = "";
 
 	@FXML
 	void cancel(ActionEvent event) throws IOException {
@@ -82,6 +93,9 @@ public class examCreateController implements Initializable {
 		if (!check()) {
 			return;
 		}
+		Duration = durationTXT.getText();
+		techInfo = techNotations.getText();
+		stInfo = studNotations.getText();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examQuestions.fxml"));
 		Parent Main = loader.load();
 		examsQuestionsController secController = loader.getController();
@@ -98,6 +112,8 @@ public class examCreateController implements Initializable {
 	public void init(String teacherName, String teacherPass) throws IOException {
 		examCreateController.paString = teacherPass;
 		examCreateController.userString = teacherName;
+		if (!Duration.equals(""))
+			durationTXT.setText(Duration);
 		filFilter(teacherName, teacherPass);
 	}
 
@@ -106,6 +122,11 @@ public class examCreateController implements Initializable {
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		coursesFilt.getItems().addAll(l);
+
+		durationTXT.setText(Duration);
+		techNotations.setText(techInfo);
+		studNotations.setText(stInfo);
+
 	}
 
 	public boolean check() {
@@ -113,14 +134,33 @@ public class examCreateController implements Initializable {
 			System.out.println("empty");
 			return false;
 		}
-		
 
 		return true;
 	}
-    @FXML
-    void finish(ActionEvent event) {
-    	//if()
-    }
+
+	@FXML
+	void addExam(ActionEvent event) throws JsonProcessingException, IOException {
+		if (examsQuestionsController.questDiscriptions.size() == 0) {
+			errorTXT.setText("Exam is empty");
+			return;
+		}
+		if (durationTXT.getText().isEmpty()) {
+			errorTXT.setText("Fill exam duration");
+			return;
+		}
+		if (techNotations.getText().isEmpty()) {
+			errorTXT.setText("Enter information for teachers");
+			return;
+		}
+		if (studNotations.getText().isEmpty()) {
+			errorTXT.setText("Enter information for students");
+			return;
+		}
+		Instance.sendMessage(Command.isExamExist.ordinal() + "@" + examsQuestionsController.getData());
+		// reset vars
+		cancel(event);
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -135,5 +175,12 @@ public class examCreateController implements Initializable {
 	public static void reset() {
 		userString = "";
 		paString = "";
+		Duration = "";
+		examsQuestionsController.cancelAll();
+	}
+
+	@FXML
+	void setDuration(ActionEvent event) {
+		examCreateController.Duration = durationTXT.getText();
 	}
 }

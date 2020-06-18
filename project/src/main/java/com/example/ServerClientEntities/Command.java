@@ -9,4 +9,5 @@ public enum Command {
 	ExamsBySubject, getSubjectName, isExamExist
 
 
+
 }
