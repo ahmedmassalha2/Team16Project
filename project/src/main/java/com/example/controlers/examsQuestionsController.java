@@ -147,6 +147,7 @@ public class examsQuestionsController {
 	public void init(String subName, String SubNumber) throws IOException {
 		tglG.getToggles().setAll(selc1, selc2, selc3, selc4);
 		questionsFilt.setDisable(false);
+		System.out.println("heeeeeeeeeeeeeeeeere");
 		if (!examsQuestionsController.sName.equals(subName)) {
 			questDiscriptions.clear();
 			questIDs.clear();
@@ -157,12 +158,13 @@ public class examsQuestionsController {
 			sName = subName;
 			sNumber = SubNumber;
 		}
+		loadQuestionList();
 		if (questDiscriptions.size() > 0) {
 			questionsFilt.setDisable(true);
 			Current = 0;
 			viewQuest();
 		}
-		loadQuestionList();
+
 	}
 
 	public void loadQuestionList() throws IOException {
@@ -170,6 +172,21 @@ public class examsQuestionsController {
 		Instance.sendMessage(Command.teachQuesSubj.ordinal() + "@" + userString + "@" + paString + "@" + sName);
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
+		if (questIDs.size() > 0 && questDiscriptions.size() == 0) {
+			for (String id : questIDs) {
+				Instance.sendMessage(Command.getQ.ordinal() + "@" + id);
+				List<String> q = new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(),
+						ArrayList.class);
+				questDiscriptions.add(q.get(0));
+				List<String> ans = new ArrayList<>();
+				questionDisc.setText(l.get(0));
+				ans.add(q.get(3));
+				ans.add(q.get(4));
+				ans.add(q.get(5));
+				ans.add(q.get(6));
+				answers.add((ArrayList<String>) ans);
+			}
+		}
 		for (int i = 0; i < questIDs.size(); i++) {
 			l.remove("Id: " + questIDs.get(i) + "\n" + questDiscriptions.get(i));
 		}
@@ -179,7 +196,11 @@ public class examsQuestionsController {
 	}
 
 	public void updateQuestionList() {
-
+		System.out.println(questIDs.size());
+		System.out.println(points.size());
+		for (String id : questIDs) {
+			System.out.println(id);
+		}
 	}
 
 	@FXML

@@ -65,8 +65,8 @@ public class commandRunner {
 			return teacherOps.getTeachers();
 		case isQuestExist:
 			return teacherOps.questionExist(commandArr[1], commandArr[2]);
-	//case isExamExist:
-			
+		// case isExamExist:
+
 		case addQ:
 			return teacherOps.addQuestion(commandArr[1], commandArr[2], commandArr[3], commandArr[4], commandArr[5],
 					commandArr[6], commandArr[7]);
@@ -96,10 +96,12 @@ public class commandRunner {
 			List<String> ll2 = new ObjectMapper().readValue(commandArr[7], ArrayList.class);
 			List<Double> ll3 = new ObjectMapper().readValue(commandArr[8], ArrayList.class);
 			List<String> ll4 = new ObjectMapper().readValue(commandArr[9], ArrayList.class);
-			return ExamOps.addExam(commandArr[1], commandArr[2], commandArr[3], commandArr[4], commandArr[5], ll
-					, ll2, ll3, ll4, commandArr[10], commandArr[11]);
+			return ExamOps.addExam(commandArr[1], commandArr[2], commandArr[3], commandArr[4], commandArr[5], ll, ll2,
+					ll3, ll4, commandArr[10], commandArr[11]);
 		case isExamExist:
 			return ExamOps.examExist(commandArr[1], commandArr[2], commandArr[3]);
+		case getExamById:
+			return ExamOps.getExamById(commandArr[1]);
 		}
 
 		return command;
