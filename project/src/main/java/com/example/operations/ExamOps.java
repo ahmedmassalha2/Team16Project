@@ -96,9 +96,12 @@ public class ExamOps {
 		}
 
 		List<Question> questionsList = new ArrayList<Question>();
+		session = dataBase.getSession();
 		for (String s : questionsIds) {
+			System.out.println(s);
 
-			questionsList.add(session.get(Question.class, Integer.valueOf(s)));
+			Question q = session.get(Question.class, Integer.valueOf(s));
+			questionsList.add(q);
 
 		}
 		Teacher teacher = teacherOps.getTeacher(teacherName, teacherPass);
@@ -113,7 +116,7 @@ public class ExamOps {
 		exam.setSubject(subject);
 		exam.setGradesPerQuestion(gradePerQuestion);
 
-		//exam.setTimeString(examDuration);
+		// exam.setTimeString(examDuration);
 		exam.setStudentExamComments(infoExamStudent);
 		exam.setStudentInfoPerQuestion(infoPerQStudent);
 		exam.setTeacherExamComments(infoExamTeacher);
@@ -131,14 +134,16 @@ public class ExamOps {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query2 = session.createQuery("from Subject where subject_name = :subject_name");
-		Subject s = (Subject) query2.setParameter("subject_name", sName);
+		query2.setParameter("subject_name", sName);
+		Subject s = (Subject) query2.getSingleResult();
 		int subId = s.getId();
 		Query query3 = session.createQuery("from Course where name = :name");
-		Subject c = (Subject) query2.setParameter("name", cName);
+		query3.setParameter("name", cName);
+		Course c = (Course) query3.getSingleResult();
 		int courseId = c.getId();
-		Query query = session.createQuery("from Exam where exam_number = :exam_number and subject_name = :subject_name "
+		Query query = session.createQuery("from Exam where exam_num = :exam_num and subject_name = :subject_name "
 				+ "and course_id = :course_id");
-		query.setParameter("exam_number", examNum);
+		query.setParameter("exam_num", examNum);
 		query.setParameter("subject_name", sName);
 		query.setParameter("course_id", courseId);
 		List list = query.list();
@@ -172,7 +177,6 @@ public class ExamOps {
 		}
 		String QuestionIds = mapper.writeValueAsString(questionsId);
 
-	
 		String examString = "" + exam.getTeacher().getUsername() + "@" + exam.getTeacher().getPassword() + "@"
 				+ exam.getTimeString() + "@" + exam.getSubjectName() + "@" + exam.getCourseName() + "@"
 				+ StudentInfoPerQuestion + "@" + TeachertInfoPerQuestion + "@" + GradesPerQuestion + "@" + QuestionIds
