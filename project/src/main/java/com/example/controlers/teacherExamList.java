@@ -66,8 +66,21 @@ public class teacherExamList implements Initializable {
 	}
 
 	@FXML
-	void showExam(ActionEvent event) {
-		System.out.println(ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
+	void showExam(ActionEvent event) throws IOException {
+		Instance.sendMessage(Command.getExamById.ordinal() + "@"
+				+ ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
+		// malki gr@123@12@math@hedva@[""]@[""]@[12.0]@[1.0]@dwq@qdw
+		// System.out.println(Instance.getClientConsole().getMessage());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCreation.fxml"));
+		Parent Main = loader.load();
+		examCreateController secController = loader.getController();
+
+		secController.initByExam(Instance.getClientConsole().getMessage().toString());
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Create exam main page");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@FXML
@@ -83,6 +96,5 @@ public class teacherExamList implements Initializable {
 		Window.setScene(scene);
 		Window.show();
 	}
-
 
 }

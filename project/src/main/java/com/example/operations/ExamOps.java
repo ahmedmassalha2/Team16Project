@@ -92,6 +92,7 @@ public class ExamOps {
 		String examNum = Instance.getQN(2);
 		while ((commandRunner.run(Command.isExamExist.ordinal() + "@" + examNum + "@" + subName + "@" + courseName))
 				.equals("exist")) {
+			examNum = Instance.getQN(2);
 			System.out.println("Waiting for server");
 		}
 
@@ -163,17 +164,16 @@ public class ExamOps {
 		Session session = dataBase.getSession();
 		List<String> examsdisc = new ArrayList<String>();
 		ObjectMapper mapper = new ObjectMapper();
-
 		Query query = session.createQuery("from Exam where exam_num = :exam_num");
 		query.setParameter("exam_num", examNum);
 		Exam exam = (Exam) query.getSingleResult();
 		String StudentInfoPerQuestion = mapper.writeValueAsString(exam.getStudentInfoPerQuestion());
 		String TeachertInfoPerQuestion = mapper.writeValueAsString(exam.getTeacherInfoPerQuestion());
 		String GradesPerQuestion = mapper.writeValueAsString(exam.getGradesPerQuestion());
-		List<Double> questionsId = new ArrayList<Double>();
+		List<String> questionsId = new ArrayList<String>();
 		for (Question q : exam.getQuestions()) {
 
-			questionsId.add((double) q.getId());
+			questionsId.add(String.valueOf(q.getId()));
 		}
 		String QuestionIds = mapper.writeValueAsString(questionsId);
 
@@ -185,6 +185,19 @@ public class ExamOps {
 		System.out.println(examString);
 		return examString;
 
+	}
+
+	public static String getExamById(String id) throws JsonProcessingException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Exam q = session.get(Exam.class, Integer.valueOf(id));
+		if (q != null) {
+			String args = getWholeExam(q.getExamNumber());
+			session.close();
+			return args;
+		}
+		session.close();
+		return "";
 	}
 
 }

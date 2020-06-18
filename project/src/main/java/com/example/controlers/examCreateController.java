@@ -11,6 +11,7 @@ import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.example.entities.checkedExam;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.event.ActionEvent;
@@ -59,6 +60,7 @@ public class examCreateController implements Initializable {
 	static String Duration = "";
 	static String stInfo = "";
 	static String techInfo = "";
+	static boolean create = true;
 
 	@FXML
 	void cancel(ActionEvent event) throws IOException {
@@ -107,6 +109,24 @@ public class examCreateController implements Initializable {
 		Window.setTitle("Questions list");
 		Window.setScene(scene);
 		Window.show();
+	}
+
+	public void initByExam(String data) throws IOException {
+		String[] datas = data.split("@");
+		examCreateController.userString = datas[0];
+		examCreateController.paString = datas[1];
+		examCreateController.Duration = datas[2];
+		examCreateController.subName = datas[3];
+		selection = datas[4];
+		examsQuestionsController.studentsInfo = new ObjectMapper().readValue(datas[5], ArrayList.class);
+		examsQuestionsController.sName = datas[3];
+		examsQuestionsController.teachersInfo = new ObjectMapper().readValue(datas[6], ArrayList.class);
+		examsQuestionsController.points = (new ObjectMapper().readValue(datas[7], ArrayList.class));
+		examsQuestionsController.questIDs = new ObjectMapper().readValue(datas[8], ArrayList.class);
+		examCreateController.stInfo = datas[9];
+		examCreateController.techInfo = datas[10];
+		filFilter(userString, paString);
+		coursesFilt.getSelectionModel().select(datas[4]);
 	}
 
 	public void init(String teacherName, String teacherPass) throws IOException {
@@ -158,7 +178,7 @@ public class examCreateController implements Initializable {
 		}
 		Duration = durationTXT.getText();
 		stInfo = studNotations.getText();
-		techInfo=techNotations.getText();
+		techInfo = techNotations.getText();
 		Instance.sendMessage(Command.AddExam.ordinal() + "@" + examsQuestionsController.getData());
 		// reset vars
 		cancel(event);
@@ -171,6 +191,7 @@ public class examCreateController implements Initializable {
 	}
 
 	public void setSelection(String select) {
+		selection = select;
 		coursesFilt.getSelectionModel().select(select);
 		subjName.setText("Exam in: " + subName);
 	}
@@ -181,6 +202,7 @@ public class examCreateController implements Initializable {
 		Duration = "";
 		stInfo = "";
 		techInfo = "";
+		create = true;
 		examsQuestionsController.cancelAll();
 	}
 
