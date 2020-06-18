@@ -93,7 +93,11 @@ public class generalOps {
 		if (list.size() != 0) {
 
 			Course course = (Course) query.getSingleResult();
-			return course.getSubject().getName() + "@" + course.getSubject().getSnumber();
+      String ret = course.getSubject().getName() + "@"+ course.getSubject().getSnumber();
+
+			session.close();
+			return ret;
+
 		}
 		session.close();
 		return "";
@@ -102,5 +106,35 @@ public class generalOps {
 	public static String getJsonString(Object object) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(object);
+	}
+	public static Subject getSubjectByName(String subName) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Subject where subject_name = :subject_name");
+		query.setParameter("subject_name", subName);
+		List list = query.list();
+		if(list.size() != 0) {
+			Subject sub = (Subject) query.getSingleResult();
+			//session.close();
+			return sub;
+		}
+		//session.close();
+		return null;
+		
+	}
+	public static Course getCourseByName(String courseName) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Course where name = :name");
+		query.setParameter("name", courseName);
+		List list = query.list();
+		if(list.size() != 0) {
+			Course course = (Course) query.getSingleResult();
+			//session.close();
+			return course;
+		}
+		//session.close();
+		return null;
+		
 	}
 }

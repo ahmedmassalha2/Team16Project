@@ -290,7 +290,7 @@ public class teacherOps {
 			String an4, String rAnsewr) throws JsonProcessingException, SQLException {
 		String qNString = "";
 		do {
-			qNString = Instance.getQN();
+			qNString = Instance.getQN(2);
 
 		} while ((commandRunner.run(Command.isQuestExist.ordinal() + "@" + qNString + "@" + subjNumber))
 				.equals("exist"));

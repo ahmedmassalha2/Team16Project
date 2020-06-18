@@ -46,11 +46,14 @@ public class Instance {
 			System.out.println("waiting for server");
 	}
 
-	public static String getQN() {
+	public static String getQN(int num) {
 		Random rand = new Random();
 		int rand_int1 = rand.nextInt(9);
 		int rand_int2 = rand.nextInt(9);
 		int rand_int3 = rand.nextInt(9);
+		if(num == 2) {
+			return "" + rand_int1 + rand_int2;
+		}
 		return "" + rand_int1 + rand_int2 + rand_int3;
 
 	}
