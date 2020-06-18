@@ -1,8 +1,11 @@
 package com.example.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,17 +42,97 @@ public class Exam {
 	@JoinColumn(name = "course_id")
 	private Course course;
 	
-	private String teacherName;
+
+	
+	private String studentExamComments;
+	
+	
+	private String teacherExamComments;
+	@ElementCollection
+	private List<String> teacherInfoPerQuestion;
+	@ElementCollection
+	private List<String> studentInfoPerQuestion;
+	@ElementCollection
+	private List<Double> gradesPerQuestion;
+	//private String teacherName;
+	@Column(name = "subject_name")
 	private String subjectName;
 
-	public Exam(Teacher teacher, Subject subject, List<Question> questions, String timeString,Course course_) {
+	@Column(name = "course_name")
+	private String courseName;
+	
+	@Column(name = "exam_num")
+	private String examNumber;
+
+	public Exam(Teacher teacher, Subject subject, List<Question> questions,
+			String timeString,Course course_) {
 		this.teacher = teacher;
 		this.subject = subject;
 		this.questions = questions;
 		this.timeString = timeString;
 		setCourse(course_);
-		setTeacherName(teacher.getUsername());
+		//setTeacherName(teacher.getUsername());
 		setSubjectName(subject.getName());
+		setCourseName(course.getName());
+		this.gradesPerQuestion = new ArrayList<Double>();
+		this.studentInfoPerQuestion = new ArrayList<String>();
+		this.teacherInfoPerQuestion = new ArrayList<String>(); 
+		//this.examNumber = examNumber;
+		
+	}
+
+	public String getExamNumber() {
+		return examNumber;
+	}
+
+	public void setExamNumber(String examNumber) {
+		this.examNumber = examNumber;
+	}
+
+	public String getStudentExamComments() {
+		return studentExamComments;
+	}
+	public void setStudentExamComments(String studentExamComments) {
+		this.studentExamComments = studentExamComments;
+	}
+	public String getTeacherExamComments() {
+		return teacherExamComments;
+	}
+	public void setTeacherExamComments(String teacherExamComments) {
+		this.teacherExamComments = teacherExamComments;
+	}
+	public List<String> getTeacherInfoPerQuestion() {
+		return teacherInfoPerQuestion;
+	}
+	public void setTeacherInfoPerQuestion(List<String> teacherInfoPerQuestion) {
+		this.teacherInfoPerQuestion = teacherInfoPerQuestion;
+	}
+	public void addTeacherInfoPerQuestion(String teacherInfoPerQuestion) {
+		this.teacherInfoPerQuestion.add(teacherInfoPerQuestion);
+	}
+	public List<String> getStudentInfoPerQuestion() {
+		return studentInfoPerQuestion;
+	}
+	public void setStudentInfoPerQuestion(List<String> studentInfoPerQuestion) {
+		this.studentInfoPerQuestion = studentInfoPerQuestion;
+	}
+	public void addStudentInfoPerQuestion(String studentInfoPerQuestion) {
+		this.studentInfoPerQuestion.add(studentInfoPerQuestion);
+	}
+	public List<Double> getGradesPerQuestion() {
+		return gradesPerQuestion;
+	}
+	public void setGradesPerQuestion(List<Double> gradesPerQuestion) {
+		this.gradesPerQuestion = gradesPerQuestion;
+	}
+	public void addGradesPerQuestion(Double gradesPerQuestion) {
+		this.gradesPerQuestion.add(gradesPerQuestion);
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 	public Exam() {
 
@@ -109,12 +192,12 @@ public class Exam {
 			ga.getExams().add(this); 
 		}
 	}
-	public String getTeacherName() {
+	/*public String getTeacherName() {
 		return teacherName;
 	}
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacher.getUsername();
-	}
+	}*/
 	public String getSubjectName() {
 		return subjectName;
 	}

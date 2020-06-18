@@ -62,6 +62,8 @@ public class commandRunner {
 			return teacherOps.getTeachers();
 		case isQuestExist:
 			return teacherOps.questionExist(commandArr[1], commandArr[2]);
+	//case isExamExist:
+			
 		case addQ:
 			return teacherOps.addQuestion(commandArr[1], commandArr[2], commandArr[3], commandArr[4], commandArr[5],
 					commandArr[6], commandArr[7]);
