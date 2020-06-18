@@ -156,7 +156,10 @@ public class examCreateController implements Initializable {
 			errorTXT.setText("Enter information for students");
 			return;
 		}
-		Instance.sendMessage(Command.isExamExist.ordinal() + "@" + examsQuestionsController.getData());
+		Duration = durationTXT.getText();
+		stInfo = studNotations.getText();
+		techInfo=techNotations.getText();
+		Instance.sendMessage(Command.AddExam.ordinal() + "@" + examsQuestionsController.getData());
 		// reset vars
 		cancel(event);
 	}
@@ -176,6 +179,8 @@ public class examCreateController implements Initializable {
 		userString = "";
 		paString = "";
 		Duration = "";
+		stInfo = "";
+		techInfo = "";
 		examsQuestionsController.cancelAll();
 	}
 

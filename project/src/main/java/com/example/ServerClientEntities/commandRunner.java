@@ -2,6 +2,8 @@
 package com.example.ServerClientEntities;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder.Case;
 
@@ -13,6 +15,7 @@ import com.example.operations.stuOps;
 import com.example.operations.teacherOps;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class commandRunner {
 	public static String run(String command) throws SQLException, JsonProcessingException {
@@ -87,7 +90,16 @@ public class commandRunner {
 			return generalOps.deleteQuestion(commandArr[1], commandArr[2]);
 		case getCourseSubject:
 			return generalOps.getSubjectByCourse(commandArr[1]);
+		case AddExam:
 
+			List<String> ll = new ObjectMapper().readValue(commandArr[6], ArrayList.class);
+			List<String> ll2 = new ObjectMapper().readValue(commandArr[7], ArrayList.class);
+			List<Double> ll3 = new ObjectMapper().readValue(commandArr[8], ArrayList.class);
+			List<String> ll4 = new ObjectMapper().readValue(commandArr[9], ArrayList.class);
+			return ExamOps.addExam(commandArr[1], commandArr[2], commandArr[3], commandArr[4], commandArr[5], ll
+					, ll2, ll3, ll4, commandArr[10], commandArr[11]);
+		case isExamExist:
+			return ExamOps.examExist(commandArr[1], commandArr[2], commandArr[3]);
 		}
 
 		return command;
