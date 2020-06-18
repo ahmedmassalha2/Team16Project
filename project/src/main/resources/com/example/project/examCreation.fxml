@@ -6,10 +6,12 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.examCreateController">
@@ -19,22 +21,42 @@
             <Group>
                <children>
                   <ComboBox fx:id="coursesFilt" layoutY="6.0" onAction="#getCourseInfo" prefWidth="150.0" promptText="Select course" />
-                  <TextField fx:id="durationTXT" layoutY="39.0" promptText="Duration" />
-                  <Button fx:id="insertQ" layoutX="427.0" layoutY="334.0" mnemonicParsing="false" onAction="#insertQuestions" text="Insert questions" />
+                  <TextField fx:id="durationTXT" layoutY="39.0" onAction="#setDuration" onInputMethodTextChanged="#setDuration" promptText="Duration" />
+                  <Button fx:id="insertQ" layoutX="335.0" layoutY="341.0" mnemonicParsing="false" onAction="#insertQuestions" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 30;" text="Insert questions">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect></Button>
                   <Text fx:id="subjName" layoutX="156.0" layoutY="24.05078125" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="78.13671875" />
-                  <TextArea layoutX="252.0" prefHeight="87.0" prefWidth="274.0" promptText="Teacher notations" />
-                  <TextArea layoutX="252.0" layoutY="96.0" prefHeight="87.0" prefWidth="274.0" promptText="Student notations" />
+                  <TextArea fx:id="techNotations" layoutX="252.0" prefHeight="87.0" prefWidth="274.0" promptText="Teacher notations" />
+                  <TextArea fx:id="studNotations" layoutX="252.0" layoutY="96.0" prefHeight="87.0" prefWidth="274.0" promptText="Student notations" />
                   <Separator layoutX="253.0" layoutY="89.0" prefHeight="0.0" prefWidth="274.0" style="-fx-background-color: black;" />
-                  <Button fx:id="cancelBTN" layoutY="334.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                  <Button fx:id="cancelBTN" layoutX="6.0" layoutY="341.0" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 30;" text="Cancel">
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font></Button>
                   <ImageView fitHeight="223.0" fitWidth="138.0" layoutX="58.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/pngguru.com.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="finishBTN" layoutX="362.0" layoutY="334.0" mnemonicParsing="false" onAction="#finish" text="Submit" visible="false" />
+                  <Text fx:id="errorTXT" fill="RED" layoutX="262.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="255.13671875" />
                </children>
             </Group>
          </center>
       </BorderPane>
+      <Button fx:id="submitBTN" layoutX="479.0" layoutY="351.0" mnemonicParsing="false" onAction="#addExam" prefHeight="30.0" prefWidth="67.0" style="-fx-background-radius: 30;" text="Submit">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
