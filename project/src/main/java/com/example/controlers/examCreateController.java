@@ -157,6 +157,7 @@ public class examCreateController implements Initializable {
 			return;
 		}
 		Instance.sendMessage(Command.isExamExist.ordinal() + "@" + examsQuestionsController.getData());
+		// reset vars
 		cancel(event);
 	}
 
