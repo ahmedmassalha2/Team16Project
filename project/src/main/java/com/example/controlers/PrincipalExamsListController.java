@@ -38,26 +38,27 @@ public class PrincipalExamsListController implements Initializable {
 	private ComboBox<String> filterBtn;
 
 	@FXML
-	void filterFunc(ActionEvent event) throws IOException{
+	void filterFunc(ActionEvent event) throws IOException {
 		String selection = filterBtn.getSelectionModel().getSelectedItem();
 		if (selection.equals("TEACHER")) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalTeacherExamFilter.fxml"));
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/example/project/PrincipalTeacherExamFilter.fxml"));
 			Scene scene = new Scene(loader.load());
 			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Window.setTitle("Teacher Filter");
 			Window.setScene(scene);
 			Window.show();
 		}
-		if(selection.equals("SUBJECT")) {
-			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalSubjectExamFilter.fxml"));
+		if (selection.equals("SUBJECT")) {
+
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/example/project/PrincipalSubjectExamFilter.fxml"));
 			Scene scene = new Scene(loader.load());
 			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Window.setTitle("Subject Filter");
 			Window.setScene(scene);
 			Window.show();
 		}
-		
 
 	}
 
@@ -74,8 +75,23 @@ public class PrincipalExamsListController implements Initializable {
 	}
 
 	@FXML
-	void showExam(ActionEvent event) {
+	void showExam(ActionEvent event) throws IOException {
+		if (!(examsList.getSelectionModel().getSelectedIndex() >= 0))
+			return;
+		Instance.sendMessage(Command.getExamById.ordinal() + "@"
+				+ examsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
 
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCreation.fxml"));
+		Parent Main = loader.load();
+		examCreateController secController = loader.getController();
+		examCreateController.create = false;
+		examCreateController.back = "/com/example/project/PrincipalExamsList.fxml";
+		secController.initByExam(Instance.getClientConsole().getMessage().toString());
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Create exam main page");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@Override
@@ -91,7 +107,7 @@ public class PrincipalExamsListController implements Initializable {
 
 	}
 
-	public void init(String examsList1) throws IOException {
+	public void init() throws IOException {
 
 		Instance.getClientConsole().setMessage(null);
 		Instance.getClientConsole().sendToServer("" + Command.getAllExams.ordinal());

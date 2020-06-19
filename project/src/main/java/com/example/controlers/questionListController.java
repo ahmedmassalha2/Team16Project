@@ -128,12 +128,14 @@ public class questionListController {
 
 	@FXML
 	void loadQ(ActionEvent event) throws IOException {
+		if (!(questionsList.getSelectionModel().getSelectedIndex() >= 0))
+			return;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/viewORupdateQuestion.fxml"));
 		Parent Main = loader.load();
 		viewORUpdateQuestController secController = loader.getController();
 		String id = questionsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[1];
 		Instance.sendMessage(Command.getQ.ordinal() + "@" + id);
-		secController.init(Instance.getClientConsole().getMessage().toString(), userString, paString);
+		secController.init(Instance.getClientConsole().getMessage().toString(), userString, paString, true);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
