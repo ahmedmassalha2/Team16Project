@@ -114,6 +114,8 @@ public class commandRunner {
 
 		case getTechName:
 			return generalOps.getTechName(commandArr[1]);
+		case getExamIdBycode:
+			return ExamOps.getExamIdBycode(commandArr[1]);
 
 		}
 

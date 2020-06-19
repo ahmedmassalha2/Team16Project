@@ -2,6 +2,7 @@ package com.example.controlers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -37,10 +39,10 @@ public class StudentStartExamPageController implements Initializable {
 	private Text errorTxt; // Value injected by FXMLLoader
 
 	@FXML
-	void enterExam(ActionEvent event) throws IOException {
+	void enterExam(ActionEvent event) throws IOException, SQLException {
 
-		Instance.sendMessage(Command.isStudentExistById.ordinal() + "@" + idNum.getText()
-								+ "@" + usrName + "@" + password);
+		Instance.sendMessage(
+				Command.isStudentExistById.ordinal() + "@" + idNum.getText() + "@" + usrName + "@" + password);
 		if (!(Instance.getClientConsole().getMessage().toString().equals("exist"))) {
 
 			errorTxt.setText("Invalid ID or exam code");
@@ -49,22 +51,32 @@ public class StudentStartExamPageController implements Initializable {
 		else {
 			Instance.sendMessage(Command.getExamCourseByCode.ordinal() + "@" + examCode.getText());
 			String subject = Instance.getClientConsole().getMessage().toString();
+			System.out.println("subjeect:  " + subject);
 			Instance.sendMessage(Command.isStudentExistInCourse.ordinal() + "@" + idNum.getText() + "@" + subject);
 			if (!Instance.getClientConsole().getMessage().toString().equals("exist")) {
 
 				errorTxt.setText("Invalid ID or exam code");
-				
 
 			}
 
 		}
-		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
+		Parent Main = loader.load();
+		studentExamPageController secController = loader.getController();
+		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText());
+		Instance.sendMessage(Command.getExamById.ordinal() + "@" + Instance.getClientConsole().getMessage().toString());
+		secController.initByExam(Instance.getClientConsole().getMessage().toString());
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Create exam main page");
+		Window.setScene(scene);
+		Window.show();
 
 	}
 
 	@FXML
 	void goBack(ActionEvent event) throws IOException {
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMainPage.fxml"));
 		Scene scene = new Scene(loader.load());
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -81,7 +93,7 @@ public class StudentStartExamPageController implements Initializable {
 	}
 
 	public void init(String usrName, String password) {
-		
+
 		this.usrName = usrName;
 		this.password = password;
 
