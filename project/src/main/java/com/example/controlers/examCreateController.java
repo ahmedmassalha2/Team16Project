@@ -61,14 +61,20 @@ public class examCreateController implements Initializable {
 	static String stInfo = "";
 	static String techInfo = "";
 	static boolean create = true;
+	static String back = "/com/example/project/teacherExamsList.fxml";
 
 	@FXML
 	void cancel(ActionEvent event) throws IOException {
 		reset();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherExamsList.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(back));
 		Parent Main = loader.load();
-		teacherExamList secController = loader.getController();
-		secController.init(teacherExamList.useString, teacherExamList.passString);
+		if (!(back.equals("/com/example/project/teacherExamsList.fxml"))) {
+			PrincipalExamsListController secController = loader.getController();
+			secController.init();
+		} else {
+			teacherExamList secController = loader.getController();
+			secController.init(teacherExamList.useString, teacherExamList.passString);
+		}
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Questions list");
@@ -103,6 +109,7 @@ public class examCreateController implements Initializable {
 		examsQuestionsController secController = loader.getController();
 		examsQuestionsController.paString = examCreateController.paString;
 		examsQuestionsController.userString = examCreateController.userString;
+		examsQuestionsController.create = create == true ? true : false;
 		secController.init(subName, subNum);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -111,7 +118,18 @@ public class examCreateController implements Initializable {
 		Window.show();
 	}
 
+	public void setvisibilty() {
+		if (create == false) {
+			coursesFilt.setDisable(true);
+			durationTXT.setDisable(true);
+			studNotations.setDisable(true);
+			techNotations.setDisable(true);
+			submitBTN.setVisible(false);
+		}
+	}
+
 	public void initByExam(String data) throws IOException {
+		setvisibilty();
 		String[] datas = data.split("@");
 		examCreateController.userString = datas[0];
 		examCreateController.paString = datas[1];
@@ -146,11 +164,13 @@ public class examCreateController implements Initializable {
 		durationTXT.setText(Duration);
 		techNotations.setText(techInfo);
 		studNotations.setText(stInfo);
+		setvisibilty();
 
 	}
 
 	public boolean check() {
 		if (!(coursesFilt.getSelectionModel().getSelectedIndex() >= 0)) {
+			errorTXT.setText("Select course");
 			System.out.println("empty");
 			return false;
 		}

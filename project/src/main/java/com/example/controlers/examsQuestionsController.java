@@ -114,7 +114,8 @@ public class examsQuestionsController {
 	static String userString;
 	static String paString;
 	static String Id = "";
-
+	static boolean create = true;
+	static String back = "/com/example/project/showMessage.fxml";
 	@FXML
 	void changeCurrUpper(ActionEvent event) {
 		if (Current + 1 > questDiscriptions.size())
@@ -125,6 +126,8 @@ public class examsQuestionsController {
 			deletebtn.setVisible(false);
 			inserBTN.setVisible(true);
 			updatebtn.setVisible(false);
+			setvisibilty();
+
 			reset();
 			return;
 		}
@@ -144,8 +147,19 @@ public class examsQuestionsController {
 		System.out.println(Current);
 	}
 
+	public void setvisibilty() {
+		if (create == false) {
+			studentInfo.setDisable(true);
+			teacherInfo.setDisable(true);
+			deletebtn.setVisible(false);
+			updatebtn.setVisible(false);
+			inserBTN.setVisible(false);
+		}
+	}
+
 	public void init(String subName, String SubNumber) throws IOException {
 		tglG.getToggles().setAll(selc1, selc2, selc3, selc4);
+		setvisibilty();
 		questionsFilt.setDisable(false);
 		System.out.println("heeeeeeeeeeeeeeeeere");
 		if (!examsQuestionsController.sName.equals(subName)) {
@@ -295,6 +309,7 @@ public class examsQuestionsController {
 		inserBTN.setVisible(false);
 		deletebtn.setVisible(true);
 		updatebtn.setVisible(true);
+		setvisibilty() ;
 		questionDisc.setText(questDiscriptions.get(Current));
 		Id = questIDs.get(Current);
 		System.out.println("Id is : " + Id);
@@ -322,7 +337,7 @@ public class examsQuestionsController {
 		teachersInfo.remove(Current + 1);
 		studentsInfo.add(Current, studentInfo.getText());
 		studentsInfo.remove(Current + 1);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/showMessage.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(back));
 		Parent Main = loader.load();
 		showMessageController secController = loader.getController();
 		secController.init("Question updated");

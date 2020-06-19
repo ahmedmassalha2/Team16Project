@@ -14,14 +14,14 @@
          <children>
             <Button fx:id="examsBtn" layoutX="181.0" layoutY="130.0" mnemonicParsing="false" onAction="#showExams" prefHeight="47.0" prefWidth="155.0" style="-fx-background-radius: 30;" text="EXAMS LIST">
                <font>
-                  <Font name="Monotype Corsiva" size="16.0" />
+                  <Font name="Arial" size="14.0" />
                </font>
                <effect>
                   <DropShadow />
                </effect></Button>
             <Button fx:id="questionsBtn" layoutX="181.0" layoutY="203.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="47.0" prefWidth="155.0" style="-fx-background-radius: 30;" text="QUESTIONS LIST">
                <font>
-                  <Font name="Monotype Corsiva" size="16.0" />
+                  <Font name="Arial" size="14.0" />
                </font>
                <effect>
                   <DropShadow />
@@ -34,7 +34,7 @@
             </ImageView>
             <Button fx:id="logoutBtn" layoutX="25.0" layoutY="26.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-radius: 30;" text="LOG OUT">
                <font>
-                  <Font name="Monotype Corsiva" size="16.0" />
+                  <Font name="Arial" size="14.0" />
                </font>
                <effect>
                   <DropShadow />
@@ -42,7 +42,7 @@
             </Button>
             <Button fx:id="todoBTN" layoutX="184.0" layoutY="271.0" mnemonicParsing="false" onAction="#todoList" prefHeight="47.0" prefWidth="155.0" style="-fx-background-radius: 30;" text="ToDo list">
                <font>
-                  <Font name="Monotype Corsiva" size="16.0" />
+                  <Font name="Arial" size="14.0" />
                </font>
                <effect>
                   <DropShadow />
