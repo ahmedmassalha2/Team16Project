@@ -291,4 +291,46 @@ public class ExamOps {
 		session.close();
 		return "";
 	}
+
+	public static String setExamByExamNum(String examNum, String examCode) {
+		dataBase.getInstance();
+
+		Session session = dataBase.getSession();
+		System.out.println("Exam num = " + examNum);
+		Query query = session.createQuery("from Exam where exam_num = :exam_num");
+		query.setParameter("exam_num", examNum);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			Exam exam = (Exam) query.getSingleResult();
+
+			exam.setExamCode(examCode);
+			session.update(exam);
+			session.getTransaction().commit();
+			session.close();
+			System.out.println("Exam code = " + exam.getExamCode());
+
+		}
+
+		return "";
+	}
+	public static String getIdByUsrName(String usrName){
+		
+		dataBase.getInstance();
+
+		Session session = dataBase.getSession();
+		//System.out.println("Exam num = " + examNum);
+		Query query = session.createQuery("from Student where username = :username");
+		query.setParameter("username", usrName);
+		List list = query.list();
+		if (list.size() != 0) {
+			Student student = (Student) query.getSingleResult();
+
+			return ""+student.getFirstName()+" "+student.getLastName();
+
+
+		}
+		return "";
+	}
+
 }
