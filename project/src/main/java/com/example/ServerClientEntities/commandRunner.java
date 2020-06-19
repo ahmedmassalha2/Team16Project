@@ -117,6 +117,12 @@ public class commandRunner {
 		case getExamIdBycode:
 			return ExamOps.getExamIdBycode(commandArr[1]);
 
+		case setExamByExamNum:
+			return ExamOps.setExamByExamNum(commandArr[1], commandArr[2]);
+		case getNameByUsrName:
+			return ExamOps.getIdByUsrName(commandArr[1]);
+
+			
 		}
 
 		return command;

@@ -68,6 +68,7 @@ public class studentExamPageController implements Initializable {
 		tacherName.setText(teacherName);
 	}
 
+
 	@FXML
 	void addExam(ActionEvent event) {
 
@@ -94,16 +95,11 @@ public class studentExamPageController implements Initializable {
 		studentExamPageController.stInfo = datas[9];
 		studentExamPageController.teacherName = getTeachName();
 		showData();
-		// examCreateController.techInfo = datas[10];
-		// filFilter(userString, paString);
-		// coursesFilt.getSelectionModel().select(datas[4]);
 	}
 
 	public String getTeachName() throws IOException {
 		Instance.sendMessage(Command.getTechName.ordinal() + "@" + userString);
-
 		return Instance.getClientConsole().getMessage().toString();
-
 	}
 
 	@Override

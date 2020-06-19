@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.example.entities.Exam;
 import com.example.entities.Teacher;
@@ -26,21 +27,20 @@ import javafx.stage.Stage;
 
 public class ExamCodeGenerateController implements Initializable {
 
-
 	String usrName = "";
 	String password = "";
 	String examCode = "";
-    @FXML // fx:id="codeBtn"
-    private Button codeBtn; // Value injected by FXMLLoader
-    @FXML // fx:id="codeIdText"
-    private Text codeIdText; // Value injected by FXMLLoader
-    @FXML // fx:id="backBtn"
-    private Button backBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="codeBtn"
+	private Button codeBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="codeIdText"
+	private Text codeIdText; // Value injected by FXMLLoader
+	@FXML // fx:id="backBtn"
+	private Button backBtn; // Value injected by FXMLLoader
 
-    @FXML
-    void goBack(ActionEvent event) throws IOException {
-    	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherExamsList.fxml"));
+	@FXML
+	void goBack(ActionEvent event) throws IOException {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherExamsList.fxml"));
 		Parent Main = loader.load();
 		teacherExamList secController = loader.getController();
 
@@ -51,53 +51,29 @@ public class ExamCodeGenerateController implements Initializable {
 		Window.setScene(scene);
 		Window.show();
 
-    }
-    @FXML
-    void generateCode(ActionEvent event) {
-    	
-    	codeIdText.setText(examCode);
-    	String examNum = "" + examCode.charAt(2) + "" + examCode.charAt(3);
-    	dataBase.getInstance();
-		Session session = dataBase.getSession();
-		Query query = session.createQuery("from Exam where exam_num = :exam_num");
-		query.setParameter("exam_num", examNum);
-		List list = query.list();
+	}
 
-		if (list.size() != 0) {
-			Exam exam = (Exam) query.getSingleResult();
-			if(exam.getExamCode() != null) {
-				exam.setExamCode(examCode);
-				session.update(exam);
-				session.getTransaction().commit();
-				session.close();
-				System.out.println("Exam code = "+exam.getExamCode());
-			}
-			else {
-				return;
-			}
-			
-			
-		}
-		
-		//query.setParameter("password", paString);
+	@FXML
+	void generateCode(ActionEvent event) throws IOException {
+		codeIdText.setText(examCode);
+		String examNum = "" + examCode.charAt(2) + "" + examCode.charAt(3);
+		Instance.sendMessage(Command.setExamByExamNum.ordinal() + "@" + examNum + "@" + examCode);
 
-    }
-
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public void init(String examCode, String usrName, String password) {
-		
+
 		this.usrName = usrName;
 		this.password = password;
-		System.out.println("code : "+examCode);
+		System.out.println("code : " + examCode);
 		this.examCode = examCode;
-		
-		
+
 	}
 
 }

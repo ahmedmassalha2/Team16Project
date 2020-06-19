@@ -59,13 +59,18 @@ public class StudentStartExamPageController implements Initializable {
 
 			}
 
+		
 		}
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
 		studentExamPageController secController = loader.getController();
 		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText());
 		Instance.sendMessage(Command.getExamById.ordinal() + "@" + Instance.getClientConsole().getMessage().toString());
-		secController.initByExam(Instance.getClientConsole().getMessage().toString());
+		String dataString = Instance.getClientConsole().getMessage().toString();
+		studentExamPageController.studentIDString = idNum.getText();
+		Instance.sendMessage(Command.getNameByUsrName.ordinal() + "@" + usrName);
+		studentExamPageController.studName = Instance.getClientConsole().getMessage().toString();
+		secController.initByExam(dataString);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Create exam main page");
