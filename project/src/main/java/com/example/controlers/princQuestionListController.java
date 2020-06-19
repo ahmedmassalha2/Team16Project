@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -44,9 +45,6 @@ public class princQuestionListController implements Initializable {
 	@FXML // fx:id="backbutton1"
 	private Button backbutton1; // Value injected by FXMLLoader
 
-	@FXML // fx:id="addQBTN"
-	private Button addQBTN; // Value injected by FXMLLoader
-
 	@FXML
 	void addQuestion(ActionEvent event) {
 
@@ -64,8 +62,21 @@ public class princQuestionListController implements Initializable {
 	}
 
 	@FXML
-	void loadQ(ActionEvent event) {
-		
+	void loadQ(ActionEvent event) throws IOException {
+		if (!(questionsList.getSelectionModel().getSelectedIndex() >= 0))
+			return;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/viewORupdateQuestion.fxml"));
+		Parent Main = loader.load();
+		viewORUpdateQuestController secController = loader.getController();
+		String id = questionsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[1];
+		Instance.sendMessage(Command.getQ.ordinal() + "@" + id);
+		secController.init(Instance.getClientConsole().getMessage().toString(), "", "", false);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
+		Window.setTitle("View or update question");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@FXML
@@ -119,7 +130,7 @@ public class princQuestionListController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
-			addQBTN.setVisible(false);
+			// addQBTN.setVisible(false);
 			loadData();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

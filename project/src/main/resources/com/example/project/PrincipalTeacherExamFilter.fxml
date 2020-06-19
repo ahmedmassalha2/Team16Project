@@ -20,7 +20,7 @@
                      <buttons>
                         <Button fx:id="showExambtn" mnemonicParsing="false" onAction="#showExam" style="-fx-background-radius: 30;" text="Show Exam">
                            <font>
-                              <Font name="Monotype Corsiva" size="13.0" />
+                              <Font name="Arial" size="13.0" />
                            </font>
                            <effect>
                               <DropShadow />
@@ -28,7 +28,7 @@
                         </Button>
                         <Button fx:id="backBTN" mnemonicParsing="false" onAction="#back" style="-fx-background-radius: 30;" text="Back">
                            <font>
-                              <Font name="Monotype Corsiva" size="13.0" />
+                              <Font name="Arial" size="13.0" />
                            </font>
                            <effect>
                               <DropShadow />

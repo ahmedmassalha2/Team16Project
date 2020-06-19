@@ -11,8 +11,7 @@ import java.util.List;
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.example.entities.Question;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.collections.ObservableList;
@@ -35,6 +34,7 @@ import javafx.stage.Stage;
 public class viewORUpdateQuestController {
 	static String password = "";
 	static String username = "";
+	static String backString = "";
 	Question quest;
 	String newRight = " ";
 	String subjN = "";
@@ -100,10 +100,13 @@ public class viewORUpdateQuestController {
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/questionList.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(backString));
 		Scene scene = new Scene(loader.load());
-		questionListController secController = loader.getController();
-		secController.loadData();
+		if (backBTN.equals("/com/example/project/questionList.fxml")) {
+			questionListController secController = loader.getController();
+			secController.loadData();
+		}
+
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Question list");
 		Window.setScene(scene);
@@ -116,13 +119,28 @@ public class viewORUpdateQuestController {
 		subjN = Instance.getClientConsole().getMessage().toString();
 	}
 
-	public void init(String data, String disc, String password) throws IOException {
+	public void init(String data, String disc, String password, boolean IsTeacher) throws IOException {
 		viewORUpdateQuestController.username = disc;
 		viewORUpdateQuestController.password = password;
-		List<String> l = new ObjectMapper().readValue(data, ArrayList.class);
-		questionDisc.setText(l.get(0));
+
+		load(data);
+		if (IsTeacher == false) {
+			// incase of principal
+			deletBTN.setVisible(false);
+			submitBTN.setVisible(false);
+			filterCombo.setDisable(true);
+			backString = "/com/example/project/princQuestionList.fxml";
+			return;
+		}
+		backString = "/com/example/project/questionList.fxml";
 		loadSubjects(disc, password);
 		// subjName.setText(l.get(1));
+
+	}
+
+	public void load(String data) throws IOException {
+		List<String> l = new ObjectMapper().readValue(data, ArrayList.class);
+		questionDisc.setText(l.get(0));
 		filterCombo.getSelectionModel().select(l.get(1));
 		questionN.setText(l.get(2));
 		ans1.setText(l.get(3));
@@ -166,7 +184,7 @@ public class viewORUpdateQuestController {
 
 	@FXML
 	void deleteQuestion(ActionEvent event) throws IOException {
-		Instance.sendMessage(Command.DELLQ.ordinal() + "@" + quest.getSubjectNumber()+"@"+quest.getNumber());
+		Instance.sendMessage(Command.DELLQ.ordinal() + "@" + quest.getSubjectNumber() + "@" + quest.getNumber());
 		back(event);
 	}
 
