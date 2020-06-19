@@ -15,6 +15,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.example.ServerClientEntities.Command;
+import com.example.ServerClientEntities.Instance;
+import com.example.ServerClientEntities.commandRunner;
+import com.example.controlers.examCreateController;
+import com.example.controlers.studentExamPageController;
 import com.example.entities.Answer;
 import com.example.entities.Course;
 import com.example.entities.Exam;
@@ -26,6 +31,12 @@ import com.example.entities.Teacher;
 import com.example.entities.checkedExam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * Hello world!
@@ -77,12 +88,12 @@ public class App {
 
 		Course lashon = new Course("lashon", "05", hebrew);
 		session.save(lashon);
-		Course tanakh = new Course("tanakh", "05", hebrew);
+		Course tanakh = new Course("tanakh", "06", hebrew);
 		session.save(tanakh);
 
-		Course grammar = new Course("grammar", "05", english);
+		Course grammar = new Course("grammar", "07", english);
 		session.save(grammar);
-		Course litreture = new Course("litreture", "05", english);
+		Course litreture = new Course("litreture", "08", english);
 		session.save(litreture);
 
 		Teacher malki = new Teacher("teacher", "malkigr", "123", "malki", "gr");
@@ -216,10 +227,18 @@ public class App {
 		 * Principal principal = new Principal("Principal", "Ahmad Massalha", "1234");
 		 * session.save(principal); dataBase.closeSess();
 		 */
-		session = dataBase.getInstance().getSession();
-		initializeData();
-		printData();
-		session.close();
+		/*
+		 * session = dataBase.getInstance().getSession(); initializeData(); printData();
+		 * session.close();
+		 */
+
+		FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/project/studentExamPage.fxml"));
+		Parent Main = loader.load();
+		Scene scene = new Scene(Main);
+		Stage Window = new Stage();
+		Window.setTitle("Create exam main page");
+		Window.setScene(scene);
+		Window.show();
 
 		/*
 		 * Query query = session.

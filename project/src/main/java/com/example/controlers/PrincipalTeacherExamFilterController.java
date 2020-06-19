@@ -46,7 +46,7 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/PrincipalExamsList.fxml"));
 		Parent Main = loader.load();
 		PrincipalExamsListController secController = loader.getController();
@@ -59,8 +59,23 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 	}
 
 	@FXML
-	void showExam(ActionEvent event) {
+	void showExam(ActionEvent event) throws IOException {
+		if (!(ExamsList.getSelectionModel().getSelectedIndex() >= 0))
+			return;
+		Instance.sendMessage(Command.getExamById.ordinal() + "@"
+				+ ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
 
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCreation.fxml"));
+		Parent Main = loader.load();
+		examCreateController secController = loader.getController();
+		examCreateController.create = false;
+		examCreateController.back = "/com/example/project/PrincipalTeacherExamFilter.fxml";
+		secController.initByExam(Instance.getClientConsole().getMessage().toString());
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Create exam main page");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@FXML

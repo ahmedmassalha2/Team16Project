@@ -68,18 +68,27 @@ public class examCreateController implements Initializable {
 		reset();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(back));
 		Parent Main = loader.load();
-		if (!(back.equals("/com/example/project/teacherExamsList.fxml"))) {
-			PrincipalExamsListController secController = loader.getController();
-			secController.init();
-		} else {
-			teacherExamList secController = loader.getController();
-			secController.init(teacherExamList.useString, teacherExamList.passString);
-		}
+		initLoader(loader);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Questions list");
 		Window.setScene(scene);
 		Window.show();
+	}
+
+	public void initLoader(FXMLLoader loader) throws IOException {
+		if (back.equals("/com/example/project/PrincipalTeacherExamFilter.fxml")
+				|| back.equals("/com/example/project/PrincipalSubjectExamFilter.fxml")) {
+			return;
+		}
+		if ((back.equals("/com/example/project/PrincipalExamsList.fxml"))) {
+			PrincipalExamsListController secController = loader.getController();
+			secController.init();
+		} else {
+			teacherExamList secController = loader.getController();
+			secController.init(teacherExamList.useString, teacherExamList.passString);
+
+		}
 	}
 
 	@FXML
@@ -121,9 +130,9 @@ public class examCreateController implements Initializable {
 	public void setvisibilty() {
 		if (create == false) {
 			coursesFilt.setDisable(true);
-			durationTXT.setDisable(true);
-			studNotations.setDisable(true);
-			techNotations.setDisable(true);
+			durationTXT.setEditable(false);
+			studNotations.setEditable(false);
+			techNotations.setEditable(false);
 			submitBTN.setVisible(false);
 		}
 	}
