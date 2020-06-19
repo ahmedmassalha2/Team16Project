@@ -68,6 +68,7 @@ public class studentExamPageController implements Initializable {
 		tacherName.setText(teacherName);
 	}
 
+
 	@FXML
 	void addExam(ActionEvent event) {
 

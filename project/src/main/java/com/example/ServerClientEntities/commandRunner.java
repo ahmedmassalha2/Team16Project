@@ -122,6 +122,7 @@ public class commandRunner {
 		case getNameByUsrName:
 			return ExamOps.getIdByUsrName(commandArr[1]);
 
+			
 		}
 
 		return command;

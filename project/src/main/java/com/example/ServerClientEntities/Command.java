@@ -9,4 +9,5 @@ public enum Command {
 	TeacherExamsByUsrName, ExamsBySubject, getSubjectName, isExamExist, AddExam, getExamById, getTechName, getExamCode,
 	isStudentExistById, getExamCourseByCode, isStudentExistInCourse, getExamIdBycode, setExamByExamNum, getNameByUsrName
 
+
 }

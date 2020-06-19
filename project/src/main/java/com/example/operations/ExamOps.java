@@ -314,20 +314,20 @@ public class ExamOps {
 
 		return "";
 	}
-	public static String getIdByUsrName(String usrName){
-		
+
+	public static String getIdByUsrName(String usrName) {
+
 		dataBase.getInstance();
 
 		Session session = dataBase.getSession();
-		//System.out.println("Exam num = " + examNum);
+		// System.out.println("Exam num = " + examNum);
 		Query query = session.createQuery("from Student where username = :username");
 		query.setParameter("username", usrName);
 		List list = query.list();
 		if (list.size() != 0) {
 			Student student = (Student) query.getSingleResult();
 
-			return ""+student.getFirstName()+" "+student.getLastName();
-
+			return "" + student.getFirstName() + " " + student.getLastName();
 
 		}
 		return "";

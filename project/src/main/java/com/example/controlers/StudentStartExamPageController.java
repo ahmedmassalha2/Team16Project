@@ -59,6 +59,7 @@ public class StudentStartExamPageController implements Initializable {
 
 			}
 
+		
 		}
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
