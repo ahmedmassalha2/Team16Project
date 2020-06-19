@@ -10,8 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.entities.Course;
+import com.example.entities.Exam;
+import com.example.operations.ExamOps;
+import com.example.project.dataBase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.collections.FXCollections;
@@ -39,6 +46,24 @@ public class teacherExamList implements Initializable {
 	private Button backBTN; // Value injected by FXMLLoader
 	@FXML // fx:id="createExamBTN"
 	private Button createExamBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="startExamBtn"
+	private Button startExamBtn; // Value injected by FXMLLoader
+
+	@FXML
+	void startExam(ActionEvent event) throws IOException {
+
+		Instance.sendMessage(Command.getExamCode.ordinal() + "@"
+				+ ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCodeGenerating.fxml"));
+		Parent Main = loader.load();
+		ExamCodeGenerateController secController = loader.getController();
+		secController.init(Instance.getClientConsole().getMessage().toString(), useString, passString);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Exams list");
+		Window.setScene(scene);
+		Window.show();
+	}
 
 	@FXML
 	void back(ActionEvent event) throws IOException {

@@ -64,6 +64,9 @@ public class Exam {
 	@Column(name = "exam_num")
 	private String examNumber;
 
+	@Column(name = "exam_code")
+	private String examCode;
+	
 	public Exam(Teacher teacher, Subject subject, List<Question> questions,
 			String timeString,Course course_) {
 		this.teacher = teacher;
@@ -79,6 +82,14 @@ public class Exam {
 		this.teacherInfoPerQuestion = new ArrayList<String>(); 
 		//this.examNumber = examNumber;
 		
+	}
+
+	public String getExamCode() {
+		return examCode;
+	}
+
+	public void setExamCode(String examCode) {
+		this.examCode = examCode;
 	}
 
 	public String getExamNumber() {

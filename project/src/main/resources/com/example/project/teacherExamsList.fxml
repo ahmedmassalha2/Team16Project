@@ -17,7 +17,17 @@
                <children>
                   <BorderPane prefHeight="48.0" prefWidth="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
-                        <Group />
+                        <Group>
+                           <children>
+                              <Button fx:id="startExamBtn" layoutX="20.0" layoutY="1.0" mnemonicParsing="false" onAction="#startExam" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 30;" text="Start Exam">
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Button>
+                           </children></Group>
                      </center>
                   </BorderPane>
                   <Button fx:id="backBTN" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#back" style="-fx-background-radius: 30;" text="Back">

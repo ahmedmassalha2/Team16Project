@@ -102,8 +102,19 @@ public class commandRunner {
 			return ExamOps.examExist(commandArr[1], commandArr[2], commandArr[3]);
 		case getExamById:
 			return ExamOps.getExamById(commandArr[1]);
+
+		case getExamCode:
+			return ExamOps.getExamCodetById(commandArr[1]);
+		case isStudentExistById:
+			return ExamOps.isStudentExistById(commandArr[1], commandArr[2], commandArr[3]);
+		case getExamCourseByCode:
+			return ExamOps.getExamCourseByCode(commandArr[1]);
+		case isStudentExistInCourse:
+			return ExamOps.isStudentExistInCourse(commandArr[1], commandArr[2]);
+
 		case getTechName:
 			return generalOps.getTechName(commandArr[1]);
+
 		}
 
 		return command;
