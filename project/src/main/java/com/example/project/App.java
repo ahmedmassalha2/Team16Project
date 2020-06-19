@@ -53,193 +53,86 @@ public class App {
 
 	private static void initializeData() throws Exception {
 
-		Subject s1 = new Subject("math", "00");
-		session.save(s1);
+		Subject math = new Subject("math", "00");
+		session.save(math);
 
-		Subject s2 = new Subject("CS", "01");
-		session.save(s2);
+		Subject cs = new Subject("CS", "01");
+		session.save(cs);
+		Subject hebrew = new Subject("hebrew", "02");
+		session.save(hebrew);
+		Subject english = new Subject("english", "03");
+		session.save(english);
 
-		Course c3 = new Course("Data Structures", "02", s2);
-		session.save(c3);
-		// Subject s3 = new Subject("CS_Semester B","02");
-		session.save(s2);
-		Course c1 = new Course("hedva", "00", s1);
-		session.save(c1);
-		Course c2 = new Course("Introduction to CS", "01", s2);
-		session.save(c2);
-		Question question = new Question("1 + 1 = ?", "000", s1);
+		Course calculations = new Course("calculations", "00", math);
+		session.save(calculations);
 
-		session.save(question);
-		List<String> answers = new ArrayList<String>();
-		answers.add("1 + 1 = 2");
-		answers.add("1 + 1 = 3");
-		answers.add("1 + 1 = 4");
-		answers.add("1 + 1 = 5");
-		// session.save(answers);
-		question.setAnswers(answers);
-		question.setRightAnswer("1 + 1 = 2");
-		session.save(question);
-		/*
-		 * Answer a1 = new Answer("1 + 1 = 2", false, question); Answer a2 = new
-		 * Answer("1 + 1 = 3", false, question); Answer a3 = new Answer("1 + 1 = 4",
-		 * false, question); Answer a4 = new Answer("1 + 1 = 5", true, question);
-		 * session.save(a1); session.save(a2); session.save(a3); session.save(a4);
-		 */
+		Course probapilities = new Course("probapilities", "01", math);
+		session.save(probapilities);
+		Course ds = new Course("Data Structures", "02", cs);
+		session.save(ds);
+		Course intro = new Course("introduction to cs", "03", cs);
+		session.save(intro);
+		Course algo = new Course("algorithmes", "04", cs);
+		session.save(algo);
 
-		Question question2 = new Question("1 * 6 = ?", "001", s1);
+		Course lashon = new Course("lashon", "05", hebrew);
+		session.save(lashon);
+		Course tanakh = new Course("tanakh", "05", hebrew);
+		session.save(tanakh);
 
-		session.save(question2);
-		List<String> answers2 = new ArrayList<String>();
-		answers2.add("1 * 6 = 2");
-		answers2.add("1 * 6 = 3");
-		answers2.add("1 * 6 = 6");
-		answers2.add("1 * 6 = 5");
-		// session.save(answers2);
-		question2.setAnswers(answers2);
-		question2.setRightAnswer("1 * 6 = 6");
-		session.save(question2);
-		/*
-		 * Answer a11 = new Answer("1 * 6 = 2", false, question2); Answer a12 = new
-		 * Answer("1 * 6 = 3", false, question2); Answer a13 = new Answer("1 * 6 = 6",
-		 * false, question2); Answer a14 = new Answer("1 * 6 = 5", true, question2);
-		 * session.save(a11); session.save(a12); session.save(a13); session.save(a14);
-		 */
+		Course grammar = new Course("grammar", "05", english);
+		session.save(grammar);
+		Course litreture = new Course("litreture", "05", english);
+		session.save(litreture);
 
-		Question question3 = new Question("if(1) : ", "002", s2);
-		session.save(question3);
-		List<String> answers3 = new ArrayList<String>();
-		answers3.add("Will enter the condition at 50% of times");
-		answers3.add("Will not enter the condition at all");
-		answers3.add("Will enter the condition always");
-		answers3.add("Will enter the condition at 90% of times");
-		// session.save(answers3);
-		question3.setAnswers(answers3);
-		question3.setRightAnswer("Will enter the condition always");
-		session.save(question3);
-		/*
-		 * Answer a = new Answer("Will enter the condition at 50% of times", false,
-		 * question3); Answer b = new Answer("Will not enter the condition at all",
-		 * false, question3); Answer c = new Answer("Will enter the condition always",
-		 * true, question3); Answer d = new
-		 * Answer("Will enter the condition at 90% of times", false, question3);
-		 * session.save(a); session.save(b); session.save(c); session.save(d);
-		 */
+		Teacher malki = new Teacher("teacher", "malkigr", "123", "malki", "gr");
+		malki.addSubjects(math, cs);
+		malki.addCourses(calculations, intro);
+		session.save(malki);
 
-		Question question4 = new Question("while(!true) : ", "003", s2);
-		session.save(question4);
-		List<String> answers4 = new ArrayList<String>();
-		answers4.add("Will loop forever");
-		answers4.add("Will not loop at all");
-		answers4.add("Will loop sometimes");
-		answers4.add("Will loop at 90% of times");
-		// session.save(answers4);
-		question4.setAnswers(answers4);
-		question4.setRightAnswer("Will loop forever");
-		session.save(question4);
-		/*
-		 * Answer a111 = new Answer("Will loop forever", true, question4); Answer b111 =
-		 * new Answer("Will not loop at all", false, question4); Answer c111 = new
-		 * Answer("Will loop sometimes", false, question4); Answer d111 = new
-		 * Answer("Will loop at 90% of times", false, question4); session.save(a111);
-		 * session.save(b111); session.save(c111); session.save(d111);
-		 */
+		Teacher oren = new Teacher("teacher", "orends", "123", "oren", "wieman");
+		oren.addSubjects(math, cs);
+		oren.addCourses(probapilities, ds);
+		session.save(oren);
 
-		Question question5 = new Question("T(n) = 2T(n/2) + o(n) = ?", "004", s2);
-		session.save(question5);
-		List<String> answers5 = new ArrayList<String>();
-		answers5.add("O(n)");
-		answers5.add("O(1)");
-		answers5.add("O(nlogn)");
-		answers5.add("O(logn)");
-		// session.save(answers5);
-		question5.setAnswers(answers5);
-		question5.setRightAnswer("O(nlogn)");
-		session.save(question5);
-		/*
-		 * Answer answer1 = new Answer("O(n)", false, question5); Answer answer2 = new
-		 * Answer("O(1)", false, question5); Answer answer3 = new Answer("O(nlogn)",
-		 * true, question5); Answer answer4 = new Answer("O(logn)", false, question5);
-		 * session.save(answer1); session.save(answer2); session.save(answer3);
-		 * session.save(answer4);
-		 */
+		Teacher noga = new Teacher("teacher", "nogaron", "123", "noga", "rontzve");
+		noga.addSubjects(hebrew, cs);
+		noga.addCourses(algo, tanakh);
+		session.save(noga);
 
-		Question question6 = new Question("BST search time = ?", "005", s2);
-		session.save(question6);
-		List<String> answers6 = new ArrayList<String>();
-		answers6.add("O(logn)");
-		answers6.add("O(2^n)");
-		answers6.add("O(n^2)");
-		answers6.add("O(n)");
-		// session.save(answers6);
-		question6.setAnswers(answers6);
-		question6.setRightAnswer("O(logn)");
-		session.save(question6);
-		/*
-		 * Answer answer11 = new Answer("O(logn)", true, question6); Answer answer12 =
-		 * new Answer("O(2^n)", false, question6); Answer answer13 = new
-		 * Answer("O(n^2)", false, question6); Answer answer14 = new Answer("O(n)",
-		 * false, question6); session.save(answer11); session.save(answer12);
-		 * session.save(answer13); session.save(answer14);
-		 */
+		Teacher liel = new Teacher("teacher", "lielf", "123", "liel", "fridman");
+		liel.addSubjects(hebrew, english);
+		liel.addCourses(tanakh, litreture);
+		session.save(liel);
 
-		Teacher teacher = new Teacher("teacher", "malki gr", "123");
-		Teacher teacher2 = new Teacher("teacher", "sholy weinter", "123");
-		Teacher teacher3 = new Teacher("teacher", "oren weiman", "123");
+		Teacher mohammed = new Teacher("teacher", "aboseh", "123", "mohammed", "seh");
+		mohammed.addSubjects(hebrew, english);
+		mohammed.addCourses(lashon, grammar);
+		session.save(mohammed);
 
-		Student haitham = new Student("316379510", "student", "haitham17ad", "123456");
-		Student ahmad = new Student("207876541", "student", "ahmad", "1234567");
-		Student azmi = new Student("316768901", "student", "azmiabu", "12345678");
-
-		List<Course> list_courses1 = new ArrayList<Course>();
-		list_courses1.add(c1);
-		list_courses1.add(c3);
-		haitham.setCourses(list_courses1);
+		Student haitham = new Student("316379510", "student", "haitham17ad", "123", "haitham", "adudahesh");
+		haitham.addCourses(ds, algo, lashon, tanakh);
 		session.save(haitham);
 
-		List<Course> list_courses2 = new ArrayList<Course>();
-		list_courses2.add(c2);
-		list_courses2.add(c3);
-		ahmad.setCourses(list_courses2);
-		session.save(ahmad);
-
-		List<Course> list_courses3 = new ArrayList<Course>();
-		list_courses3.add(c1);
-		list_courses3.add(c2);
-		azmi.setCourses(list_courses3);
+		Student azmi = new Student("316022334", "student", "azmi_abu", "123", "azmi", "abuahmad");
+		azmi.addCourses(ds, probapilities);
 		session.save(azmi);
 
-		List<Question> list = new ArrayList<Question>();
-		list.add(question);
-		list.add(question2);
-		teacher.addCourses(c1);
-		teacher.addSubjects(s1);
-		session.save(teacher);
+		Student ahmad = new Student("632510265", "student", "ahmadW", "123", "ahmad", "wahbi");
+		ahmad.addCourses(grammar, litreture, tanakh);
+		session.save(ahmad);
 
-		List<Question> list2 = new ArrayList<Question>();
-		list2.add(question3);
-		list2.add(question4);
-		teacher2.addCourses(c2);
-		teacher2.addSubjects(s2);
-		session.save(teacher2);
+		Student rola = new Student("203174698", "student", "rolama", "123", "rola", "marie");
+		rola.addCourses(intro, ds, calculations);
+		session.save(rola);
 
-		List<Question> list3 = new ArrayList<Question>();
-		list3.add(question5);
-		list3.add(question6);
-		teacher3.addCourses(c3);
-		teacher3.addSubjects(s2);
-		teacher3.addSubjects(s1);
-		session.save(teacher3);
+		Student shadi = new Student("485126957", "student", "shadiCR7", "123", "shadi", "haloun");
+		shadi.addCourses(probapilities, intro, ds, calculations);
+		session.save(shadi);
 
-		Exam exam = new Exam(teacher, s1, list, "1:00", c1);
-		session.save(exam);
+		Principal ahmadM = new Principal("principal", "ahmedmassalha", "123", "ahmad", "massalha");
+		session.save(ahmadM);
 
-		Exam exam2 = new Exam(teacher2, s2, list2, "1:00", c2);
-		session.save(exam2);
-
-		Exam exam3 = new Exam(teacher3, s2, list3, "1:00", c3);
-		session.save(exam3);
-		Principal principal = new Principal("principal", "Ahmed Massalha", "123");
-		session.save(principal);
 		session.getTransaction().commit();
 
 	}

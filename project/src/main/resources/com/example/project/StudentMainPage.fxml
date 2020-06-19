@@ -52,7 +52,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Text>
-                  <Text fontSmoothingType="LCD" layoutX="339.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student of the FUTUR">
+                  <Text fontSmoothingType="LCD" layoutX="329.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student of the FUTURE">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>

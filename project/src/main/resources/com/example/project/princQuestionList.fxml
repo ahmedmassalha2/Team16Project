@@ -49,14 +49,6 @@
                         <DropShadow />
                      </effect>
                   </Button>
-                  <Button fx:id="addQBTN" layoutX="204.0" layoutY="390.0" mnemonicParsing="false" onAction="#addQuestion" prefHeight="17.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Add question">
-                     <font>
-                        <Font name="Arial" size="14.0" />
-                     </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </Button>
                   <Separator layoutX="375.0" layoutY="381.0" orientation="VERTICAL" prefHeight="44.0" prefWidth="6.0" />
                </children>
             </Group>
