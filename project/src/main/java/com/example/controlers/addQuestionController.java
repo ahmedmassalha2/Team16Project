@@ -165,7 +165,7 @@ public class addQuestionController {
 		return -1;
 	}
 
-	String getRAns() {
+	public String getRAns() {
 		ObservableList<Toggle> ans = tglG.getToggles();
 		if (ans.get(0).isSelected())
 			return ans1.getText();

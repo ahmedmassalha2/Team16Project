@@ -33,26 +33,18 @@
                   <TextArea fx:id="ans2" editable="false" layoutX="154.0" layoutY="202.0" prefHeight="22.0" prefWidth="217.0" promptText="Second answer" />
                   <TextArea fx:id="ans3" editable="false" layoutX="154.0" layoutY="246.0" prefHeight="22.0" prefWidth="217.0" promptText="Third answer" />
                   <TextArea fx:id="ans4" editable="false" layoutX="154.0" layoutY="290.0" prefHeight="22.0" prefWidth="217.0" promptText="Fourth" />
-                  <RadioButton fx:id="selc1" disable="true" layoutX="381.0" layoutY="169.0" mnemonicParsing="false">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="tglG" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="selc2" disable="true" layoutX="380.0" layoutY="211.0" mnemonicParsing="false">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="tglG" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="selc3" disable="true" layoutX="380.0" layoutY="256.0" mnemonicParsing="false">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="tglG" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="selc4" disable="true" layoutX="380.0" layoutY="299.0" mnemonicParsing="false">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="tglG" />
-                     </toggleGroup>
-                  </RadioButton>
+                  <Group layoutX="380.0" layoutY="169.0">
+                     <children>
+                        <RadioButton fx:id="selc1" layoutX="1.0" mnemonicParsing="false" onAction="#updateAnswers">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="tglG" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="selc2" layoutY="42.0" mnemonicParsing="false" onAction="#updateAnswers" toggleGroup="$tglG" />
+                        <RadioButton fx:id="selc3" layoutY="87.0" mnemonicParsing="false" onAction="#updateAnswers" toggleGroup="$tglG" />
+                        <RadioButton fx:id="selc4" layoutY="130.0" mnemonicParsing="false" onAction="#updateAnswers" toggleGroup="$tglG" />
+                     </children>
+                  </Group>
                   <Button fx:id="nextBTN" layoutX="96.0" layoutY="269.0" mnemonicParsing="false" onAction="#changeCurrUpper" style="-fx-background-radius: 30;" text="Next">
                      <effect>
                         <DropShadow />
@@ -67,13 +59,6 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </TextArea>
-                  <Button fx:id="updatebtn" layoutX="276.0" layoutY="333.0" mnemonicParsing="false" onAction="#update" text="update" visible="false" />
-                  <Button fx:id="deletebtn" layoutX="219.0" layoutY="333.0" mnemonicParsing="false" onAction="#delete" text="delete" visible="false" />
-                  <Text fx:id="ErrorTXT2" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="insert points-&gt;" textAlignment="JUSTIFY" visible="false" wrappingWidth="157.33331298828125" x="-40.0" y="182.0">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Text>
                   <Button fx:id="finishBTN" layoutX="398.0" layoutY="338.0" mnemonicParsing="false" onAction="#backToMain" style="-fx-background-radius: 30;" text="Finish">
                      <effect>
                         <DropShadow />
@@ -82,7 +67,7 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Text>
-                  <Text layoutX="44.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="points" wrappingWidth="38.13671875">
+                  <Text fx:id="Qpoints" layoutX="44.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="points" wrappingWidth="38.13671875">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font></Text>
@@ -90,10 +75,5 @@
             </Group>
          </center>
       </BorderPane>
-      <Text fx:id="ErrorTXT" fill="RED" layoutX="26.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select question -&gt;" textAlignment="JUSTIFY" visible="false" wrappingWidth="157.33331298828125">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

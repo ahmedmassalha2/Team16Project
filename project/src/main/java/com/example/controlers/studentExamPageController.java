@@ -19,15 +19,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class studentExamPageController implements Initializable {
 
-	@FXML // fx:id="insertQ"
-	private Button insertQ; // Value injected by FXMLLoader
+	@FXML // fx:id="toQuestions"
+	private Button toQuestions; // Value injected by FXMLLoader
 
 	@FXML // fx:id="studNotations"
 	private TextArea studNotations; // Value injected by FXMLLoader
@@ -68,15 +73,23 @@ public class studentExamPageController implements Initializable {
 		tacherName.setText(teacherName);
 	}
 
-
 	@FXML
 	void addExam(ActionEvent event) {
 
 	}
 
 	@FXML
-	void insertQuestions(ActionEvent event) {
-
+	void showQuestions(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamQuestions.fxml"));
+		Parent Main = loader.load();
+		studentExamQuestionsController secController = loader.getController();
+		examsQuestionsController.paString = examCreateController.paString;
+		secController.viewQuest();
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Questions list");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	public void initByExam(String data) throws IOException, SQLException {
@@ -86,15 +99,13 @@ public class studentExamPageController implements Initializable {
 		studentExamPageController.duration = datas[2];
 		studentExamPageController.subName = datas[3];
 		studentExamPageController.cName = datas[4];
-		// studentExamQuestionsController.studentsInfo = new
-		// ObjectMapper().readValue(datas[5], ArrayList.class);
-		// studentExamQuestionsController.points = (new
-		// ObjectMapper().readValue(datas[7], ArrayList.class));
-		// studentExamQuestionsController.questIDs = new
-		// ObjectMapper().readValue(datas[8], ArrayList.class);
+		studentExamQuestionsController.studentsInfo = new ObjectMapper().readValue(datas[5], ArrayList.class);
+		studentExamQuestionsController.points = (new ObjectMapper().readValue(datas[7], ArrayList.class));
+		studentExamQuestionsController.questIDs = new ObjectMapper().readValue(datas[8], ArrayList.class);
 		studentExamPageController.stInfo = datas[9];
 		studentExamPageController.teacherName = getTeachName();
 		showData();
+		studentExamQuestionsController.loadDiscriptions();
 	}
 
 	public String getTeachName() throws IOException {
