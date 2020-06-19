@@ -137,4 +137,19 @@ public class generalOps {
 		return null;
 		
 	}
+	public static String getTechName(String user) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username");
+		query.setParameter("username", user);
+		List list = query.list();
+		if(list.size() != 0) {
+			String name = ((Teacher) query.getSingleResult()).getFirstName() +" "+((Teacher) query.getSingleResult()).getLastName();
+			session.close();
+			return name;
+		}
+		session.close();
+	
+		return null;
+	}
 }

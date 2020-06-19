@@ -116,6 +116,7 @@ public class examsQuestionsController {
 	static String Id = "";
 	static boolean create = true;
 	static String back = "/com/example/project/showMessage.fxml";
+
 	@FXML
 	void changeCurrUpper(ActionEvent event) {
 		if (Current + 1 > questDiscriptions.size())
@@ -149,11 +150,13 @@ public class examsQuestionsController {
 
 	public void setvisibilty() {
 		if (create == false) {
-			studentInfo.setDisable(true);
-			teacherInfo.setDisable(true);
+			studentInfo.setEditable(false);
+			teacherInfo.setEditable(false);
 			deletebtn.setVisible(false);
 			updatebtn.setVisible(false);
 			inserBTN.setVisible(false);
+			poitns.setEditable(false);
+			questionsFilt.setDisable(true);
 		}
 	}
 
@@ -309,7 +312,7 @@ public class examsQuestionsController {
 		inserBTN.setVisible(false);
 		deletebtn.setVisible(true);
 		updatebtn.setVisible(true);
-		setvisibilty() ;
+		setvisibilty();
 		questionDisc.setText(questDiscriptions.get(Current));
 		Id = questIDs.get(Current);
 		System.out.println("Id is : " + Id);
