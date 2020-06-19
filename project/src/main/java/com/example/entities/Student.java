@@ -36,6 +36,8 @@ public class Student {
 	private String password;
 	@ElementCollection
 	private List<String> todoList;
+	private String firstName;
+	private String lastName;
 
 	public String getUsername() {
 		return username;
@@ -105,14 +107,41 @@ public class Student {
 		todoList.add(item);
 	}
 
-	public Student(String idNum, String privelage, String username, String password) {
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void addCourses(Course... courses_) {
+		for (Course course : courses_) {
+			this.courses.add(course);
+			course.getStudents().add(this);
+		}
+	}
+
+	public Student(String idNum, String privelage, String username, String password, String firstName,
+			String lastName) {
 		super();
 		// this.id = id;
 		this.idNum = idNum;
 		this.privelage = privelage;
 		this.username = username;
 		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.todoList = new ArrayList<String>();
+		this.courses = new ArrayList<Course>();
 	}
 
 	public Student() {

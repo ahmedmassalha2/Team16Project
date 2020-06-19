@@ -35,15 +35,21 @@ public class Teacher {
 	@JsonIgnore
 	@ManyToMany()
 	private List<Subject> subjects;
-	/*@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
-	private List<todoItem> todoList;*/
-	
+	/*
+	 * @JsonIgnore
+	 * 
+	 * @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher") private
+	 * List<todoItem> todoList;
+	 */
+
 	@ElementCollection
 	private List<String> todoList;
 
 	private String username;
 	private String password;
+
+	private String firstName;
+	private String lastName;
 
 	public String getUsername() {
 		return username;
@@ -131,14 +137,36 @@ public class Teacher {
 	public void setTodoList(List<String> todoList) {
 		this.todoList = todoList;
 	}
+
 	public void addTodoItem(String item) {
 		todoList.add(item);
 	}
-	public Teacher(String privelage, String username, String password) {
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Teacher(String privelage, String username, String password, String firstName, String lastName) {
 
 		this.privelage = privelage;
 		this.username = username;
 		this.password = password;
+
+		this.firstName = firstName;
+		this.lastName = lastName;
+
 		this.courses = new ArrayList<Course>();
 		this.subjects = new ArrayList<Subject>();
 		this.todoList = new ArrayList<String>();

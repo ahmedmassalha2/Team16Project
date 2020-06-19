@@ -86,7 +86,7 @@ public class questionListController {
 	}
 
 	public void loadData() throws IOException {
-		
+
 		loadQuestions(userString, paString);
 		loadSubjects(userString, paString);
 
@@ -105,6 +105,8 @@ public class questionListController {
 
 		Instance.sendMessage(Command.teacherQuestions.ordinal() + "@" + username + "@" + password);
 		String json = Instance.getClientConsole().getMessage().toString();
+		if (json.isEmpty())
+			return;
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		questionsList.getItems().removeAll(questionsList.getItems());
 		questionsList.getItems().addAll(l);

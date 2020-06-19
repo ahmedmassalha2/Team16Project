@@ -65,7 +65,7 @@ public class princQuestionListController implements Initializable {
 
 	@FXML
 	void loadQ(ActionEvent event) {
-
+		
 	}
 
 	@FXML
@@ -77,7 +77,7 @@ public class princQuestionListController implements Initializable {
 		}
 		Instance.sendMessage(Command.getSubjNumber.ordinal() + "@" + selection);
 		selection = Instance.getClientConsole().getMessage().toString();
-		
+
 		Instance.sendMessage("" + Command.GETQUESSUBJ.ordinal() + "@" + selection);
 		String json = Instance.getClientConsole().getMessage().toString();
 		if (json.equals("")) {
@@ -119,6 +119,7 @@ public class princQuestionListController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
+			addQBTN.setVisible(false);
 			loadData();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

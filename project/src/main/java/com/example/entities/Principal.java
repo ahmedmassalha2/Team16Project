@@ -20,14 +20,35 @@ public class Principal {
 
 	private String username;
 	private String password;
+	
+	private String firstName;
+	private String lastName;
 	@ElementCollection
 	private List<String> todoList;
 
-	public Principal(String privelage, String username, String password) {
+	public Principal(String privelage, String username, String password,String firstName, String lastName) {
 		this.privelage = privelage;
 		this.username = username;
 		this.todoList = new ArrayList<String>();
 		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getUsername() {
