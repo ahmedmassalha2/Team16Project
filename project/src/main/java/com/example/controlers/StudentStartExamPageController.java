@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.project.dataBase;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +42,14 @@ public class StudentStartExamPageController implements Initializable {
 	@FXML
 	void enterExam(ActionEvent event) throws IOException, SQLException {
 
+		if(examCode.getText().toString().length() != 4) {
+			errorTxt.setText("Exam code should be 4 digits!");
+			return;
+		}
+		if(!Instance.containCH(examCode.getText())) {
+			errorTxt.setText("Exam code should only contain digits");
+			return;
+		}
 		Instance.sendMessage(
 				Command.isStudentExistById.ordinal() + "@" + idNum.getText() + "@" + usrName + "@" + password);
 		if (!(Instance.getClientConsole().getMessage().toString().equals("exist"))) {
@@ -50,9 +59,14 @@ public class StudentStartExamPageController implements Initializable {
 
 		else {
 			Instance.sendMessage(Command.getExamCourseByCode.ordinal() + "@" + examCode.getText());
-			String subject = Instance.getClientConsole().getMessage().toString();
-			System.out.println("subjeect:  " + subject);
-			Instance.sendMessage(Command.isStudentExistInCourse.ordinal() + "@" + idNum.getText() + "@" + subject);
+			String course = Instance.getClientConsole().getMessage().toString();
+			if(course.isEmpty()) {
+				errorTxt.setText("Invalid ID or exam code");
+				return;
+			}
+			//System.out.println("subjeect:  " + subject);
+			//Instance.sendMessage(Command.isCodeFor);
+			Instance.sendMessage(Command.isStudentExistInCourse.ordinal() + "@" + idNum.getText() + "@" + course);
 			if (!Instance.getClientConsole().getMessage().toString().equals("exist")) {
 
 				errorTxt.setText("Invalid ID or exam code");
