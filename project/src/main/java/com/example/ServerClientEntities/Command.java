@@ -6,6 +6,7 @@ public enum Command {
 	accExist, teacherExams, teacherQuestions, teacherSubjects, teacherCourses, teachQuesSubj, teacherToDo, teachAddToDo,
 	teachDellToDo, princToDo, princAddToDo, princDellToDo, StuToDo, StuAddToDo, StuDellToDo, getAllExams, getSubjNumber,
 	getTeachers, isQuestExist, addQ, getSUBJS, getQUESTIONS, GETQUESSUBJ, getQ, DELLQ, getCourseSubject,
-	TeacherExamsByUsrName, ExamsBySubject, getSubjectName, isExamExist, AddExam, getExamById
+	TeacherExamsByUsrName, ExamsBySubject, getSubjectName, isExamExist, AddExam, getExamById, getExamCode,
+	isStudentExistById, getExamCourseByCode, isStudentExistInCourse
 
 }

@@ -13,6 +13,7 @@ import com.example.ServerClientEntities.commandRunner;
 import com.example.entities.Course;
 import com.example.entities.Exam;
 import com.example.entities.Question;
+import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
 import com.example.project.dataBase;
@@ -186,7 +187,27 @@ public class ExamOps {
 		return examString;
 
 	}
+	
+	
+	public static String getExamCodetById(String id) {
+		
+		//System.out.println("Id "+id);
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Exam where id = :id");
+		System.out.println("Exam number: " + id);
+		int i = Integer.parseInt(id); 
+		query.setParameter("id", i);
+		Exam exam = (Exam) query.getSingleResult();
+		Query query2 = session.createQuery("from Course where id = :id");
+		String courseId = Integer.toString(exam.getCourse().getId());
+		query2.setParameter("id",exam.getCourse().getId());
+		Course course = (Course) query2.getSingleResult();
+		session.close();
+		return "" + course.getCnumber() + "" + exam.getExamNumber();
+	}
 
+	
 	public static String getExamById(String id) throws JsonProcessingException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
@@ -197,6 +218,61 @@ public class ExamOps {
 			return args;
 		}
 		session.close();
+		return "";
+	}
+	
+	public static String isStudentExistById(String id, String usrName, String password) {
+		
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Student where idNum = :idNum and "
+				+ "username = :username and password = :password");
+		query.setParameter("idNum", id);
+		query.setParameter("username", usrName);
+		query.setParameter("password", password);
+		List list = query.list();
+		if (list.size() != 0) {
+			dataBase.closeSess();
+			return "exist";
+		}
+		return "";
+	}
+	public static String getExamCourseByCode(String examCode) {
+		
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Exam where exam_code = :exam_code");
+		query.setParameter("exam_code", examCode);
+		List list = query.list();
+		if(list.size() != 0) {
+			Exam exam = (Exam) query.getSingleResult();
+			String course = exam.getCourseName();
+			return course;
+		}
+		return "";
+	}
+	public static String isStudentExistInCourse(String id ,String courseName) {
+		
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Student where idNum = :idNum");
+		query.setParameter("idNum", id);
+		Query query2 = session.createQuery("from Course where name = :name");
+		query2.setParameter("name", courseName);
+		List list = query.list();
+		if (list.size() != 0) {
+			Student student = (Student) query.getSingleResult();
+			//List<Student> students = course.getStudents();
+			Course course = (Course) query2.getSingleResult();
+			if(course.getStudents().contains(student)) {
+				session.close();
+				dataBase.closeSess();
+				return "exist";
+			}
+
+		}
+		session.close();
+		dataBase.closeSess();
 		return "";
 	}
 

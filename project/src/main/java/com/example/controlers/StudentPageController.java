@@ -47,7 +47,18 @@ public class StudentPageController implements Initializable {
 	private Button todoBTN; // Value injected by FXMLLoader
 
 	@FXML
-	void enterExam(ActionEvent event) {
+	void enterExam(ActionEvent event) throws IOException {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentStartExamPage.fxml"));
+		Parent Main = loader.load();
+		StudentStartExamPageController secController = loader.getController();
+
+		secController.init(username, password);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Exam Log In");
+		Window.setScene(scene);
+		Window.show();
 
 	}
 
