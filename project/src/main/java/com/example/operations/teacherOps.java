@@ -33,12 +33,21 @@ public class teacherOps {
 			Teacher teacher = (Teacher) query.getSingleResult();
 			List<Exam> l = teacher.getExams();
 			List<String> examsdisc = new ArrayList<String>();
-			for (Exam exam : l) {
-
-				String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
-						+ " writen by " + exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString()
-						+ " hours";
-				examsdisc.add(discString);
+			/*
+			 * for (Exam exam : l) {
+			 * 
+			 * String discString = "Exam id: " + exam.getId() + "\nExam in " +
+			 * exam.getSubject().getName() + " writen by " + exam.getTeacher().getUsername()
+			 * + "\nDuration: " + exam.getTimeString() + " hours";
+			 * examsdisc.add(discString); }
+			 */
+			for (Course course : teacher.getCourses()) {
+				for (Exam exam : course.getExams()) {
+					String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
+							+ " writen by " + exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString()
+							+ " hours";
+					examsdisc.add(discString);
+				}
 			}
 			ObjectMapper mapper = new ObjectMapper();
 
@@ -51,8 +60,6 @@ public class teacherOps {
 		session.close();
 		return "";
 	}
-	
-	
 
 	public static String getQuestions(String user, String paString) throws JsonProcessingException {
 
@@ -157,6 +164,7 @@ public class teacherOps {
 		session.close();
 		return null;
 	}
+
 	public static String getTeacherCourses(String user, String paString) throws JsonProcessingException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
@@ -180,6 +188,7 @@ public class teacherOps {
 		session.close();
 		return null;
 	}
+
 	public static Teacher getTeacher(String user, String paString) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
@@ -332,13 +341,14 @@ public class teacherOps {
 		}
 		return null;
 	}
+
 	public static String getExamsByUsrName(String user) throws JsonProcessingException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query = session.createQuery("from Teacher where username = :username");
 		query.setParameter("username", user);
 		List list = query.list();
-		if(list.size() != 0) {
+		if (list.size() != 0) {
 			Teacher teacher = (Teacher) query.getSingleResult();
 			List<Exam> l = teacher.getExams();
 			List<String> examsdisc = new ArrayList<String>();

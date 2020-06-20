@@ -57,7 +57,7 @@ public class ExamCodeGenerateController implements Initializable {
 	void generateCode(ActionEvent event) throws IOException {
 		codeIdText.setText(examCode);
 		String examNum = "" + examCode.charAt(2) + "" + examCode.charAt(3);
-		Instance.sendMessage(Command.setExamByExamNum.ordinal() + "@" + examNum + "@" + examCode);
+		Instance.sendMessage(Command.setExamByExamNum.ordinal() + "@" + examNum + "@" + examCode + "@" + usrName);
 
 	}
 

@@ -74,8 +74,8 @@ public class studentExamPageController implements Initializable {
 	}
 
 	@FXML
-	void addExam(ActionEvent event) {
-
+	void addExam(ActionEvent event) throws JsonProcessingException {
+		System.out.println(studentExamQuestionsController.getData());
 	}
 
 	@FXML

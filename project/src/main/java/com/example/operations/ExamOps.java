@@ -292,7 +292,7 @@ public class ExamOps {
 		return "";
 	}
 
-	public static String setExamByExamNum(String examNum, String examCode) {
+	public static String setExamByExamNum(String examNum, String examCode, String teacherName) {
 		dataBase.getInstance();
 
 		Session session = dataBase.getSession();
@@ -302,13 +302,17 @@ public class ExamOps {
 		List list = query.list();
 
 		if (list.size() != 0) {
+			Query query2 = session.createQuery("from Teacher where username = :username");
+			query2.setParameter("username", teacherName);
 			Exam exam = (Exam) query.getSingleResult();
-
+			Teacher teacher = (Teacher) query2.getSingleResult();
 			exam.setExamCode(examCode);
+			exam.setTeacherGeneratedExam(Integer.toString(teacher.getId()));
 			session.update(exam);
 			session.getTransaction().commit();
 			session.close();
 			System.out.println("Exam code = " + exam.getExamCode());
+			System.out.println("Teacher: " + exam.getTeacherGeneratedExam());
 
 		}
 

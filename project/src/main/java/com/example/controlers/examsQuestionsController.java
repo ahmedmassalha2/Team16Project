@@ -399,15 +399,13 @@ public class examsQuestionsController {
 	}
 
 	public static String getData() throws JsonProcessingException {
-		// teacher namer , password , duration, subject name, course name ,
-		// infoperqueststudent, infoperquestTeacher , grades , ids , stuInfo ,
-		// teacherInfo
+
 		String toRetString = "";
-		toRetString += userString + "@" + paString + "@" + examCreateController.Duration + "@" + sName + "@"
-				+ examCreateController.selection + "@" + generalOps.getJsonString(studentsInfo) + "@"
-				+ generalOps.getJsonString(teachersInfo) + "@" + generalOps.getJsonString(points) + "@"
-				+ generalOps.getJsonString(questIDs) + "@" + examCreateController.stInfo + "@"
-				+ examCreateController.techInfo;
+		toRetString += teacherExamList.useString + "@" + teacherExamList.passString + "@"
+				+ examCreateController.Duration + "@" + sName + "@" + examCreateController.selection + "@"
+				+ generalOps.getJsonString(studentsInfo) + "@" + generalOps.getJsonString(teachersInfo) + "@"
+				+ generalOps.getJsonString(points) + "@" + generalOps.getJsonString(questIDs) + "@"
+				+ examCreateController.stInfo + "@" + examCreateController.techInfo;
 
 		return toRetString;
 	}

@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.operations.generalOps;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.collections.ObservableList;
@@ -27,6 +29,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import net.bytebuddy.asm.Advice.This;
 
 public class studentExamQuestionsController {
 
@@ -214,5 +217,15 @@ public class studentExamQuestionsController {
 			ans.add(l.get(6));
 			answers.add((ArrayList<String>) ans);
 		}
+	}
+
+	public static String getData() throws JsonProcessingException {
+
+		String toRetString = "";
+		toRetString += studentExamPageController.studentIDString + "@"
+				+ generalOps.getJsonString(studentExamQuestionsController.studentAnswers) + "@"
+				+ StudentStartExamPageController.examC;
+
+		return toRetString;
 	}
 }

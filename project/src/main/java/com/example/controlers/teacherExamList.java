@@ -96,8 +96,7 @@ public class teacherExamList implements Initializable {
 			return;
 		Instance.sendMessage(Command.getExamById.ordinal() + "@"
 				+ ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
-		// malki gr@123@12@math@hedva@[""]@[""]@[12.0]@[1.0]@dwq@qdw
-		// System.out.println(Instance.getClientConsole().getMessage());
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCreation.fxml"));
 		Parent Main = loader.load();
 		examCreateController secController = loader.getController();
