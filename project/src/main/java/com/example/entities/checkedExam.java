@@ -3,6 +3,7 @@ package com.example.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,8 @@ public class checkedExam {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_id")
 	private Student student;
+	@ElementCollection
+	List<String> studentAnswers;
 	
 	private double grade;
 	private String discreption;

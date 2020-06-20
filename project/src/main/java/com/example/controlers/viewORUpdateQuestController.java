@@ -85,6 +85,7 @@ public class viewORUpdateQuestController {
 
 	@FXML // fx:id="deletBTN"
 	private Button deletBTN; // Value injected by FXMLLoader
+	static String backTo = "/com/example/project/questionList.fxml";
 
 	@FXML
 	void addQuestion(ActionEvent event) throws IOException {
@@ -102,11 +103,10 @@ public class viewORUpdateQuestController {
 	void back(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(backString));
 		Scene scene = new Scene(loader.load());
-		if (backBTN.equals("/com/example/project/questionList.fxml")) {
+		if (backTo.equals("/com/example/project/questionList.fxml")) {
 			questionListController secController = loader.getController();
 			secController.loadData();
 		}
-
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Question list");
 		Window.setScene(scene);

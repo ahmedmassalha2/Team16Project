@@ -38,15 +38,16 @@ public class StudentStartExamPageController implements Initializable {
 	private Button backBtn; // Value injected by FXMLLoader
 	@FXML // fx:id="errorTxt"
 	private Text errorTxt; // Value injected by FXMLLoader
+	static String examC = "";
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException, SQLException {
 
-		if(examCode.getText().toString().length() != 4) {
+		if (examCode.getText().toString().length() != 4) {
 			errorTxt.setText("Exam code should be 4 digits!");
 			return;
 		}
-		if(!Instance.containCH(examCode.getText())) {
+		if (!Instance.containCH(examCode.getText())) {
 			errorTxt.setText("Exam code should only contain digits");
 			return;
 		}
@@ -55,26 +56,24 @@ public class StudentStartExamPageController implements Initializable {
 		if (!(Instance.getClientConsole().getMessage().toString().equals("exist"))) {
 
 			errorTxt.setText("Invalid ID or exam code");
+			return;
 		}
 
 		else {
 			Instance.sendMessage(Command.getExamCourseByCode.ordinal() + "@" + examCode.getText());
 			String course = Instance.getClientConsole().getMessage().toString();
-			if(course.isEmpty()) {
+			if (course.isEmpty()) {
 				errorTxt.setText("Invalid ID or exam code");
 				return;
 			}
-			//System.out.println("subjeect:  " + subject);
-			//Instance.sendMessage(Command.isCodeFor);
 			Instance.sendMessage(Command.isStudentExistInCourse.ordinal() + "@" + idNum.getText() + "@" + course);
 			if (!Instance.getClientConsole().getMessage().toString().equals("exist")) {
 
-				errorTxt.setText("Invalid ID or exam code");
-
+				errorTxt.setText("You don't have access to this exam!");
+				return;
 			}
-
-		
 		}
+		StudentStartExamPageController.examC = examCode.getText();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
 		studentExamPageController secController = loader.getController();

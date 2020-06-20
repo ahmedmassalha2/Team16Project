@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "exam")
 public class Exam {
@@ -34,19 +35,16 @@ public class Exam {
 	@JsonIgnore
 	@ManyToMany()
 	private List<Question> questions;
-	
+
 	private String timeString;
-	
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	private Course course;
-	
 
-	
 	private String studentExamComments;
-	
-	
+
 	private String teacherExamComments;
 	@ElementCollection
 	private List<String> teacherInfoPerQuestion;
@@ -54,34 +52,44 @@ public class Exam {
 	private List<String> studentInfoPerQuestion;
 	@ElementCollection
 	private List<Double> gradesPerQuestion;
-	//private String teacherName;
+	// private String teacherName;
 	@Column(name = "subject_name")
 	private String subjectName;
 
 	@Column(name = "course_name")
 	private String courseName;
-	
+
 	@Column(name = "exam_num")
 	private String examNumber;
 
 	@Column(name = "exam_code")
 	private String examCode;
-	
-	public Exam(Teacher teacher, Subject subject, List<Question> questions,
-			String timeString,Course course_) {
+
+	@Column(name = "teacher_exam_generator")
+	private String teacherGeneratedExam;
+
+	public Exam(Teacher teacher, Subject subject, List<Question> questions, String timeString, Course course_) {
 		this.teacher = teacher;
 		this.subject = subject;
 		this.questions = questions;
 		this.timeString = timeString;
 		setCourse(course_);
-		//setTeacherName(teacher.getUsername());
+		// setTeacherName(teacher.getUsername());
 		setSubjectName(subject.getName());
 		setCourseName(course.getName());
 		this.gradesPerQuestion = new ArrayList<Double>();
 		this.studentInfoPerQuestion = new ArrayList<String>();
-		this.teacherInfoPerQuestion = new ArrayList<String>(); 
-		//this.examNumber = examNumber;
-		
+		this.teacherInfoPerQuestion = new ArrayList<String>();
+		// this.examNumber = examNumber;
+
+	}
+
+	public String getTeacherGeneratedExam() {
+		return teacherGeneratedExam;
+	}
+
+	public void setTeacherGeneratedExam(String teacherGeneratedExam) {
+		this.teacherGeneratedExam = teacherGeneratedExam;
 	}
 
 	public String getExamCode() {
@@ -103,48 +111,63 @@ public class Exam {
 	public String getStudentExamComments() {
 		return studentExamComments;
 	}
+
 	public void setStudentExamComments(String studentExamComments) {
 		this.studentExamComments = studentExamComments;
 	}
+
 	public String getTeacherExamComments() {
 		return teacherExamComments;
 	}
+
 	public void setTeacherExamComments(String teacherExamComments) {
 		this.teacherExamComments = teacherExamComments;
 	}
+
 	public List<String> getTeacherInfoPerQuestion() {
 		return teacherInfoPerQuestion;
 	}
+
 	public void setTeacherInfoPerQuestion(List<String> teacherInfoPerQuestion) {
 		this.teacherInfoPerQuestion = teacherInfoPerQuestion;
 	}
+
 	public void addTeacherInfoPerQuestion(String teacherInfoPerQuestion) {
 		this.teacherInfoPerQuestion.add(teacherInfoPerQuestion);
 	}
+
 	public List<String> getStudentInfoPerQuestion() {
 		return studentInfoPerQuestion;
 	}
+
 	public void setStudentInfoPerQuestion(List<String> studentInfoPerQuestion) {
 		this.studentInfoPerQuestion = studentInfoPerQuestion;
 	}
+
 	public void addStudentInfoPerQuestion(String studentInfoPerQuestion) {
 		this.studentInfoPerQuestion.add(studentInfoPerQuestion);
 	}
+
 	public List<Double> getGradesPerQuestion() {
 		return gradesPerQuestion;
 	}
+
 	public void setGradesPerQuestion(List<Double> gradesPerQuestion) {
 		this.gradesPerQuestion = gradesPerQuestion;
 	}
+
 	public void addGradesPerQuestion(Double gradesPerQuestion) {
 		this.gradesPerQuestion.add(gradesPerQuestion);
 	}
+
 	public String getCourseName() {
 		return courseName;
 	}
+
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
+
 	public Exam() {
 
 	}
@@ -197,24 +220,25 @@ public class Exam {
 		this.course = course;
 		this.course.getExams().add(this);
 	}
+
 	public void addQuestions(Question... questionslst) {
 		for (Question ga : questionslst) {
 			questions.add(ga);
-			ga.getExams().add(this); 
+			ga.getExams().add(this);
 		}
 	}
-	/*public String getTeacherName() {
-		return teacherName;
-	}
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacher.getUsername();
-	}*/
+
+	/*
+	 * public String getTeacherName() { return teacherName; } public void
+	 * setTeacherName(String teacherName) { this.teacherName =
+	 * teacher.getUsername(); }
+	 */
 	public String getSubjectName() {
 		return subjectName;
 	}
+
 	public void setSubjectName(String subjectName) {
-		this.subjectName =subject.getName();
+		this.subjectName = subject.getName();
 	}
-	
 
 }

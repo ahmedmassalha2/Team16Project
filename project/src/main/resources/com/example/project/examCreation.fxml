@@ -22,7 +22,7 @@
                <children>
                   <ComboBox fx:id="coursesFilt" layoutY="6.0" onAction="#getCourseInfo" prefWidth="150.0" promptText="Select course" />
                   <TextField fx:id="durationTXT" layoutY="39.0" onAction="#setDuration" onInputMethodTextChanged="#setDuration" promptText="Duration" />
-                  <Button fx:id="insertQ" layoutX="335.0" layoutY="341.0" mnemonicParsing="false" onAction="#insertQuestions" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 30;" text="Insert questions">
+                  <Button fx:id="insertQ" layoutX="335.0" layoutY="341.0" mnemonicParsing="false" onAction="#insertQuestions" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 30;" text="Exam questions">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
