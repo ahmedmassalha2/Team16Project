@@ -48,6 +48,8 @@ public class teacherExamList implements Initializable {
 	private Button createExamBTN; // Value injected by FXMLLoader
 	@FXML // fx:id="startExamBtn"
 	private Button startExamBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="checkExamsbtn"
+	private Button checkExamsbtn; // Value injected by FXMLLoader
 
 	@FXML
 	void startExam(ActionEvent event) throws IOException {
@@ -63,6 +65,11 @@ public class teacherExamList implements Initializable {
 		Window.setTitle("Exams list");
 		Window.setScene(scene);
 		Window.show();
+	}
+
+	@FXML
+	void checkExams(ActionEvent event) {
+
 	}
 
 	@FXML
