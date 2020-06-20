@@ -31,7 +31,7 @@ public class Teacher {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
 	private List<Exam> exams;
-	
+
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
 	private List<checkedExam> chExams;
@@ -39,8 +39,6 @@ public class Teacher {
 	@JsonIgnore
 	@ManyToMany()
 	private List<Subject> subjects;
-	
-	
 
 	@ElementCollection
 	private List<String> todoList;
@@ -170,6 +168,15 @@ public class Teacher {
 		this.courses = new ArrayList<Course>();
 		this.subjects = new ArrayList<Subject>();
 		this.todoList = new ArrayList<String>();
+		this.chExams = new ArrayList<checkedExam>();
+	}
+
+	public List<checkedExam> getChExams() {
+		return chExams;
+	}
+
+	public void setChExams(List<checkedExam> chExams) {
+		this.chExams = chExams;
 	}
 
 	public Teacher() {

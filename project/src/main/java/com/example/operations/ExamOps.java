@@ -393,7 +393,8 @@ public class ExamOps {
 		chExam.setTeacherInfoPerQuestion(new ArrayList<>());
 		for (String s : exam.getStudentInfoPerQuestion())
 			chExam.getTeacherInfoPerQuestion().add(s);
-
+		teacher.getChExams().add(chExam);
+		session.update(teacher);
 		chExam.setTeacherExamComments(exam.getStudentExamComments());
 		ExamOps.evaluateExam(chExam, exam);
 		return "";
