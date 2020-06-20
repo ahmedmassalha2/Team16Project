@@ -24,7 +24,7 @@
                               <Image url="@images/teacher-3679814_960_720.jpg" />
                            </image>
                         </ImageView>
-                      <Button fx:id="myExamsBTN" layoutX="399.0" layoutY="93.0" mnemonicParsing="false" onAction="#showExamsList" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="My Exams">
+                      <Button fx:id="myExamsBTN" layoutX="399.0" layoutY="93.0" mnemonicParsing="false" onAction="#showExamsList" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Exams">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
