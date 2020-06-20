@@ -76,7 +76,8 @@ public class studentExamPageController implements Initializable {
 	}
 
 	@FXML
-	void addExam(ActionEvent event) throws JsonProcessingException {
+	void addExam(ActionEvent event) throws IOException {
+		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData());
 		System.out.println(studentExamQuestionsController.getData());
 	}
 

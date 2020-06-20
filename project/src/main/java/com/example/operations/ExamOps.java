@@ -16,6 +16,7 @@ import com.example.entities.Question;
 import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
+import com.example.entities.checkedExam;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,8 +65,6 @@ public class ExamOps {
 		List list = query.list();
 		if (list.size() != 0) {
 			System.out.println("Entered exam subject");
-			// Exam teacher = (Exam) query.getSingleResult();
-			// List<String> questions = new ArrayList<String>();
 			for (Exam exam : exams) {
 
 				String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
@@ -118,15 +117,12 @@ public class ExamOps {
 		exam.setSubject(subject);
 		exam.setGradesPerQuestion(gradePerQuestion);
 
-		// exam.setTimeString(examDuration);
 		exam.setStudentExamComments(infoExamStudent);
 		exam.setStudentInfoPerQuestion(infoPerQStudent);
 		exam.setTeacherExamComments(infoExamTeacher);
 		exam.setTeacherInfoPerQuestion(infoPerQTeacher);
-		// session.delete(object);
 		session.save(exam);
 		session.getTransaction().commit();
-		// ExamOps.getWholeExam(examNum);
 		session.close();
 		dataBase.closeSess();
 		return "";
@@ -190,7 +186,6 @@ public class ExamOps {
 
 	public static String getExamCodetById(String id) {
 
-		// System.out.println("Id "+id);
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query = session.createQuery("from Exam where id = :id");
@@ -356,4 +351,51 @@ public class ExamOps {
 		return "";
 	}
 
+	public static String evaluateExam(checkedExam examToCheck, Exam exam) {
+		Session session = dataBase.getSession();
+		List<String> studentAnswers = examToCheck.getStudentAnswers();
+		List<Question> questions = examToCheck.getQuestions();
+		List<Double> grades = exam.getGradesPerQuestion();
+		double res = 0;
+		for (int i = 0; i < studentAnswers.size(); i++) {
+			if (studentAnswers.get(i).equals(questions.get(i).getRightAnswer()))
+				res += grades.get(i);
+		}
+		examToCheck.setGrade(res);
+		session.save(examToCheck);
+		session.getTransaction().commit();
+		session.close();
+		return "";
+	}
+
+	public static String examSubmmited(String studentId, List<String> answersList, String examCode, String teacherId) {
+
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Student where idNum = :idNum");
+		query.setParameter("idNum", studentId);
+		Student student = (Student) query.getSingleResult();
+		Query query2 = session.createQuery("from Exam where exam_code = :exam_code");
+		query2.setParameter("exam_code", examCode);
+		Exam exam = (Exam) query2.getSingleResult();
+		Query query3 = session.createQuery("from Teacher where id = :id");
+		query3.setParameter("id", Integer.valueOf(teacherId));
+		Teacher teacher = (Teacher) query3.getSingleResult();
+		checkedExam chExam = new checkedExam(teacher, exam.getSubject(), null, exam.getTimeString(), student, 0.0, "");
+		chExam.setStudentAnswers(answersList);
+		chExam.setStudent(student);
+		chExam.setTeacher(teacher);
+		chExam.setQuestions(new ArrayList<Question>());
+		for (Question q : exam.getQuestions()) {
+			chExam.getQuestions().add(q);
+			q.getCheckedExams().add(chExam);
+		}
+		chExam.setTeacherInfoPerQuestion(new ArrayList<>());
+		for (String s : exam.getStudentInfoPerQuestion())
+			chExam.getTeacherInfoPerQuestion().add(s);
+
+		chExam.setTeacherExamComments(exam.getStudentExamComments());
+		ExamOps.evaluateExam(chExam, exam);
+		return "";
+	}
 }
