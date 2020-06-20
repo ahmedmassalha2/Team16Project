@@ -324,16 +324,35 @@ public class ExamOps {
 		dataBase.getInstance();
 
 		Session session = dataBase.getSession();
-		// System.out.println("Exam num = " + examNum);
 		Query query = session.createQuery("from Student where username = :username");
 		query.setParameter("username", usrName);
 		List list = query.list();
 		if (list.size() != 0) {
 			Student student = (Student) query.getSingleResult();
-
-			return "" + student.getFirstName() + " " + student.getLastName();
+			String toRetString = "" + student.getFirstName() + " " + student.getLastName();
+			session.close();
+			return toRetString;
 
 		}
+		session.close();
+		return "";
+	}
+
+	public static String getTechIdByExCode(String string) {
+		dataBase.getInstance();
+
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Exam where exam_code = :exam_code");
+		query.setParameter("exam_code", string);
+		List list = query.list();
+		if (list.size() != 0) {
+			Exam exam = (Exam) query.getSingleResult();
+			String toRetString = exam.getTeacherGeneratedExam();
+			session.close();
+			return toRetString;
+
+		}
+		session.close();
 		return "";
 	}
 

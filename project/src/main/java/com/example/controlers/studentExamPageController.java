@@ -64,6 +64,8 @@ public class studentExamPageController implements Initializable {
 	static String stInfo = "";
 	static String teacherName = "";
 
+	static String setTeacher = "";
+
 	public void showData() {
 		examDur.setText(duration);
 		studentName.setText(studName);
@@ -103,7 +105,7 @@ public class studentExamPageController implements Initializable {
 		studentExamQuestionsController.points = (new ObjectMapper().readValue(datas[7], ArrayList.class));
 		studentExamQuestionsController.questIDs = new ObjectMapper().readValue(datas[8], ArrayList.class);
 		studentExamPageController.stInfo = datas[9];
-		studentExamPageController.teacherName = getTeachName();
+		studentExamPageController.teacherName = setTeacher;
 		showData();
 		studentExamQuestionsController.loadDiscriptions();
 	}

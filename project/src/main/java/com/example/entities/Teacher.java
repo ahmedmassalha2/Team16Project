@@ -31,16 +31,16 @@ public class Teacher {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
 	private List<Exam> exams;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+	private List<checkedExam> chExams;
 
 	@JsonIgnore
 	@ManyToMany()
 	private List<Subject> subjects;
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher") private
-	 * List<todoItem> todoList;
-	 */
+	
+	
 
 	@ElementCollection
 	private List<String> todoList;
