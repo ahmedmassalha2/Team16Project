@@ -48,6 +48,7 @@ public class Question {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = checkedExam.class)
 	@JoinTable(name = "Question_Exam", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "exam_id"))
 	private List<Exam> exams;
+	
 	@JsonIgnore
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = checkedExam.class)
 	@JoinTable(name = "Question_CheckedExam", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "checkedexam_id"))

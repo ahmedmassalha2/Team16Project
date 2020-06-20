@@ -123,7 +123,9 @@ public class commandRunner {
 			return ExamOps.getIdByUsrName(commandArr[1]);
 		case getTechIdByExCode:
 			return ExamOps.getTechIdByExCode(commandArr[1]);
-			
+		case studentSubmmit:
+			List<String> answers = new ObjectMapper().readValue(commandArr[2], ArrayList.class);
+			return ExamOps.examSubmmited(commandArr[1], answers, commandArr[3], commandArr[4]);
 		}
 
 		return command;

@@ -108,6 +108,7 @@ public class examsQuestionsController {
 	static List<String> teachersInfo = new ArrayList<String>();
 	static List<String> questIDs = new ArrayList<String>();
 	static List<Double> points = new ArrayList<Double>();
+	static List<String> rightAnswers = new ArrayList<String>();
 	static List<ArrayList<String>> answers = new ArrayList<ArrayList<String>>();
 	static String sName = "";
 	static String sNumber = "";
@@ -118,7 +119,7 @@ public class examsQuestionsController {
 	static String back = "/com/example/project/showMessage.fxml";
 
 	@FXML
-	void changeCurrUpper(ActionEvent event) {
+	void changeCurrUpper(ActionEvent event) throws IOException {
 		if (Current + 1 > questDiscriptions.size())
 			return;
 		if (Current + 1 == questDiscriptions.size()) {
@@ -171,6 +172,7 @@ public class examsQuestionsController {
 			answers.clear();
 			teachersInfo.clear();
 			studentsInfo.clear();
+			rightAnswers.clear();
 			points.clear();
 			sName = subName;
 			sNumber = SubNumber;
@@ -251,7 +253,17 @@ public class examsQuestionsController {
 
 	}
 
+	public String getAns(String id) throws IOException {
+		Instance.sendMessage(Command.getQ.ordinal() + "@" + id);
+		List<String> l = new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(),
+				ArrayList.class);
+		System.out.println(l.get(7));
+		return l.get(7);
+	}
+
 	public void setRightAns(String answer) {
+		System.out.println("right answer: " + answer);
+
 		if (ans1.getText().equals(answer))
 			selc1.setSelected(true);
 		if (ans2.getText().equals(answer))
@@ -261,6 +273,19 @@ public class examsQuestionsController {
 		if (ans4.getText().equals(answer))
 			selc4.setSelected(true);
 		return;
+	}
+
+	public String getRightAnswer() {
+		if (selc1.isSelected())
+			return ans1.getText();
+		if (selc2.isSelected())
+			return ans2.getText();
+		if (selc3.isSelected())
+			return ans3.getText();
+		if (selc4.isSelected())
+			return ans4.getText();
+
+		return "";
 	}
 
 	public void reset() {
@@ -279,7 +304,7 @@ public class examsQuestionsController {
 	}
 
 	@FXML
-	void insert(ActionEvent event) {
+	void insert(ActionEvent event) throws IOException {
 		if (!(questionsFilt.getSelectionModel().getSelectedIndex() >= 0)) {
 			ErrorTXT.setVisible(true);
 			return;
@@ -298,6 +323,7 @@ public class examsQuestionsController {
 		anStrings.add(ans3.getText());
 		anStrings.add(ans4.getText());
 		answers.add(Current, (ArrayList<String>) anStrings);
+		//rightAnswers.add(Current, getRightAnswer());
 		teachersInfo.add(Current, teacherInfo.getText());
 		studentsInfo.add(Current, studentInfo.getText());
 		questionsFilt.getItems().remove("Id: " + questIDs.get(Current) + "\n" + questionDisc.getText());
@@ -305,7 +331,7 @@ public class examsQuestionsController {
 		changeCurrUpper(null);
 	}
 
-	public void viewQuest() {
+	public void viewQuest() throws IOException {
 
 		ErrorTXT.setVisible(false);
 		questionsFilt.setDisable(true);
@@ -317,10 +343,12 @@ public class examsQuestionsController {
 		Id = questIDs.get(Current);
 		System.out.println("Id is : " + Id);
 		List<String> anStrings = answers.get(Current);
+
 		ans1.setText(anStrings.get(0));
 		ans2.setText(anStrings.get(1));
 		ans3.setText(anStrings.get(2));
 		ans4.setText(anStrings.get(3));
+		setRightAns(getAns(Id));
 		teacherInfo.setText(teachersInfo.get(Current));
 		studentInfo.setText(studentsInfo.get(Current));
 		poitns.setText(Double.toString(points.get(Current)));
@@ -350,7 +378,7 @@ public class examsQuestionsController {
 	}
 
 	@FXML
-	void delete(ActionEvent event) {
+	void delete(ActionEvent event) throws IOException {
 		questionsFilt.getItems().add("Id: " + questIDs.get(Current) + "\n" + questionDisc.getText());
 		questDiscriptions.remove(Current);
 		questIDs.remove(Current);
@@ -358,6 +386,7 @@ public class examsQuestionsController {
 		teachersInfo.remove(Current);
 		studentsInfo.remove(Current);
 		points.remove(Current);
+		//rightAnswers.remove(Current);
 		reset();
 		Current--;
 		if (Current < 0) {
@@ -376,6 +405,7 @@ public class examsQuestionsController {
 		questIDs.clear();
 		answers.clear();
 		points.clear();
+		rightAnswers.clear();
 		sName = "";
 		sNumber = "";
 		userString = "";
