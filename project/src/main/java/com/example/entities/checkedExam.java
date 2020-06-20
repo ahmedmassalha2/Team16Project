@@ -44,6 +44,8 @@ public class checkedExam {
 	
 	private double grade;
 	private String discreption;
+	
+	private boolean isChecked;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
@@ -114,6 +116,24 @@ public class checkedExam {
 			questions.add(ga);
 			ga.getCheckedExams().add(this); 
 		}
+	}
+	public List<String> getStudentAnswers() {
+		return studentAnswers;
+	}
+	public void setStudentAnswers(List<String> studentAnswers) {
+		this.studentAnswers = studentAnswers;
+	}
+	public boolean isChecked() {
+		return isChecked;
+	}
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
+	}
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 	
 

@@ -39,6 +39,7 @@ public class StudentStartExamPageController implements Initializable {
 	@FXML // fx:id="errorTxt"
 	private Text errorTxt; // Value injected by FXMLLoader
 	static String examC = "";
+	static String teacherID = "";
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException, SQLException {
@@ -73,7 +74,12 @@ public class StudentStartExamPageController implements Initializable {
 				return;
 			}
 		}
+
 		StudentStartExamPageController.examC = examCode.getText();
+		Instance.sendMessage(Command.getTechIdByExCode.ordinal() + "@" + examCode.getText());
+		StudentStartExamPageController.teacherID = Instance.getClientConsole().getMessage().toString();
+		studentExamQuestionsController.teacherID = teacherID;
+		studentExamPageController.setTeacher = teacherID;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
 		studentExamPageController secController = loader.getController();

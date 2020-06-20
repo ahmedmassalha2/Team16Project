@@ -121,7 +121,8 @@ public class commandRunner {
 			return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3]);
 		case getNameByUsrName:
 			return ExamOps.getIdByUsrName(commandArr[1]);
-
+		case getTechIdByExCode:
+			return ExamOps.getTechIdByExCode(commandArr[1]);
 			
 		}
 

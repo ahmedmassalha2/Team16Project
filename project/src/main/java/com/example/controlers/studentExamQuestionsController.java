@@ -87,15 +87,14 @@ public class studentExamQuestionsController {
 	static List<ArrayList<String>> answers = new ArrayList<ArrayList<String>>();
 	static int Current = 0;
 
+	static String teacherID = "";
+
 	@FXML
 	void backToMain(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
 		studentExamPageController secController = loader.getController();
 		secController.showData();
-		// secController.filFilter(examCreateController.userString,
-		// examCreateController.paString);
-		// secController.setSelection(examCreateController.selection);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Exam Main Page");
@@ -224,7 +223,7 @@ public class studentExamQuestionsController {
 		String toRetString = "";
 		toRetString += studentExamPageController.studentIDString + "@"
 				+ generalOps.getJsonString(studentExamQuestionsController.studentAnswers) + "@"
-				+ StudentStartExamPageController.examC;
+				+ StudentStartExamPageController.examC + "@" + teacherID;
 
 		return toRetString;
 	}
