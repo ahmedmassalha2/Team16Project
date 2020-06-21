@@ -53,10 +53,14 @@ public class checkedExam {
 	private String discreption;
 
 	private boolean isChecked;
+
+	private int examId;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	private Course course;
+	@JoinColumn(name = "teacherCommentChange")
+	private String teacherExp;
 
 	public checkedExam(Teacher teacher, Subject subject, List<Question> questions, String timeString, Student student,
 			double grade, String discreption) {
@@ -67,6 +71,7 @@ public class checkedExam {
 		this.student = student;
 		this.grade = grade;
 		this.discreption = discreption;
+		isChecked = false;
 	}
 
 	public checkedExam() {
@@ -190,6 +195,22 @@ public class checkedExam {
 
 	public void setQuestionsGrades(List<Double> questionsGrades) {
 		this.questionsGrades = questionsGrades;
+	}
+
+	public String getTeacherExp() {
+		return teacherExp;
+	}
+
+	public void setTeacherExp(String teacherExp) {
+		this.teacherExp = teacherExp;
+	}
+
+	public int getExamId() {
+		return examId;
+	}
+
+	public void setExamId(int examId) {
+		this.examId = examId;
 	}
 
 }

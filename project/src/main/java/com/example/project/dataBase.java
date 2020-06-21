@@ -35,7 +35,7 @@ public class dataBase {
 	private static SessionFactory getSessionFactory() throws HibernateException {
 		Configuration configuration = new Configuration();
 		// Add ALL of your entities here. You can also try adding a whole package.
-		//configuration.addAnnotatedClass(Answer.class);
+		// configuration.addAnnotatedClass(Answer.class);
 		configuration.addAnnotatedClass(checkedExam.class);
 		configuration.addAnnotatedClass(Course.class);
 		configuration.addAnnotatedClass(Exam.class);
@@ -83,7 +83,8 @@ public class dataBase {
 	}
 
 	public static void closeSess() {
-		session.close();
+		if (session != null && session.isOpen())
+			session.close();
 	}
 
 }

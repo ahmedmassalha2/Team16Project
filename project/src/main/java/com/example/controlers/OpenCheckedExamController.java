@@ -56,14 +56,19 @@ public class OpenCheckedExamController {
 	private TextField lastGrade; // Value injected by FXMLLoader
 	@FXML // fx:id="errorTXT"
 	private Text errorTXT; // Value injected by FXMLLoader
-
+	@FXML // fx:id="lastGF"
+	private Text lastGF; // Value injected by FXMLLoader
 	@FXML // fx:id="back"
 	private Button back; // Value injected by FXMLLoader
 	static String teacherName = "";
 	static String studtName = "";
 	static String time = "";
 	static String grade = "";
+	static String Lgrade = "";
 	static String teacherCommentsExam = "";
+	static String exId;
+	static String dicriptionsTech = "";
+	static boolean isTeacher = true;
 
 	@FXML
 	void goBack(ActionEvent event) throws IOException {
@@ -96,15 +101,20 @@ public class OpenCheckedExamController {
 			errorTXT.setText("Fill you're comments!");
 			return;
 		}
+		Instance.sendMessage(Command.teachAPPROVE.ordinal() + "@" + exId + "@" + lastGrade.getText() + "@"
+				+ studNotations.getText());
 		goBack(event);
 	}
 
 	@FXML
 	void showQuestions(ActionEvent event) throws IOException {
-
+		Lgrade = lastGrade.getText();
+		dicriptionsTech = studNotations.getText();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExamShowQuestions.fxml"));
 		Parent Main = loader.load();
 		CheckExamShowQuestionsController secController = loader.getController();
+		if (!isTeacher)
+			CheckExamShowQuestionsController.isTeacher = false;
 		secController.viewQuest();
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -115,11 +125,14 @@ public class OpenCheckedExamController {
 	}
 
 	public void initByExam(String data) throws IOException, SQLException {
+		if (!isTeacher)
+			hideButtons();
 		String[] datas = data.split("@");
 		OpenCheckedExamController.teacherName = datas[0];
 		OpenCheckedExamController.studtName = datas[1];
 		OpenCheckedExamController.time = datas[2];
 		OpenCheckedExamController.grade = datas[4];
+		OpenCheckedExamController.exId = datas[13];
 		OpenCheckedExamController.teacherCommentsExam = datas[6];
 		CheckExamShowQuestionsController.discriptions = new ObjectMapper().readValue(datas[9], ArrayList.class);
 		CheckExamShowQuestionsController.studentAnswers = new ObjectMapper().readValue(datas[7], ArrayList.class);
@@ -133,13 +146,35 @@ public class OpenCheckedExamController {
 		showData();
 	}
 
+	public void hideButtons() {
+
+		submitBTN.setVisible(false);
+		lastGrade.setVisible(false);
+		lastGF.setVisible(false);
+		studNotations.setEditable(false);
+
+	}
+
 	public void showData() {
 		examDur.setText(time);
 		tacherName.setText(teacherName);
 		studentName.setText(studtName);
 		systemGrade.setText(grade);
 		teacherComments.setText(teacherCommentsExam);
-
+		lastGrade.setText(Lgrade);
+		studNotations.setText(dicriptionsTech);
 	}
 
+	public static void resetAll() {
+		OpenCheckedExamController.teacherName = "";
+		OpenCheckedExamController.studtName = "";
+		OpenCheckedExamController.time = "";
+		OpenCheckedExamController.grade = "";
+		OpenCheckedExamController.Lgrade = "";
+		OpenCheckedExamController.teacherCommentsExam = "";
+		OpenCheckedExamController.exId = "";
+		OpenCheckedExamController.dicriptionsTech = "";
+		OpenCheckedExamController.isTeacher = true;
+		CheckExamShowQuestionsController.resetAll();
+	}
 }

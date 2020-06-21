@@ -28,6 +28,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import net.bytebuddy.asm.Advice.This;
 
 public class CheckExamShowQuestionsController implements Initializable {
 
@@ -94,13 +95,16 @@ public class CheckExamShowQuestionsController implements Initializable {
 	static int current = 0;
 	static List<Double> gradesnew = new ArrayList<>();
 	static List<List<String>> answersList = new ArrayList<>();
+	static boolean isTeacher = true;
 
 	@FXML
 	void backToMain(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/OpenCheckedExam.fxml"));
 		Parent Main = loader.load();
 		OpenCheckedExamController secController = loader.getController();
-
+		if (!isTeacher) {
+			secController.hideButtons();
+		}
 		secController.showData();
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -204,7 +208,20 @@ public class CheckExamShowQuestionsController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		// TODO Auto-generated method stub
 		// start();
+	}
+
+	public static void resetAll() {
+		CheckExamShowQuestionsController.discriptions.clear();
+		CheckExamShowQuestionsController.studentAnswers.clear();
+		CheckExamShowQuestionsController.rightAnswers.clear();
+		CheckExamShowQuestionsController.studentInfoPerQ.clear();
+		CheckExamShowQuestionsController.teacherInfoPerQ.clear();
+		CheckExamShowQuestionsController.current = 0;
+		CheckExamShowQuestionsController.gradesnew.clear();
+		CheckExamShowQuestionsController.answersList.clear();
+		CheckExamShowQuestionsController.isTeacher = true;
 	}
 }

@@ -116,7 +116,6 @@ public class ExamOps {
 		exam.setTeacher(teacher);
 		exam.setSubject(subject);
 		exam.setGradesPerQuestion(gradePerQuestion);
-
 		exam.setStudentExamComments(infoExamStudent);
 		exam.setStudentInfoPerQuestion(infoPerQStudent);
 		exam.setTeacherExamComments(infoExamTeacher);
@@ -278,11 +277,14 @@ public class ExamOps {
 				session.close();
 				return "";
 			}
-			String nameOFCourse = ((Exam) query2.getSingleResult()).getCourse().getName();
+			// String nameOFCourse = ((Exam)
+			// query2.getSingleResult()).getCourse().getName();
+			int nameOFCourse = ((Exam) query2.getSingleResult()).getId();
 			System.out.println(student.getGrades().size());
 			for (checkedExam exam : student.getGrades()) {
 				// System.out.println(exam.getCourse().getName());
-				if (exam.getCourse() != null && exam.getCourse().getName().equals(nameOFCourse)) {
+				// exam.getCourse().getName().equals(nameOFCourse)
+				if (exam.getCourse() != null && exam.getExamId() == nameOFCourse) {
 					session.close();
 					return "doneIt";
 				}
@@ -451,6 +453,7 @@ public class ExamOps {
 		chExam.setStudent(student);
 		chExam.setTeacher(teacher);
 		chExam.setQuestions(new ArrayList<Question>());
+		chExam.setExamId(exam.getId());
 		for (Question q : exam.getQuestions()) {
 			chExam.getQuestions().add(q);
 			q.getCheckedExams().add(chExam);
@@ -484,5 +487,38 @@ public class ExamOps {
 		session.close();
 		return "";
 
+	}
+
+	public static String teachAPPROVE(String idString, String newGrade, String teacherExplain) {
+		// TODO Auto-generated method stub
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		checkedExam exam = session.get(checkedExam.class, Integer.valueOf(idString));
+		exam.setGrade(Double.valueOf(newGrade));
+		exam.setTeacherExp(teacherExplain);
+		exam.setChecked(true);
+		session.save(exam);
+		session.getTransaction().commit();
+		session.close();
+		return "";
+	}
+
+	public static String getALLChecked() throws JsonProcessingException {
+		dataBase.getInstance();
+
+		List<checkedExam> exams = dataBase.getAll(checkedExam.class);
+		List<String> examsdisc = new ArrayList<>();
+		for (checkedExam exam : exams) {
+			String discString = "Exam id: " + exam.getId() + "\nName: " + exam.getStudent().getFirstName() + " "
+					+ exam.getStudent().getLastName() + "\nGrade: " + exam.getGrade() + "\nDuration: "
+					+ exam.getTimeString() + " minutes";
+			if (exam.isChecked())
+				examsdisc.add(discString);
+		}
+		dataBase.closeSess();
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(examsdisc);
+		System.out.println(json);
+		return json;
 	}
 }
