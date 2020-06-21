@@ -8,8 +8,8 @@ public enum Command {
 	getTeachers, isQuestExist, addQ, getSUBJS, getQUESTIONS, GETQUESSUBJ, getQ, DELLQ, getCourseSubject,
 	TeacherExamsByUsrName, ExamsBySubject, getSubjectName, isExamExist, AddExam, getExamById, getTechName, getExamCode,
 	isStudentExistById, getExamCourseByCode, isStudentExistInCourse, getExamIdBycode, setExamByExamNum,getNameByUsrName,
-  getTechIdByExCode, studentSubmmit,getAllStudents, getTeacherExamGenerated, getCheckedExamById
-
+  getTechIdByExCode, studentSubmmit,getAllStudents, getTeacherExamGenerated, getCheckedExamById,teachAPPROVE,getALLChecked, getStudentByIDNUM,
+  getSTIDNum, studentChecked
 
 
 }

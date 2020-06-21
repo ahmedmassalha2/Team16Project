@@ -106,7 +106,7 @@ public class commandRunner {
 		case getExamCode:
 			return ExamOps.getExamCodetById(commandArr[1]);
 		case isStudentExistById:
-			return ExamOps.isStudentExistById(commandArr[1], commandArr[2], commandArr[3],commandArr[4]);
+			return ExamOps.isStudentExistById(commandArr[1], commandArr[2], commandArr[3], commandArr[4]);
 		case getExamCourseByCode:
 			return ExamOps.getExamCourseByCode(commandArr[1]);
 		case isStudentExistInCourse:
@@ -134,7 +134,16 @@ public class commandRunner {
 			return teacherOps.getTeacherExamGenerated(commandArr[1], commandArr[2]);
 		case getCheckedExamById:
 			return ExamOps.getCheckedExamById(commandArr[1]);
-
+		case teachAPPROVE:
+			return ExamOps.teachAPPROVE(commandArr[1], commandArr[2], commandArr[3]);
+		case getALLChecked:
+			return ExamOps.getALLChecked();
+		case getStudentByIDNUM:
+			return generalOps.getStudentByIDNUM(commandArr[1]);
+		case getSTIDNum:
+			return generalOps.getSTIDNum(commandArr[1], commandArr[2]);
+		case studentChecked:
+			return generalOps.studentChecked(commandArr[1]);
 		}
 
 		return command;

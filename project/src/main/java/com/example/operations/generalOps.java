@@ -12,6 +12,7 @@ import com.example.entities.Question;
 import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
+import com.example.entities.checkedExam;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -169,5 +170,66 @@ public class generalOps {
 		}
 		dataBase.closeSess();
 		return ret;
+	}
+
+	public static String getStudentByIDNUM(String idNum) throws JsonProcessingException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Student where idNum = :idNum");
+		query.setParameter("idNum", idNum);
+		List list = query.list();
+		if (list.size() != 0) {
+			String disc = "";
+			Student student = ((Student) query.getSingleResult());
+
+			List<checkedExam> exams = student.getGrades();
+			// List<Course> courses = student.getCourses();
+			List<String> coursesNAmes = new ArrayList<>();
+			for (Course course : student.getCourses())
+				coursesNAmes.add(course.getName());
+			disc = student.getFirstName() + " " + student.getLastName() + "@" + student.getIdNum() + "@"
+					+ generalOps.getJsonString(exams) + "@" + generalOps.getJsonString(coursesNAmes);
+			session.close();
+			return disc;
+		}
+		session.close();
+
+		return null;
+	}
+
+	public static String getSTIDNum(String userName, String password) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Student where username = :username and password = :password");
+		query.setParameter("username", userName);
+		query.setParameter("password", password);
+		List list = query.list();
+		if (list.size() != 0) {
+			String disc = "";
+			String student = ((Student) query.getSingleResult()).getIdNum();
+			session.close();
+			return student;
+		}
+		session.close();
+		return "";
+	}
+
+	public static String studentChecked(String string) throws JsonProcessingException {
+		List<checkedExam> exams = dataBase.getAll(checkedExam.class);
+		List<String> examsdisc = new ArrayList<>();
+		for (checkedExam exam : exams) {
+			if (exam.getStudent().getIdNum().equals(string)) {
+				String discString = "Exam id: " + exam.getId() + "\nName: " + exam.getStudent().getFirstName() + " "
+						+ exam.getStudent().getLastName() + "\nGrade: " + exam.getGrade() + "\nDuration: "
+						+ exam.getTimeString() + " minutes";
+				if (exam.isChecked())
+					examsdisc.add(discString);
+			}
+		}
+		dataBase.closeSess();
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(examsdisc);
+		System.out.println(json);
+		return json;
 	}
 }

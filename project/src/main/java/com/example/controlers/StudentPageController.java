@@ -6,11 +6,18 @@ package com.example.controlers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.ServerClientEntities.Command;
+import com.example.ServerClientEntities.Instance;
+import com.example.entities.checkedExam;
 import com.example.project.App;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -96,8 +103,30 @@ public class StudentPageController implements Initializable {
 	}
 
 	@FXML
-	void showGrades(ActionEvent event) {
+	void showGrades(ActionEvent event) throws IOException {
+		principalStudentInfoContoller.thisPageFXML = "/com/example/project/principalStudentInfo.fxml";
+		Instance.sendMessage(Command.getSTIDNum.ordinal() + "@" + username + "@" + password);
+		Instance.sendMessage(
+				Command.getStudentByIDNUM.ordinal() + "@" + Instance.getClientConsole().getMessage().toString());
+		String[] datas = Instance.getClientConsole().getMessage().toString().split("@");
+		principalStudentInfoContoller.name = datas[0];
+		principalStudentInfoContoller.stId = datas[1];
+		principalStudentInfoContoller.courses = new ObjectMapper().readValue(datas[3], ArrayList.class);
+		principalStudentInfoContoller.exams = new ObjectMapper().readValue(datas[2],
+				new TypeReference<List<checkedExam>>() {
+				});
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/principalStudentInfo.fxml"));
+		Parent Main = loader.load();
+		principalStudentInfoContoller.backTo = "/com/example/project/StudentMainPage.fxml";
+		System.out.println("dd: " + datas[2]);
+		principalStudentInfoContoller secController = loader.getController();
+		secController.setData();
 
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Student Info");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@FXML
@@ -137,7 +166,7 @@ public class StudentPageController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		usernameTXT.setText(username);
-		//start();
+		// start();
 	}
 
 	public void init(String disc, String Password) {

@@ -106,6 +106,7 @@ public class PrincipalMainPageController implements Initializable {
 	@FXML
 	void studentsList(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/principalMainStudents.fxml"));
+		principalMainStudentsController.backTo ="/com/example/project/PrincipalMainPage.fxml";
 		Parent Main = loader.load();
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();

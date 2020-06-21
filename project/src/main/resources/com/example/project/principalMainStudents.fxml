@@ -20,7 +20,7 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-radius: 30;" text="View student information">
+                        <Button fx:id="viewStBTN" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#viewStudent" style="-fx-background-radius: 30;" text="View student information">
                            <font>
                               <Font name="Arial" size="12.0" />
                            </font>
@@ -35,7 +35,7 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <Button layoutX="15.0" layoutY="17.0" mnemonicParsing="false" style="-fx-background-radius: 30;" text="Exams">
+            <Button fx:id="examsBTN" layoutX="15.0" layoutY="17.0" mnemonicParsing="false" onAction="#showExams" style="-fx-background-radius: 30;" text="Exams">
                <effect>
                   <DropShadow />
                </effect>

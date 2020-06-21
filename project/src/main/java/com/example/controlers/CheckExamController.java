@@ -20,7 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class CheckExamController {
-
+	static boolean isTeacher = true;
 	static String username = "";
 	static String password = "";
 	@FXML // fx:id="backBTN"
@@ -31,15 +31,18 @@ public class CheckExamController {
 
 	@FXML // fx:id="ExamsList"
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
+	static String backto = "/com/example/project/teacherExamsList.fxml";
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherExamsList.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(backto));
 		Parent Main = loader.load();
-		teacherExamList secController = loader.getController();
+		if (isTeacher) {
+			teacherExamList secController = loader.getController();
 
-		secController.init(teacherExamList.useString, teacherExamList.passString);
-		;
+			secController.init(teacherExamList.useString, teacherExamList.passString);
+		}
+
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Exam list");
@@ -58,7 +61,8 @@ public class CheckExamController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/OpenCheckedExam.fxml"));
 		Parent Main = loader.load();
 		OpenCheckedExamController secController = loader.getController();
-
+		if (!isTeacher)
+			OpenCheckedExamController.isTeacher = false;
 		secController.initByExam(Instance.getClientConsole().getMessage().toString());
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -71,8 +75,12 @@ public class CheckExamController {
 	public void init(String usrName, String password) throws IOException {
 		CheckExamController.username = usrName;
 		CheckExamController.password = password;
-		Instance.sendMessage(Command.getTeacherExamGenerated.ordinal() + "@" + usrName + "@" + password);
-
+		if (isTeacher)
+			Instance.sendMessage(Command.getTeacherExamGenerated.ordinal() + "@" + usrName + "@" + password);
+		else {
+			
+			Instance.sendMessage(Command.getALLChecked.ordinal() + "");
+		}
 		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		ExamsList.getItems().addAll(l);

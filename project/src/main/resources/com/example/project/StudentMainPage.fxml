@@ -21,7 +21,7 @@
                         <Image url="@images/white.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="gradesBtn" layoutX="322.0" layoutY="178.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="GRADES">
+                  <Button fx:id="gradesBtn" layoutX="322.0" layoutY="178.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="Exams\Grades">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>

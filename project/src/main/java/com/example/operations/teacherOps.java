@@ -386,11 +386,11 @@ public class teacherOps {
 			List<String> examsdisc = new ArrayList<String>();
 			for (checkedExam exam : l) {
 
-				String discString = "Exam id: " + exam.getId() + "\nName: " +exam.getStudent().getFirstName()+
-						" " + exam.getStudent().getLastName() + "\nGrade: " + exam.getGrade()
-						+ "\nDuration: " + exam.getTimeString()
-						+ " minutes";
-				examsdisc.add(discString);
+				String discString = "Exam id: " + exam.getId() + "\nName: " + exam.getStudent().getFirstName() + " "
+						+ exam.getStudent().getLastName() + "\nGrade: " + exam.getGrade() + "\nDuration: "
+						+ exam.getTimeString() + " minutes";
+				if (!exam.isChecked())
+					examsdisc.add(discString);
 			}
 			ObjectMapper mapper = new ObjectMapper();
 			String json = mapper.writeValueAsString(examsdisc);
