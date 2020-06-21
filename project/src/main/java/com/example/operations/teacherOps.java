@@ -15,6 +15,7 @@ import com.example.entities.Exam;
 import com.example.entities.Question;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
+import com.example.entities.checkedExam;
 import com.example.entities.todoItem;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -368,6 +369,38 @@ public class teacherOps {
 		}
 		session.close();
 		return "";
+	}
+
+	public static String getTeacherExamGenerated(String usrName, String password) throws JsonProcessingException {
+
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username and password = :password");
+		query.setParameter("username", usrName);
+		query.setParameter("password", password);
+		List list = query.list();
+		if (list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			teacher.getChExams();
+			List<checkedExam> l = teacher.getChExams();
+			List<String> examsdisc = new ArrayList<String>();
+			for (checkedExam exam : l) {
+
+				String discString = "Exam id: " + exam.getId() + "\nName: " +exam.getStudent().getFirstName()+
+						" " + exam.getStudent().getLastName() + "\nGrade: " + exam.getGrade()
+						+ "\nDuration: " + exam.getTimeString()
+						+ " minutes";
+				examsdisc.add(discString);
+			}
+			ObjectMapper mapper = new ObjectMapper();
+			String json = mapper.writeValueAsString(examsdisc);
+			System.out.println("JSON = " + json);
+			session.close();
+			return json;
+		}
+		session.close();
+		return "";
+
 	}
 
 }

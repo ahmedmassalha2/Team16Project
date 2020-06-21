@@ -126,8 +126,15 @@ public class commandRunner {
 		case studentSubmmit:
 			List<String> answers = new ObjectMapper().readValue(commandArr[2], ArrayList.class);
 			return ExamOps.examSubmmited(commandArr[1], answers, commandArr[3], commandArr[4]);
+
 		case getAllStudents:
 			return generalOps.getAllStudents();
+
+		case getTeacherExamGenerated:
+			return teacherOps.getTeacherExamGenerated(commandArr[1], commandArr[2]);
+		case getCheckedExamById:
+			return ExamOps.getCheckedExamById(commandArr[1]);
+
 		}
 
 		return command;

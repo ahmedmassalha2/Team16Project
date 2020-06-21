@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+//import org.graalvm.compiler.lir.alloc.lsra.Interval.UsePosList;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -68,7 +69,19 @@ public class teacherExamList implements Initializable {
 	}
 
 	@FXML
-	void checkExams(ActionEvent event) {
+	void checkExams(ActionEvent event) throws IOException {
+		
+		
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExam.fxml"));
+		Parent Main = loader.load();
+		CheckExamController secController = loader.getController();
+		secController.init(useString, passString);
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Check Exams list");
+		Window.setScene(scene);
+		Window.show();
 
 	}
 

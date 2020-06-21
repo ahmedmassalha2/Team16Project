@@ -183,6 +183,37 @@ public class ExamOps {
 		return examString;
 
 	}
+	public static String getWholeCheckedExam(int i) throws JsonProcessingException {
+
+		System.out.println(i);
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		List<String> examsdisc = new ArrayList<String>();
+		ObjectMapper mapper = new ObjectMapper();
+		Query query = session.createQuery("from checkedExam where id = :id");
+		query.setParameter("id",i);
+		checkedExam exam = (checkedExam) query.getSingleResult();
+		String StudentInfoPerQuestion = mapper.writeValueAsString(exam.getTeacherInfoPerQuestion());
+		//String TeachertInfoPerQuestion = mapper.writeValueAsString(exam.getTeacherInfoPerQuestion());
+		String Grade = mapper.writeValueAsString(exam.getGrade());
+		List<String> questionsId = new ArrayList<String>();
+		for (Question q : exam.getQuestions()) {
+
+			questionsId.add(String.valueOf(q.getId()));
+		}
+		String QuestionIds = mapper.writeValueAsString(questionsId);
+
+		String examString = "" + exam.getTeacher().getUsername() 
+				+"@" + exam.getStudent().getFirstName() + " " + 
+				exam.getStudent().getLastName() + "@"
+				+ exam.getTimeString()  + "@"
+				+ StudentInfoPerQuestion  + "@" + Grade + "@" + QuestionIds
+				+ "@" + exam.getTeacherExamComments() ;
+
+		System.out.println(examString);
+		return examString;
+
+	}
 
 	public static String getExamCodetById(String id) {
 
@@ -416,5 +447,20 @@ public class ExamOps {
 		chExam.setTeacherExamComments(exam.getStudentExamComments());
 		ExamOps.evaluateExam(chExam, exam);
 		return "";
+	}
+	
+	public static String getCheckedExamById(String id) throws JsonProcessingException {
+		
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		checkedExam q = session.get(checkedExam.class, Integer.valueOf(id));
+		if (q != null) {
+			String args = getWholeCheckedExam(q.getId());
+			session.close();
+			return args;
+		}
+		session.close();
+		return "";
+		
 	}
 }
