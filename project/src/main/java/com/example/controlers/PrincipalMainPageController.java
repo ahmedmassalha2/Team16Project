@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.example.ServerClientEntities.Command;
+import com.example.ServerClientEntities.Instance;
 import com.example.operations.ExamOps;
 import com.example.operations.PrincipalOps;
 
@@ -37,6 +39,8 @@ public class PrincipalMainPageController implements Initializable {
 	private Button logoutBtn; // Value injected by FXMLLoader
 	@FXML // fx:id="todoBTN"
 	private Button todoBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="studentsBTN"
+	private Button studentsBTN; // Value injected by FXMLLoader
 
 	@FXML
 	void logOut(ActionEvent event) {
@@ -95,6 +99,17 @@ public class PrincipalMainPageController implements Initializable {
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("ToDo list");
+		Window.setScene(scene);
+		Window.show();
+	}
+
+	@FXML
+	void studentsList(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/principalMainStudents.fxml"));
+		Parent Main = loader.load();
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Students informations");
 		Window.setScene(scene);
 		Window.show();
 	}

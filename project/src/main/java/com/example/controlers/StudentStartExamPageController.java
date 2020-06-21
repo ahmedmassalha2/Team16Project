@@ -52,8 +52,12 @@ public class StudentStartExamPageController implements Initializable {
 			errorTxt.setText("Exam code should only contain digits");
 			return;
 		}
-		Instance.sendMessage(
-				Command.isStudentExistById.ordinal() + "@" + idNum.getText() + "@" + usrName + "@" + password);
+		Instance.sendMessage(Command.isStudentExistById.ordinal() + "@" + idNum.getText() + "@" + usrName + "@"
+				+ password + "@" + examCode.getText());
+		if (Instance.getClientConsole().getMessage().toString().equals("doneIt")) {
+			errorTxt.setText("You've already submited you're exam!");
+			return;
+		}
 		if (!(Instance.getClientConsole().getMessage().toString().equals("exist"))) {
 
 			errorTxt.setText("Invalid ID or exam code");

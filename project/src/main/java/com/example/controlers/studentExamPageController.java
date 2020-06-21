@@ -78,7 +78,13 @@ public class studentExamPageController implements Initializable {
 	@FXML
 	void addExam(ActionEvent event) throws IOException {
 		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData());
-		System.out.println(studentExamQuestionsController.getData());
+		resetAll();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMainPage.fxml"));
+		Scene scene = new Scene(loader.load());
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Main page");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	@FXML
@@ -119,5 +125,19 @@ public class studentExamPageController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+	}
+
+	public static void resetAll() {
+		studName = "";
+		studentIDString = "";
+		userString = "";
+		paString = "";
+		duration = "";
+		subName = "";
+		cName = "";
+		stInfo = "";
+		teacherName = "";
+		setTeacher = "";
+		studentExamQuestionsController.resetAll();
 	}
 }

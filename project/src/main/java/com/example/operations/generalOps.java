@@ -6,8 +6,10 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.example.ServerClientEntities.Instance;
 import com.example.entities.Course;
 import com.example.entities.Question;
+import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
 import com.example.project.dataBase;
@@ -93,7 +95,7 @@ public class generalOps {
 		if (list.size() != 0) {
 
 			Course course = (Course) query.getSingleResult();
-      String ret = course.getSubject().getName() + "@"+ course.getSubject().getSnumber();
+			String ret = course.getSubject().getName() + "@" + course.getSubject().getSnumber();
 
 			session.close();
 			return ret;
@@ -107,49 +109,65 @@ public class generalOps {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(object);
 	}
+
 	public static Subject getSubjectByName(String subName) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query = session.createQuery("from Subject where subject_name = :subject_name");
 		query.setParameter("subject_name", subName);
 		List list = query.list();
-		if(list.size() != 0) {
+		if (list.size() != 0) {
 			Subject sub = (Subject) query.getSingleResult();
-			//session.close();
+			// session.close();
 			return sub;
 		}
-		//session.close();
+		// session.close();
 		return null;
-		
+
 	}
+
 	public static Course getCourseByName(String courseName) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query = session.createQuery("from Course where name = :name");
 		query.setParameter("name", courseName);
 		List list = query.list();
-		if(list.size() != 0) {
+		if (list.size() != 0) {
 			Course course = (Course) query.getSingleResult();
-			//session.close();
+			// session.close();
 			return course;
 		}
-		//session.close();
+		// session.close();
 		return null;
-		
+
 	}
+
 	public static String getTechName(String user) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query = session.createQuery("from Teacher where username = :username");
 		query.setParameter("username", user);
 		List list = query.list();
-		if(list.size() != 0) {
-			String name = ((Teacher) query.getSingleResult()).getFirstName() +" "+((Teacher) query.getSingleResult()).getLastName();
+		if (list.size() != 0) {
+			String name = ((Teacher) query.getSingleResult()).getFirstName() + " "
+					+ ((Teacher) query.getSingleResult()).getLastName();
 			session.close();
 			return name;
 		}
 		session.close();
-	
+
 		return null;
+	}
+
+	public static String getAllStudents() throws JsonProcessingException {
+		List<Student> students = dataBase.getAll(Student.class);
+		String ret = "";
+		for (Student student : students) {
+			String disc = "Student ID: " + student.getIdNum() + "\n" + "First Name: " + student.getFirstName() + "\n"
+					+ "Last Name: " + student.getLastName();
+			ret = ret + disc + "@";
+		}
+		dataBase.closeSess();
+		return ret;
 	}
 }

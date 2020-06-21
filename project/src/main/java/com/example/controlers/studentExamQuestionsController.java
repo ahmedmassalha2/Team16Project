@@ -227,4 +227,16 @@ public class studentExamQuestionsController {
 
 		return toRetString;
 	}
+
+	public static void resetAll() {
+		questDiscriptions.clear();
+		studentsInfo.clear();
+		questIDs.clear();
+		points.clear();
+		isAnswerd.clear();
+		studentAnswers.clear();
+		answers.clear();
+		Current = 0;
+		teacherID = "";
+	}
 }
