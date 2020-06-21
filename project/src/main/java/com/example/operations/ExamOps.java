@@ -245,7 +245,7 @@ public class ExamOps {
 		return "";
 	}
 
-	public static String isStudentExistById(String id, String usrName, String password) {
+	public static String isStudentExistById(String id, String usrName, String password, String courseCode) {
 
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
@@ -256,6 +256,23 @@ public class ExamOps {
 		query.setParameter("password", password);
 		List list = query.list();
 		if (list.size() != 0) {
+			Student student = (Student) query.getSingleResult();
+			Query query2 = session.createQuery("from Exam where exam_code = :exam_code");
+			query2.setParameter("exam_code", courseCode);
+			if (query2.list().size() == 0) {
+				session.close();
+				return "";
+			}
+			String nameOFCourse = ((Exam) query2.getSingleResult()).getCourse().getName();
+			System.out.println(student.getGrades().size());
+			for (checkedExam exam : student.getGrades()) {
+				// System.out.println(exam.getCourse().getName());
+				if (exam.getCourse() != null && exam.getCourse().getName().equals(nameOFCourse)) {
+					session.close();
+					return "doneIt";
+				}
+
+			}
 			dataBase.closeSess();
 			return "exist";
 		}
@@ -426,6 +443,7 @@ public class ExamOps {
 			chExam.getTeacherInfoPerQuestion().add(s);
 		teacher.getChExams().add(chExam);
 		session.update(teacher);
+		chExam.setCourse(session.get(Course.class, exam.getCourse().getId()));
 		chExam.setTeacherExamComments(exam.getStudentExamComments());
 		ExamOps.evaluateExam(chExam, exam);
 		return "";

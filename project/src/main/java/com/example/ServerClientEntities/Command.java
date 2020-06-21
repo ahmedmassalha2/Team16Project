@@ -7,8 +7,9 @@ public enum Command {
 	teachDellToDo, princToDo, princAddToDo, princDellToDo, StuToDo, StuAddToDo, StuDellToDo, getAllExams, getSubjNumber,
 	getTeachers, isQuestExist, addQ, getSUBJS, getQUESTIONS, GETQUESSUBJ, getQ, DELLQ, getCourseSubject,
 	TeacherExamsByUsrName, ExamsBySubject, getSubjectName, isExamExist, AddExam, getExamById, getTechName, getExamCode,
-	isStudentExistById, getExamCourseByCode, isStudentExistInCourse, getExamIdBycode, setExamByExamNum,
-	getNameByUsrName, getTechIdByExCode, studentSubmmit, getTeacherExamGenerated, getCheckedExamById
+	isStudentExistById, getExamCourseByCode, isStudentExistInCourse, getExamIdBycode, setExamByExamNum,getNameByUsrName,
+  getTechIdByExCode, studentSubmmit,getAllStudents, getTeacherExamGenerated, getCheckedExamById
+
 
 
 }
