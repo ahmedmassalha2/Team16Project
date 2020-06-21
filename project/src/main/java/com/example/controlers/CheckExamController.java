@@ -20,27 +20,37 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class CheckExamController {
-	
-	 String studentFirstName = "";
-	 String studentLastName = "";
-    @FXML // fx:id="backBTN"
-    private Button backBTN; // Value injected by FXMLLoader
 
-    @FXML // fx:id="openExamBtn"
-    private Button openExamBtn; // Value injected by FXMLLoader
+	static String username = "";
+	static String password = "";
+	@FXML // fx:id="backBTN"
+	private Button backBTN; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ExamsList"
-    private ListView<String> ExamsList; // Value injected by FXMLLoader
+	@FXML // fx:id="openExamBtn"
+	private Button openExamBtn; // Value injected by FXMLLoader
 
-    @FXML
-    void back(ActionEvent event) {
+	@FXML // fx:id="ExamsList"
+	private ListView<String> ExamsList; // Value injected by FXMLLoader
 
-    }
+	@FXML
+	void back(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherExamsList.fxml"));
+		Parent Main = loader.load();
+		teacherExamList secController = loader.getController();
 
-    @FXML
-    void openExam(ActionEvent event) throws IOException, SQLException {
-    	
-    	if (!(ExamsList.getSelectionModel().getSelectedIndex() >= 0))
+		secController.init(teacherExamList.useString, teacherExamList.passString);
+		;
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Exam list");
+		Window.setScene(scene);
+		Window.show();
+	}
+
+	@FXML
+	void openExam(ActionEvent event) throws IOException, SQLException {
+
+		if (!(ExamsList.getSelectionModel().getSelectedIndex() >= 0))
 			return;
 		Instance.sendMessage(Command.getCheckedExamById.ordinal() + "@"
 				+ ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
@@ -52,30 +62,31 @@ public class CheckExamController {
 		secController.initByExam(Instance.getClientConsole().getMessage().toString());
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Create exam main page");
+		Window.setTitle("Student exam");
 		Window.setScene(scene);
 		Window.show();
-    	
 
+	}
 
-    }
-    
-    public void init(String usrName, String password) throws IOException {
-    	
-    	Instance.sendMessage(Command.getTeacherExamGenerated.ordinal() + "@"
-				+ usrName + "@" + password);
-    	
-    	String json = Instance.getClientConsole().getMessage().toString();
+	public void init(String usrName, String password) throws IOException {
+		CheckExamController.username = usrName;
+		CheckExamController.password = password;
+		Instance.sendMessage(Command.getTeacherExamGenerated.ordinal() + "@" + usrName + "@" + password);
+
+		String json = Instance.getClientConsole().getMessage().toString();
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		ExamsList.getItems().addAll(l);
-		System.out.println("Teacher usrName "+usrName);
-	/*	for(String s : l) {
-			
-			studentFirstName = "" + ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[1].toString();
-			studentLastName = "" + ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2].toString();
-			System.out.println("first name: "+studentFirstName);
-		}*/
-    	
-    }
+		System.out.println("Teacher usrName " + usrName);
+		/*
+		 * for(String s : l) {
+		 * 
+		 * studentFirstName = "" +
+		 * ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[1].
+		 * toString(); studentLastName = "" +
+		 * ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2].
+		 * toString(); System.out.println("first name: "+studentFirstName); }
+		 */
+
+	}
 
 }

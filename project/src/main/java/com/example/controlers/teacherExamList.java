@@ -70,9 +70,6 @@ public class teacherExamList implements Initializable {
 
 	@FXML
 	void checkExams(ActionEvent event) throws IOException {
-		
-		
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExam.fxml"));
 		Parent Main = loader.load();
 		CheckExamController secController = loader.getController();

@@ -48,7 +48,7 @@
                   <Text fx:id="examDur" layoutX="289.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="duration" wrappingWidth="129.13671875" />
                   <Text layoutX="346.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher:" textAlignment="CENTER" wrappingWidth="46.13671875" />
                   <Text fx:id="tacherName" layoutX="398.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher name" wrappingWidth="129.13671875" />
-                  <Button fx:id="backBtn" layoutX="246.0" layoutY="350.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 30;" text="Back">
+                  <Button fx:id="backBtn" layoutX="247.0" layoutY="350.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 30;" text="Back">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>

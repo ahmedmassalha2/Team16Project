@@ -45,6 +45,9 @@ public class checkedExam {
 
 	@ElementCollection
 	List<String> teacherInfoPerQuestion;
+
+	@ElementCollection
+	List<Double> questionsGrades;
 	private double grade;
 
 	private String discreption;
@@ -179,6 +182,14 @@ public class checkedExam {
 
 	public void setTeacherExamComments(String teacherExamComments) {
 		this.teacherExamComments = teacherExamComments;
+	}
+
+	public List<Double> getQuestionsGrades() {
+		return questionsGrades;
+	}
+
+	public void setQuestionsGrades(List<Double> questionsGrades) {
+		this.questionsGrades = questionsGrades;
 	}
 
 }

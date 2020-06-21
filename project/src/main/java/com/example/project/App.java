@@ -197,10 +197,13 @@ public class App {
 	}
 
 	public static void main(String[] args) throws Exception {
-		/*
-		 * dataBase.getInstance(); session = dataBase.getSession(); initializeData();
-		 * printData(); dataBase.closeSess();
-		 */
+
+		dataBase.getInstance();
+		session = dataBase.getSession();
+		initializeData();
+		printData();
+		dataBase.closeSess();
+
 		/*
 		 * Course c1 = new Course("122","1212"); Subject s1 = new Subject("math", "00");
 		 * Question question = new Question("1 + 1 = ?", "000", s1); Answer a1 = new
@@ -231,14 +234,6 @@ public class App {
 		 * session = dataBase.getInstance().getSession(); initializeData(); printData();
 		 * session.close();
 		 */
-
-		FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/project/studentExamPage.fxml"));
-		Parent Main = loader.load();
-		Scene scene = new Scene(Main);
-		Stage Window = new Stage();
-		Window.setTitle("Create exam main page");
-		Window.setScene(scene);
-		Window.show();
 
 		/*
 		 * Query query = session.
