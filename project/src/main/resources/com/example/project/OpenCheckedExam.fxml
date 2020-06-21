@@ -18,7 +18,7 @@
          <center>
             <Group>
                <children>
-                  <Button fx:id="toQuestions" layoutX="335.0" layoutY="347.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 30;" text="questions">
+                  <Button fx:id="toQuestions" layoutX="335.0" layoutY="383.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 30;" text="questions">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
@@ -31,8 +31,8 @@
                         <Image url="@images/pngguru.com%20(1).png" />
                      </image>
                   </ImageView>
-                  <TextArea fx:id="studNotations" editable="false" layoutX="210.0" layoutY="131.0" prefHeight="111.0" prefWidth="274.0" promptText="Student notations" />
-                  <Button fx:id="submitBTN" layoutX="462.0" layoutY="347.0" mnemonicParsing="false" onAction="#addExam" prefHeight="30.0" prefWidth="67.0" style="-fx-background-radius: 30;" text="Submit">
+                  <TextArea fx:id="studNotations" layoutX="210.0" layoutY="131.0" prefHeight="111.0" prefWidth="274.0" promptText="Fill you're comments here!!" />
+                  <Button fx:id="submitBTN" layoutX="462.0" layoutY="383.0" mnemonicParsing="false" onAction="#addExam" prefHeight="30.0" prefWidth="67.0" style="-fx-background-radius: 30;" text="Submit">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
@@ -51,6 +51,19 @@
                   <Text layoutX="312.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Grade:" textAlignment="CENTER" wrappingWidth="68.53668212890625" />
                   <TextArea fx:id="teacherComments" editable="false" layoutX="209.0" layoutY="242.0" prefHeight="74.0" prefWidth="274.0" promptText="Student notations" />
                   <TextField fx:id="lastGrade" layoutX="398.0" layoutY="94.0" prefHeight="25.0" prefWidth="115.0" />
+                  <Text fx:id="errorTXT" fill="RED" layoutX="149.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="153.13671875">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="back" layoutX="5.0" layoutY="383.0" mnemonicParsing="false" onAction="#goBack" prefHeight="30.0" prefWidth="67.0" style="-fx-background-radius: 30;" text="Back">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
                </children>
             </Group>
          </center>

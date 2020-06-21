@@ -54,6 +54,9 @@ public class studentExamPageController implements Initializable {
 
 	@FXML // fx:id="tacherName"
 	private Text tacherName; // Value injected by FXMLLoader
+
+	@FXML // fx:id="backBtn"
+	private Button backBtn; // Value injected by FXMLLoader
 	static String studName = "";
 	static String studentIDString = "";
 	static String userString = "";
@@ -139,5 +142,10 @@ public class studentExamPageController implements Initializable {
 		teacherName = "";
 		setTeacher = "";
 		studentExamQuestionsController.resetAll();
+	}
+
+	@FXML
+	void goBack(ActionEvent event) {
+
 	}
 }

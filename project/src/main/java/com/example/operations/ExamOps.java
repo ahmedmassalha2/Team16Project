@@ -183,6 +183,7 @@ public class ExamOps {
 		return examString;
 
 	}
+
 	public static String getWholeCheckedExam(int i) throws JsonProcessingException {
 
 		System.out.println(i);
@@ -191,10 +192,11 @@ public class ExamOps {
 		List<String> examsdisc = new ArrayList<String>();
 		ObjectMapper mapper = new ObjectMapper();
 		Query query = session.createQuery("from checkedExam where id = :id");
-		query.setParameter("id",i);
+		query.setParameter("id", i);
 		checkedExam exam = (checkedExam) query.getSingleResult();
 		String StudentInfoPerQuestion = mapper.writeValueAsString(exam.getTeacherInfoPerQuestion());
-		//String TeachertInfoPerQuestion = mapper.writeValueAsString(exam.getTeacherInfoPerQuestion());
+		// String TeachertInfoPerQuestion =
+		// mapper.writeValueAsString(exam.getTeacherInfoPerQuestion());
 		String Grade = mapper.writeValueAsString(exam.getGrade());
 		List<String> questionsId = new ArrayList<String>();
 		for (Question q : exam.getQuestions()) {
@@ -202,13 +204,26 @@ public class ExamOps {
 			questionsId.add(String.valueOf(q.getId()));
 		}
 		String QuestionIds = mapper.writeValueAsString(questionsId);
+		String studentAnswers = mapper.writeValueAsString(exam.getStudentAnswers());
+		List<String> rightAnswers = new ArrayList<>();
+		List<String> discriptions = new ArrayList<>();
+		List<List<String>> answersList = new ArrayList<>();
+		for (Question question : exam.getQuestions()) {
+			List<String> ans = new ArrayList<>();
+			for (String an : question.getAnswers())
+				ans.add(an);
+			answersList.add(ans);
+			rightAnswers.add(question.getRightAnswer());
+			discriptions.add(question.getDiscription());
+		}
 
-		String examString = "" + exam.getTeacher().getUsername() 
-				+"@" + exam.getStudent().getFirstName() + " " + 
-				exam.getStudent().getLastName() + "@"
-				+ exam.getTimeString()  + "@"
-				+ StudentInfoPerQuestion  + "@" + Grade + "@" + QuestionIds
-				+ "@" + exam.getTeacherExamComments() ;
+		String examString = "" + exam.getTeacher().getUsername() + "@" + exam.getStudent().getFirstName() + " "
+				+ exam.getStudent().getLastName() + "@" + exam.getTimeString() + "@" + StudentInfoPerQuestion + "@"
+				+ Grade + "@" + QuestionIds + "@" + exam.getTeacherExamComments() + "@" + studentAnswers + "@"
+				+ mapper.writeValueAsString(rightAnswers) + "@" + mapper.writeValueAsString(discriptions) + "@"
+				+ mapper.writeValueAsString(exam.getTeacherInfoPerQuestion()) + "@"
+				+ mapper.writeValueAsString(exam.getQuestionsGrades()) + "@" + mapper.writeValueAsString(answersList)
+				+ "@" + exam.getId();
 
 		System.out.println(examString);
 		return examString;
@@ -404,12 +419,14 @@ public class ExamOps {
 		List<String> studentAnswers = examToCheck.getStudentAnswers();
 		List<Question> questions = examToCheck.getQuestions();
 		List<Double> grades = exam.getGradesPerQuestion();
+		double total = 0;
 		double res = 0;
 		for (int i = 0; i < studentAnswers.size(); i++) {
 			if (studentAnswers.get(i).equals(questions.get(i).getRightAnswer()))
 				res += grades.get(i);
+			total += grades.get(i);
 		}
-		examToCheck.setGrade(res);
+		examToCheck.setGrade((res / total) * 100);
 		session.save(examToCheck);
 		session.getTransaction().commit();
 		session.close();
@@ -441,6 +458,11 @@ public class ExamOps {
 		chExam.setTeacherInfoPerQuestion(new ArrayList<>());
 		for (String s : exam.getStudentInfoPerQuestion())
 			chExam.getTeacherInfoPerQuestion().add(s);
+
+		chExam.setQuestionsGrades(new ArrayList<>());
+		for (double s : exam.getGradesPerQuestion())
+			chExam.getQuestionsGrades().add(s);
+
 		teacher.getChExams().add(chExam);
 		session.update(teacher);
 		chExam.setCourse(session.get(Course.class, exam.getCourse().getId()));
@@ -448,9 +470,9 @@ public class ExamOps {
 		ExamOps.evaluateExam(chExam, exam);
 		return "";
 	}
-	
+
 	public static String getCheckedExamById(String id) throws JsonProcessingException {
-		
+
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		checkedExam q = session.get(checkedExam.class, Integer.valueOf(id));
@@ -461,6 +483,6 @@ public class ExamOps {
 		}
 		session.close();
 		return "";
-		
+
 	}
 }

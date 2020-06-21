@@ -4,9 +4,12 @@
 
 package com.example.controlers;
 
+import java.awt.TextField;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
@@ -32,7 +35,23 @@ import javafx.stage.Stage;
 import net.bytebuddy.asm.Advice.This;
 
 public class studentExamQuestionsController {
+	int second = 0;
+	Timer myTimer = new Timer();
 
+	TimerTask task = new TimerTask() {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			second++;
+			mylabel.setText(Integer.toString(second));
+			if (mylabel.getText().equals("5"))
+				mylabel.setText("0");
+
+		}
+	};
+	@FXML // fx:id="myLabel"
+	private TextField mylabel; // Value injected by FXMLLoader
 	@FXML // fx:id="questionDisc"
 	private TextArea questionDisc; // Value injected by FXMLLoader
 
