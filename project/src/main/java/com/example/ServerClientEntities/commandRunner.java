@@ -102,10 +102,10 @@ public class commandRunner {
 		case isExamExist:
 			return ExamOps.examExist(commandArr[1], commandArr[2], commandArr[3]);
 		case getExamById:
-			if(commandArr.length==3) {
-				return ExamOps.getExamById(commandArr[1],"onhand");
+			if (commandArr.length == 3) {
+				return ExamOps.getExamById(commandArr[1], "onhand");
 			}
-			return ExamOps.getExamById(commandArr[1],"");
+			return ExamOps.getExamById(commandArr[1], "");
 
 		case getExamCode:
 			return ExamOps.getExamCodetById(commandArr[1]);
@@ -153,6 +153,10 @@ public class commandRunner {
 			return generalOps.studentChecked(commandArr[1]);
 		case thisTeacherStudentChecked:
 			return generalOps.thisTeacherStudentChecked(commandArr[1]);
+		case submitHanedExam:
+			return teacherOps.submitHanedExam(commandArr[1], commandArr[2], commandArr[3]);
+		case getHandedExams:
+			return teacherOps.getHandedExams(commandArr[1], commandArr[2]);
 		}
 
 		return command;

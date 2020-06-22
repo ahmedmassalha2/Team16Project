@@ -25,6 +25,7 @@ import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
 import com.example.entities.checkedExam;
+import com.example.entities.handedExam;
 import com.example.entities.todoItem;
 
 public class dataBase {
@@ -44,7 +45,7 @@ public class dataBase {
 		configuration.addAnnotatedClass(Student.class);
 		configuration.addAnnotatedClass(Subject.class);
 		configuration.addAnnotatedClass(Teacher.class);
-		// configuration.addAnnotatedClass(todoItem.class);
+		configuration.addAnnotatedClass(handedExam.class);
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
 		return configuration.buildSessionFactory(serviceRegistry);

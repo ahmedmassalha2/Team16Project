@@ -162,7 +162,6 @@ public class ExamOps {
 
 	public static String getWholeExam(String examNum) throws IOException {
 
-		System.out.println(examNum);
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		List<String> examsdisc = new ArrayList<String>();
@@ -183,9 +182,9 @@ public class ExamOps {
 		String examString = "" + exam.getTeacher().getUsername() + "@" + exam.getTeacher().getPassword() + "@"
 				+ exam.getTimeString() + "@" + exam.getSubjectName() + "@" + exam.getCourseName() + "@"
 				+ StudentInfoPerQuestion + "@" + TeachertInfoPerQuestion + "@" + GradesPerQuestion + "@" + QuestionIds
-				+ "@" + exam.getStudentExamComments() + "@" + exam.getTeacherExamComments();
+				+ "@" + exam.getStudentExamComments() + "@" + exam.getTeacherExamComments() + "@"
+				+ exam.getTeacherGeneratedExam();
 
-		System.out.println(examString);
 		return examString + "@" + examToWord(examNum);
 
 	}
@@ -260,7 +259,7 @@ public class ExamOps {
 		if (q != null) {
 			String args = getWholeExam(q.getExamNumber());
 			if (!isOnHand.equals("")) {
-				String ret = examToWord(q.getExamNumber());
+				String ret = examToWord(q.getExamNumber()) + "@" + args;
 				session.close();
 				return ret;
 			}
@@ -351,12 +350,14 @@ public class ExamOps {
 	public static String getExamIdBycode(String code) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
+		System.out.println("searching id for code: " + code);
 		Query query = session.createQuery("from Exam where exam_code = :exam_code");
 		query.setParameter("exam_code", code);
 		List list = query.list();
 		if (list.size() != 0) {
 			Exam exam = (Exam) query.getSingleResult();
 			String id = Integer.toString(exam.getId());
+			System.out.println("id is: " + id);
 			session.close();
 			return id;
 		}
@@ -541,7 +542,6 @@ public class ExamOps {
 
 	public static String examToWord(String examNum) throws IOException {
 
-		System.out.println(examNum);
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		List<String> examsdisc = new ArrayList<String>();
@@ -563,8 +563,8 @@ public class ExamOps {
 			for (String string : questions.get(i).getAnswers()) {
 				examString += "\t\t-) " + string + "\n";
 			}
+			examString += "Write you're answer here: _____________________________________________\n\n";
 		}
-		System.out.println(examString);
 		return examString;
 
 	}
