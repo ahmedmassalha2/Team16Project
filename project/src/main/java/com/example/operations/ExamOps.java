@@ -1,8 +1,13 @@
 package com.example.operations;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,6 +25,8 @@ import com.example.entities.checkedExam;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javafx.stage.FileChooser;
 
 public class ExamOps {
 
@@ -86,7 +93,7 @@ public class ExamOps {
 	public static String addExam(String teacherName, String teacherPass, String examDuration, String subName,
 			String courseName, List<String> infoPerQStudent, List<String> infoPerQTeacher,
 			List<Double> gradePerQuestion, List<String> questionsIds, String infoExamStudent, String infoExamTeacher)
-			throws JsonProcessingException, SQLException {
+			throws SQLException, IOException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		String examNum = Instance.getQN(2);
@@ -153,7 +160,7 @@ public class ExamOps {
 		return "good";
 	}
 
-	public static String getWholeExam(String examNum) throws JsonProcessingException {
+	public static String getWholeExam(String examNum) throws IOException {
 
 		System.out.println(examNum);
 		dataBase.getInstance();
@@ -179,7 +186,7 @@ public class ExamOps {
 				+ "@" + exam.getStudentExamComments() + "@" + exam.getTeacherExamComments();
 
 		System.out.println(examString);
-		return examString;
+		return examString + "@" + examToWord(examNum);
 
 	}
 
@@ -246,12 +253,17 @@ public class ExamOps {
 		return "" + course.getCnumber() + "" + exam.getExamNumber();
 	}
 
-	public static String getExamById(String id) throws JsonProcessingException {
+	public static String getExamById(String id, String isOnHand) throws IOException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Exam q = session.get(Exam.class, Integer.valueOf(id));
 		if (q != null) {
 			String args = getWholeExam(q.getExamNumber());
+			if (!isOnHand.equals("")) {
+				String ret = examToWord(q.getExamNumber());
+				session.close();
+				return ret;
+			}
 			session.close();
 			return args;
 		}
@@ -352,7 +364,7 @@ public class ExamOps {
 		return "";
 	}
 
-	public static String setExamByExamNum(String examNum, String examCode, String teacherName) {
+	public static String setExamByExamNum(String examNum, String examCode, String teacherName, String onHand) {
 		dataBase.getInstance();
 
 		Session session = dataBase.getSession();
@@ -368,6 +380,11 @@ public class ExamOps {
 			Teacher teacher = (Teacher) query2.getSingleResult();
 			exam.setExamCode(examCode);
 			exam.setTeacherGeneratedExam(Integer.toString(teacher.getId()));
+			if (!onHand.equals("")) {
+				exam.setOnHand(true);
+			} else {
+				exam.setOnAPP(true);
+			}
 			session.update(exam);
 			session.getTransaction().commit();
 			session.close();
@@ -520,5 +537,35 @@ public class ExamOps {
 		String json = mapper.writeValueAsString(examsdisc);
 		System.out.println(json);
 		return json;
+	}
+
+	public static String examToWord(String examNum) throws IOException {
+
+		System.out.println(examNum);
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		List<String> examsdisc = new ArrayList<String>();
+		ObjectMapper mapper = new ObjectMapper();
+		Query query = session.createQuery("from Exam where exam_num = :exam_num");
+		query.setParameter("exam_num", examNum);
+		Exam exam = (Exam) query.getSingleResult();
+		String examString = "";
+		List<Question> questions = exam.getQuestions();
+		List<String> infoperQ = exam.getStudentInfoPerQuestion();
+		List<Double> points = exam.getGradesPerQuestion();
+		examString += "\t\t\t\tCourse: " + exam.getCourse().getName() + "\n";
+		examString += "\t\t\t\tDuration: " + exam.getTimeString() + "\n\n\n";
+		for (int i = 0; i < questions.size(); i++) {
+			examString += "\nQuestion: " + String.valueOf(i + 1) + "\t-----------  PTS: " + points.get(i) + "\n";
+			examString += "\tInstructions: " + infoperQ.get(i) + "\n";
+			examString += questions.get(i).getDiscription() + "\n";
+			examString += "\tAnswers:\n";
+			for (String string : questions.get(i).getAnswers()) {
+				examString += "\t\t-) " + string + "\n";
+			}
+		}
+		System.out.println(examString);
+		return examString;
+
 	}
 }

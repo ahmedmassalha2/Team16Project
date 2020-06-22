@@ -1,6 +1,7 @@
 
 package com.example.ServerClientEntities;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class commandRunner {
-	public static String run(String command) throws SQLException, JsonProcessingException {
+	public static String run(String command) throws SQLException, IOException {
 		dataBase.getInstance();
 		System.out.println(command);
 		String[] commandArr = command.split("@");
@@ -101,7 +102,10 @@ public class commandRunner {
 		case isExamExist:
 			return ExamOps.examExist(commandArr[1], commandArr[2], commandArr[3]);
 		case getExamById:
-			return ExamOps.getExamById(commandArr[1]);
+			if(commandArr.length==3) {
+				return ExamOps.getExamById(commandArr[1],"onhand");
+			}
+			return ExamOps.getExamById(commandArr[1],"");
 
 		case getExamCode:
 			return ExamOps.getExamCodetById(commandArr[1]);
@@ -118,7 +122,10 @@ public class commandRunner {
 			return ExamOps.getExamIdBycode(commandArr[1]);
 
 		case setExamByExamNum:
-			return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3]);
+			if (commandArr.length == 5) {
+				return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3], "onhand");
+			}
+			return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3], "");
 		case getNameByUsrName:
 			return ExamOps.getIdByUsrName(commandArr[1]);
 		case getTechIdByExCode:

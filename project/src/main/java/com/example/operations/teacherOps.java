@@ -1,5 +1,6 @@
 package com.example.operations;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -297,7 +298,7 @@ public class teacherOps {
 	}
 
 	public static String addQuestion(String discription, String subjNumber, String an1, String an2, String an3,
-			String an4, String rAnsewr) throws JsonProcessingException, SQLException {
+			String an4, String rAnsewr) throws SQLException, IOException {
 		String qNString = "";
 		do {
 			qNString = Instance.getQN(2);

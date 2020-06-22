@@ -36,6 +36,8 @@ public class ExamCodeGenerateController implements Initializable {
 	private Text codeIdText; // Value injected by FXMLLoader
 	@FXML // fx:id="backBtn"
 	private Button backBtn; // Value injected by FXMLLoader
+	@FXML // fx:id="onHandBTN"
+	private Button onHandBTN; // Value injected by FXMLLoader
 
 	@FXML
 	void goBack(ActionEvent event) throws IOException {
@@ -59,6 +61,14 @@ public class ExamCodeGenerateController implements Initializable {
 		String examNum = "" + examCode.charAt(2) + "" + examCode.charAt(3);
 		Instance.sendMessage(Command.setExamByExamNum.ordinal() + "@" + examNum + "@" + examCode + "@" + usrName);
 
+	}
+
+	@FXML
+	void generateCodeMan(ActionEvent event) throws IOException {
+		codeIdText.setText(examCode);
+		String examNum = "" + examCode.charAt(2) + "" + examCode.charAt(3);
+		Instance.sendMessage(
+				Command.setExamByExamNum.ordinal() + "@" + examNum + "@" + examCode + "@" + usrName + "@onhand");
 	}
 
 	@Override

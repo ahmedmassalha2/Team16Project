@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.project.startApp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Platform;
@@ -26,11 +27,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class studentExamPageController implements Initializable {
 
+	@FXML // fx:id="mainPane"
+	private AnchorPane mainPane; // Value injected by FXMLLoader
 	@FXML // fx:id="toQuestions"
 	private Button toQuestions; // Value injected by FXMLLoader
 
@@ -91,14 +97,20 @@ public class studentExamPageController implements Initializable {
 
 	@FXML
 	void addExam(ActionEvent event) throws IOException {
-		System.out.println("took for you  " + (Integer.parseInt(duration) - mintsExam));
-		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData());
+
+		// System.out.println("took for you " + (Integer.parseInt(duration) -
+		// mintsExam));
+		// Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" +
+		// studentExamQuestionsController.getData());
 		toQuestions.setVisible(true);
 		errorTXT.setVisible(false);
 		resetAll();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMainPage.fxml"));
 		Scene scene = new Scene(loader.load());
-		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Stage Window = event != null ? (Stage) ((Node) event.getSource()).getScene().getWindow()
+				: (Stage) mainPane.getScene().getWindow();
+		if (Window == null)
+			Window = startApp.stageM;
 		Window.setTitle("Main page");
 		Window.setScene(scene);
 		Window.show();
@@ -225,7 +237,17 @@ public class studentExamPageController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-
+		/*	Platform.runLater(() -> {
+				// Code that will run in the JavaFX thread
+				try {
+					
+					addExam(null);
+				
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			});*/
 		}
 
 	}
