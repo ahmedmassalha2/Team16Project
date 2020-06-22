@@ -28,6 +28,9 @@ public class CheckExamController {
 
 	@FXML // fx:id="openExamBtn"
 	private Button openExamBtn; // Value injected by FXMLLoader
+	
+    @FXML // fx:id="myExamsBtn"
+    private Button myExamsBtn; // Value injected by FXMLLoader
 
 	@FXML // fx:id="ExamsList"
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
@@ -49,6 +52,23 @@ public class CheckExamController {
 		Window.setScene(scene);
 		Window.show();
 	}
+    @FXML
+    void showMyExams(ActionEvent event) throws IOException {
+    	
+    	Instance.sendMessage(Command.thisTeacherStudentChecked.ordinal() + "@" + username);
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/TeacherShowStudentsExam.fxml"));
+		Parent Main = loader.load();
+		TeacherShowStudentsExam secController = loader.getController();
+
+		secController.init(new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(), ArrayList.class));
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Exams list");
+		Window.setScene(scene);
+		Window.show();
+    	
+
+    }
 
 	@FXML
 	void openExam(ActionEvent event) throws IOException, SQLException {

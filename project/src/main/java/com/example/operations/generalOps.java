@@ -8,6 +8,7 @@ import org.hibernate.Session;
 
 import com.example.ServerClientEntities.Instance;
 import com.example.entities.Course;
+import com.example.entities.Exam;
 import com.example.entities.Question;
 import com.example.entities.Student;
 import com.example.entities.Subject;
@@ -226,6 +227,61 @@ public class generalOps {
 					examsdisc.add(discString);
 			}
 		}
+		dataBase.closeSess();
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(examsdisc);
+		System.out.println(json);
+		return json;
+	}
+	
+	public static String thisTeacherStudentChecked(String string) throws JsonProcessingException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		List<Exam> exams = dataBase.getAll(Exam.class);
+		List<String> examsdisc = new ArrayList<>();
+		List<checkedExam> checked = dataBase.getAll(checkedExam.class);
+		System.out.println("teacher: " + string);
+		for (Exam ex : exams) {
+			Query query = session.createQuery("from Exam where id = :id");
+			query.setParameter("id", ex.getId());
+			Exam exam = (Exam) query.getSingleResult();
+			if (exam.getTeacherGeneratedExam() != null) {
+				System.out.println("HEYYY THERE");
+				Query query2 = session.createQuery("from Teacher where username = :username");
+				query2.setParameter("username", string);
+				Teacher teacher = (Teacher) query2.getSingleResult();
+				if (exam.getTeacher().getId() == teacher.getId()
+						|| Integer.parseInt(exam.getTeacherGeneratedExam()) == teacher.getId()) {
+					System.out.println("TEACHER ID: " + teacher.getId());
+					Query query3 = session.createQuery("from checkedExam where id = :id");
+					query3.setParameter("id", exam.getId());
+
+					for (checkedExam exa : checked) {
+						if (exa.getTeacher().getId() == teacher.getId()
+								|| exam.getTeacher().getId() == teacher.getId()) {
+							if (exa.isChecked()) {
+
+								System.out.println("Teacaher name: " + teacher.getUsername());
+								System.out.println("Exam id: " + exa.getId());
+								System.out.println("Teacher id: " + exa.getTeacher().getId());
+								System.out.println(
+										"Teacher generated id: " + Integer.parseInt(exam.getTeacherGeneratedExam()));
+								String discString = "Exam id: " + exa.getId() + "\nName: "
+										+ exa.getStudent().getFirstName() + " " + exa.getStudent().getLastName()
+										+ "\nGrade: " + exa.getGrade() + "\nDuration: " + exa.getTimeString()
+										+ " minutes";
+								examsdisc.add(discString);
+
+							}
+						}
+
+					}
+				}
+			}
+		}
+
+		//session.update(object);
+		session.close();
 		dataBase.closeSess();
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(examsdisc);
