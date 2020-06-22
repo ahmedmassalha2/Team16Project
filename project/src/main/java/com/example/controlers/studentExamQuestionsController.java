@@ -6,13 +6,16 @@ package com.example.controlers;
 
 import java.awt.TextField;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.controlers.studentExamPageController.examTimer;
 import com.example.operations.generalOps;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +24,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,24 +36,13 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import net.bytebuddy.asm.Advice.This;
 
-public class studentExamQuestionsController {
-	int second = 0;
-	Timer myTimer = new Timer();
+public class studentExamQuestionsController implements Initializable {
 
-	TimerTask task = new TimerTask() {
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			second++;
-			mylabel.setText(Integer.toString(second));
-			if (mylabel.getText().equals("5"))
-				mylabel.setText("0");
-
-		}
-	};
+	@FXML // fx:id="mainPane"
+	private AnchorPane mainPane; // Value injected by FXMLLoader
 	@FXML // fx:id="myLabel"
 	private TextField mylabel; // Value injected by FXMLLoader
 	@FXML // fx:id="questionDisc"
@@ -97,6 +90,10 @@ public class studentExamQuestionsController {
 	private Text Qpoints; // Value injected by FXMLLoader
 	@FXML // fx:id="ErrorTXT"
 	private Text ErrorTXT; // Value injected by FXMLLoader
+	@FXML // fx:id="minuts"
+	private Text minuts; // Value injected by FXMLLoader
+	@FXML // fx:id="seconds"
+	private Text seconds; // Value injected by FXMLLoader
 	static List<String> questDiscriptions = new ArrayList<String>();
 	static List<String> studentsInfo = new ArrayList<String>();
 	static List<String> questIDs = new ArrayList<String>();
@@ -105,17 +102,23 @@ public class studentExamQuestionsController {
 	static List<String> studentAnswers = new ArrayList<String>();
 	static List<ArrayList<String>> answers = new ArrayList<ArrayList<String>>();
 	static int Current = 0;
-
+	static int exTimeSec = 0;
+	static int exTimeMin = 0;
 	static String teacherID = "";
+	static boolean studentInExam = false;
+	@FXML // fx:id="errorTXT"
+	private Text errorTXT; // Value injected by FXMLLoader
 
 	@FXML
 	void backToMain(ActionEvent event) throws IOException {
+		setView();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
 		studentExamPageController secController = loader.getController();
 		secController.showData();
 		Scene scene = new Scene(Main);
-		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Stage Window = event != null ? (Stage) ((Node) event.getSource()).getScene().getWindow()
+				: (Stage) mainPane.getScene().getWindow();
 		Window.setTitle("Exam Main Page");
 		Window.setScene(scene);
 		Window.show();
@@ -258,4 +261,68 @@ public class studentExamQuestionsController {
 		Current = 0;
 		teacherID = "";
 	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
+		if (studentInExam) {
+			exTimeSec = studentExamPageController.secondsExam;
+			exTimeMin = studentExamPageController.mintsExam;
+			examTimer myTimer = new examTimer();
+			Thread t = new Thread(myTimer);
+			t.start();
+		}
+
+	}
+
+	public void setView() {
+		minuts.setText("00");
+		seconds.setText("00");
+		errorTXT.setVisible(true);
+		nextBTN.setVisible(true);
+		backBTN.setVisible(true);
+		selc1.setDisable(false);
+		selc2.setDisable(false);
+		selc3.setDisable(false);
+		selc4.setDisable(false);
+	}
+
+	public class examTimer implements Runnable {
+		int second;
+		int mints;
+
+		public examTimer() {
+			this.second = studentExamPageController.secondsExam;
+			this.mints = studentExamPageController.mintsExam;
+		}
+
+		@Override
+		public void run() {
+			while (true) {
+				seconds.setText(Integer.toString(studentExamPageController.secondsExam));
+				minuts.setText(Integer.toString(studentExamPageController.mintsExam));
+				if (studentExamPageController.mintsExam < 58 && studentExamPageController.secondsExam <= 0) {
+					minuts.setText("00");
+					seconds.setText("00");
+					errorTXT.setVisible(true);
+					nextBTN.setVisible(false);
+					backBTN.setVisible(false);
+					selc1.setDisable(true);
+					selc2.setDisable(true);
+					selc3.setDisable(true);
+					selc4.setDisable(true);
+					break;
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+	}
+
 }

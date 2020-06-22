@@ -113,5 +113,6 @@ public class PrincipalMainPageController implements Initializable {
 		Window.setTitle("Students informations");
 		Window.setScene(scene);
 		Window.show();
+		
 	}
 }
