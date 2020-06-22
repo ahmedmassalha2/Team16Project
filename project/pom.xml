@@ -20,6 +20,7 @@
 	</properties>
 
 	<dependencies>
+
 		<!-- http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.8.6/jackson-core-2.8.6.jar -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -134,7 +135,7 @@
 								<mainClass>com.example.project.startApp</mainClass>
 							</configuration>
 						</execution>
-												<execution>
+						<execution>
 							<id>myApp</id>
 							<goals>
 								<goal>java</goal>

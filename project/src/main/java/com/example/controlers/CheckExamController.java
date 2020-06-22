@@ -28,12 +28,14 @@ public class CheckExamController {
 
 	@FXML // fx:id="openExamBtn"
 	private Button openExamBtn; // Value injected by FXMLLoader
-	
-    @FXML // fx:id="myExamsBtn"
-    private Button myExamsBtn; // Value injected by FXMLLoader
+
+	@FXML // fx:id="myExamsBtn"
+	private Button myExamsBtn; // Value injected by FXMLLoader
 
 	@FXML // fx:id="ExamsList"
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
+	@FXML // fx:id="regularExBTN"
+	private Button regularExBTN; // Value injected by FXMLLoader
 	static String backto = "/com/example/project/teacherExamsList.fxml";
 
 	@FXML
@@ -52,23 +54,24 @@ public class CheckExamController {
 		Window.setScene(scene);
 		Window.show();
 	}
-    @FXML
-    void showMyExams(ActionEvent event) throws IOException {
-    	
-    	Instance.sendMessage(Command.thisTeacherStudentChecked.ordinal() + "@" + username);
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/TeacherShowStudentsExam.fxml"));
+
+	@FXML
+	void showMyExams(ActionEvent event) throws IOException {
+
+		Instance.sendMessage(Command.thisTeacherStudentChecked.ordinal() + "@" + username);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/TeacherShowStudentsExam.fxml"));
 		Parent Main = loader.load();
 		TeacherShowStudentsExam secController = loader.getController();
 
-		secController.init(new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(), ArrayList.class));
+		secController.init(
+				new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(), ArrayList.class));
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Exams list");
 		Window.setScene(scene);
 		Window.show();
-    	
 
-    }
+	}
 
 	@FXML
 	void openExam(ActionEvent event) throws IOException, SQLException {
@@ -98,7 +101,7 @@ public class CheckExamController {
 		if (isTeacher)
 			Instance.sendMessage(Command.getTeacherExamGenerated.ordinal() + "@" + usrName + "@" + password);
 		else {
-			
+
 			Instance.sendMessage(Command.getALLChecked.ordinal() + "");
 		}
 		String json = Instance.getClientConsole().getMessage().toString();
@@ -117,4 +120,14 @@ public class CheckExamController {
 
 	}
 
+	@FXML
+	void showRegular(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/teacherRegularExams.fxml"));
+		Parent Main = loader.load();
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Student exams");
+		Window.setScene(scene);
+		Window.show();
+	}
 }

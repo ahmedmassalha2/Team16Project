@@ -1,5 +1,8 @@
 package com.example.operations;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,9 +20,11 @@ import com.example.entities.Question;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
 import com.example.entities.checkedExam;
+import com.example.entities.handedExam;
 import com.example.entities.todoItem;
 import com.example.project.dataBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class teacherOps {
@@ -402,6 +407,68 @@ public class teacherOps {
 		session.close();
 		return "";
 
+	}
+
+	public static String submitHanedExam(String teacherID, String disc, String lines) throws IOException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where id = :id");
+		query.setParameter("id", Integer.parseInt(teacherID));
+		List list = query.list();
+		if (list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			handedExam exam = new handedExam(new ObjectMapper().readValue(disc, ArrayList.class), lines, teacher);
+
+			exam.setTeacher(teacher);
+
+			teacher.getHandExams().add(exam);
+			// File someFile = new File("teacher.doc");
+			// FileOutputStream fos = new FileOutputStream(someFile);
+
+			// fos.write(teacher.getHandExams().get(0).getLines());
+			// fos.flush();
+			// fos.close();
+			teacher.getHandExams().add(exam);
+			session.update(teacher);
+			session.save(exam);
+			// session.getTransaction().commit();
+			session.close();
+			return "";
+		}
+		session.close();
+		return " ";
+	}
+
+	public static String getHandedExams(String user, String pass) throws JsonProcessingException {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username and password = :password");
+		query.setParameter("username", user);
+		query.setParameter("password", pass);
+		List list = query.list();
+		if (list.size() != 0) {
+			Teacher teacher = (Teacher) query.getSingleResult();
+			List<String> disc = new ArrayList<>();
+			for (handedExam exam : teacher.getHandExams()) {
+				String d = "";
+				int i = 0;
+				System.out.println("exam dis");
+				System.out.println(exam.getExDisc());
+				for (String s : exam.getExDisc()) {
+					if (i == exam.getExDisc().size() - 1)
+						d += s;
+					else
+						d += s + "\n";
+					i++;
+				}
+				disc.add(d);
+			}
+			String toret = generalOps.getJsonString(disc);
+			session.close();
+			return toret;
+		}
+		session.close();
+		return " ";
 	}
 
 }

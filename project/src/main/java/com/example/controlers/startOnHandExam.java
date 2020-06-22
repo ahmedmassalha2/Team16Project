@@ -5,19 +5,22 @@
 package com.example.controlers;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
-import com.example.controlers.studentExamPageController.examTimer;
+import com.example.operations.generalOps;
 import com.example.project.startApp;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -28,7 +31,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class startOnHandExam {
 	static int mintsExam = 10;
-	static int secondsExam = 4;
+	static int secondsExam = 20;
 	@FXML // fx:id="idNum"
 	private TextField idNum; // Value injected by FXMLLoader
 
@@ -51,6 +54,9 @@ public class startOnHandExam {
 	@FXML // fx:id="errorTxt"
 	private Text errorTxt; // Value injected by FXMLLoader
 	private String exCode;
+	static String duration = "";
+	static String course = "";
+	static String teacherId = "";
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException {
@@ -58,13 +64,18 @@ public class startOnHandExam {
 		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText());
 		Instance.sendMessage(
 				Command.getExamById.ordinal() + "@" + Instance.getClientConsole().getMessage().toString() + "@onhand");
+		String[] args = Instance.getClientConsole().getMessage().toString().split("@");
+		duration = args[3];
+		course = args[5];
+		teacherId = args[12];
+
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Download file");
 		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
-		fc.getExtensionFilters().addAll(new ExtensionFilter("Word file", "*.doc"));
+		fc.getExtensionFilters().addAll(new ExtensionFilter("Word file", "*.docx"));
 		File file = fc.showSaveDialog(null);
 		PrintWriter p = new PrintWriter(file);
-		p.write(Instance.getClientConsole().getMessage().toString());
+		p.write(args[0]);
 		p.close();
 		examTimer myTimer = new examTimer();
 		Thread t = new Thread(myTimer);
@@ -73,8 +84,38 @@ public class startOnHandExam {
 	}
 
 	@FXML
-	void submit(ActionEvent event) {
-		System.out.println("1");
+	void submit(ActionEvent event) throws IOException {
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Download file");
+		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
+		fc.getExtensionFilters().addAll(new ExtensionFilter("Word file", "*.docx"));
+		File file = fc.showOpenDialog(null);
+		String examDis = "Student ID: " + idNum.getText() + "\n" + "Duration: " + duration + "\n" + "Exam in: "
+				+ course;
+		System.out.println(examDis);
+		try (Scanner scanner = new Scanner(file)) {
+			String lines = "";
+			while (scanner.hasNextLine()) {
+				System.out.println("here ");
+				lines += scanner.nextLine() + "\n";
+			}
+			List<String> exDis = new ArrayList<>();
+			exDis.add(idNum.getText());
+			exDis.add(duration);
+			exDis.add(course);
+			Instance.sendMessage(Command.submitHanedExam.ordinal() + "@" + teacherId + "@"
+					+ generalOps.getJsonString(exDis) + "@" + lines);
+			// String toSubmitString = "" + ;
+			// System.out.println(toSubmitString);
+			// byte[] bytes2 = new ObjectMapper().readValue(toSubmitString, byte[].class);
+			goBack(event);
+		}
+
+		/*
+		 * File someFile = new File("java3.doc"); FileOutputStream fos = new
+		 * FileOutputStream(someFile); fos.write(bytes2); fos.flush(); fos.close();
+		 */
+
 	}
 
 	@FXML

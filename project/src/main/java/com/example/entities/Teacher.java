@@ -43,6 +43,10 @@ public class Teacher {
 	@ElementCollection
 	private List<String> todoList;
 
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+	private List<handedExam> handExams;
+
 	private String username;
 	private String password;
 
@@ -169,6 +173,7 @@ public class Teacher {
 		this.subjects = new ArrayList<Subject>();
 		this.todoList = new ArrayList<String>();
 		this.chExams = new ArrayList<checkedExam>();
+		this.handExams = new ArrayList<handedExam>();
 	}
 
 	public List<checkedExam> getChExams() {
@@ -177,6 +182,14 @@ public class Teacher {
 
 	public void setChExams(List<checkedExam> chExams) {
 		this.chExams = chExams;
+	}
+
+	public List<handedExam> getHandExams() {
+		return handExams;
+	}
+
+	public void setHandExams(List<handedExam> handExams) {
+		this.handExams = handExams;
 	}
 
 	public Teacher() {
