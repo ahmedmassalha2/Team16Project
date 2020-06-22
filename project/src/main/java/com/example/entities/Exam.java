@@ -37,7 +37,10 @@ public class Exam {
 	private List<Question> questions;
 
 	private String timeString;
-
+	@JoinColumn(name = "onHand")
+	private boolean onHand;
+	@JoinColumn(name = "onAPP")
+	private boolean onAPP;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
@@ -239,6 +242,22 @@ public class Exam {
 
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subject.getName();
+	}
+
+	public boolean isOnHand() {
+		return onHand;
+	}
+
+	public void setOnHand(boolean onHand) {
+		this.onHand = onHand;
+	}
+
+	public boolean isOnAPP() {
+		return onAPP;
+	}
+
+	public void setOnAPP(boolean onAPP) {
+		this.onAPP = onAPP;
 	}
 
 }

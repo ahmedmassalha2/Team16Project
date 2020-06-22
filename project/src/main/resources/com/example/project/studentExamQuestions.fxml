@@ -71,9 +71,34 @@
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font></Text>
+                  <Text fx:id="errorTXT" fill="RED" layoutX="89.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exam time ended submit you're suliotion" visible="false" wrappingWidth="361.13671875">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Text>
                </children>
             </Group>
          </center>
       </BorderPane>
+      <Text fx:id="minuts" fill="RED" layoutX="130.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="60">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="seconds" fill="RED" layoutX="160.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="59">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="150.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="3.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time remeaning:">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

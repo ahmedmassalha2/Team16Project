@@ -15,9 +15,11 @@ import javafx.stage.Stage;
 public class startApp extends Application {
 
 	private static Scene scene;
+	public static Stage stageM = null;
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		stageM = stage;
 		SimpleChatClient chatClient = new SimpleChatClient("localhost", Integer.valueOf(3333));
 		Instance.clientConsole = chatClient;
 		chatClient.openConnection();

@@ -87,6 +87,7 @@ public class StudentStartExamPageController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
 		studentExamPageController secController = loader.getController();
+		studentExamPageController.studentInExam = true;
 		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText());
 		Instance.sendMessage(Command.getExamById.ordinal() + "@" + Instance.getClientConsole().getMessage().toString());
 		String dataString = Instance.getClientConsole().getMessage().toString();

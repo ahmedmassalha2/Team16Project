@@ -1,7 +1,9 @@
 
 package com.example.controlers;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import jdk.jfr.Description;
 
 public class examCreateController implements Initializable {
 	static String userString;
@@ -154,6 +159,8 @@ public class examCreateController implements Initializable {
 		examCreateController.techInfo = datas[10];
 		filFilter(userString, paString);
 		coursesFilt.getSelectionModel().select(datas[4]);
+
+
 	}
 
 	public void init(String teacherName, String teacherPass) throws IOException {

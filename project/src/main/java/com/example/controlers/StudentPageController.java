@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JFileChooser;
+
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
 import com.example.entities.checkedExam;
@@ -34,21 +36,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StudentPageController implements Initializable {
-	int second = 0;
-	Timer myTimer = new Timer();
-
-	TimerTask task = new TimerTask() {
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			second++;
-			mylabel.setText(Integer.toString(second));
-			if (mylabel.getText().equals("5"))
-				mylabel.setText("0");
-
-		}
-	};
 
 	static String password = "";
 	static String username = "";
@@ -77,14 +64,11 @@ public class StudentPageController implements Initializable {
 	@FXML
 	void enterExam(ActionEvent event) throws IOException {
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentStartExamPage.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/onlineOnHandExamEnter.fxml"));
 		Parent Main = loader.load();
-		StudentStartExamPageController secController = loader.getController();
-
-		secController.init(username, password);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Exam Log In");
+		Window.setTitle("Exam navigator");
 		Window.setScene(scene);
 		Window.show();
 
@@ -143,11 +127,6 @@ public class StudentPageController implements Initializable {
 		Window.show();
 	}
 
-	public void start() {
-		myTimer.scheduleAtFixedRate(task, 1000, 1000);
-
-	}
-
 	@FXML
 	void todoList(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/todoList.fxml"));
@@ -164,7 +143,7 @@ public class StudentPageController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+
 		usernameTXT.setText(username);
 		// start();
 	}

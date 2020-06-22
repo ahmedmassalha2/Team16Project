@@ -21,14 +21,14 @@
                         <Image url="@images/white.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="gradesBtn" layoutX="322.0" layoutY="178.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="Exams\Grades">
+                  <Button fx:id="gradesBtn" layoutX="315.0" layoutY="180.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="52.0" prefWidth="220.0" style="-fx-background-radius: 30;" text="Exams\Grades">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>
                      <effect>
                         <DropShadow />
                      </effect></Button>
-                  <Button fx:id="enterExamBtn" layoutX="323.0" layoutY="115.0" mnemonicParsing="false" onAction="#enterExam" prefHeight="52.0" prefWidth="161.0" style="-fx-background-radius: 30;" text="ENTER EXAM">
+                  <Button fx:id="enterExamBtn" layoutX="316.0" layoutY="117.0" mnemonicParsing="false" onAction="#enterExam" prefHeight="52.0" prefWidth="220.0" style="-fx-background-radius: 30;" text="ENTER  EXAM">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Image url="@images/university-students-with-books-cartoon-style-male-vector-15694547.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="feedbackBtn" layoutX="322.0" layoutY="241.0" mnemonicParsing="false" onAction="#showFeedback" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="FEEDBACK">
+                  <Button fx:id="feedbackBtn" layoutX="315.0" layoutY="243.0" mnemonicParsing="false" onAction="#showFeedback" prefHeight="52.0" prefWidth="220.0" style="-fx-background-radius: 30;" text="FEEDBACK">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>
@@ -71,7 +71,7 @@
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font></Button>
-                  <Button fx:id="todoBTN" layoutX="325.0" layoutY="305.0" mnemonicParsing="false" onAction="#todoList" prefHeight="52.0" prefWidth="162.0" style="-fx-background-radius: 30;" text="ToDo list">
+                  <Button fx:id="todoBTN" layoutX="318.0" layoutY="307.0" mnemonicParsing="false" onAction="#todoList" prefHeight="52.0" prefWidth="220.0" style="-fx-background-radius: 30;" text="ToDo list">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>

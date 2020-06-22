@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.StudentStartExamPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controlers.startOnHandExam">
    <children>
       <Group layoutX="236.0" layoutY="142.0">
          <children>
@@ -32,6 +32,14 @@
                   <DropShadow />
                </effect>
             </Button>
+            <Button fx:id="submitExambtn" layoutX="-29.0" mnemonicParsing="false" onAction="#submit" prefHeight="35.0" prefWidth="131.0" style="-fx-background-radius: 30;" text="Submit Exam" visible="false">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
          </children>
       </Group>
       <Group layoutX="274.0" layoutY="335.0">
@@ -45,11 +53,21 @@
       </Group>
       <ImageView fitHeight="251.0" fitWidth="162.0" layoutX="27.0" layoutY="129.0">
          <image>
-            <Image url="@images/examlogin.png" />
+            <Image url="@com/example/project/images/examlogin.png" />
          </image>
       </ImageView>
       <Text fx:id="errorTxt" layoutX="237.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="162.0" />
-
-
+      <Text fill="RED" layoutX="354.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="207.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time remeaning:">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="minuts" layoutX="321.0" layoutY="86.0" prefHeight="10.0" prefWidth="29.0" />
+      <TextField fx:id="seconds" layoutX="362.0" layoutY="86.0" prefHeight="10.0" prefWidth="29.0" />
    </children>
 </AnchorPane>
