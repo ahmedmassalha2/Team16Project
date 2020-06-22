@@ -144,6 +144,8 @@ public class commandRunner {
 			return generalOps.getSTIDNum(commandArr[1], commandArr[2]);
 		case studentChecked:
 			return generalOps.studentChecked(commandArr[1]);
+		case thisTeacherStudentChecked:
+			return generalOps.thisTeacherStudentChecked(commandArr[1]);
 		}
 
 		return command;
