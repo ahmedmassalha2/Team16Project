@@ -75,7 +75,7 @@ public class OpenCheckedExamController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExam.fxml"));
 		Parent Main = loader.load();
 		CheckExamController secController = loader.getController();
-		secController.init(CheckExamController.username, CheckExamController.password);
+		secController.init(CheckExamController.username, CheckExamController.password, false);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Check Exams list");

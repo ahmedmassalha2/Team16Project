@@ -22,6 +22,10 @@ public class EnterExamNavigate {
 
 	@FXML // fx:id="onhandExamBTN"
 	private Button onhandExamBTN; // Value injected by FXMLLoader
+	
+
+    @FXML // fx:id="backBtn"
+    private Button backBtn; // Value injected by FXMLLoader
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException {
@@ -47,5 +51,21 @@ public class EnterExamNavigate {
 		Window.setScene(scene);
 		Window.show();
 	}
+	
+
+    @FXML
+    void goBack(ActionEvent event) throws IOException {
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMainPage.fxml"));
+		Parent Main = loader.load();
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		StudentPageController sesController = loader.getController();
+		sesController.init(StudentPageController.username, StudentPageController.password);
+		Window.setTitle("Main Page");
+		Window.setScene(scene);
+		Window.show();
+
+    }
 
 }

@@ -57,6 +57,8 @@ public class teacherExamList implements Initializable {
 	@FXML
 	void startExam(ActionEvent event) throws IOException {
 
+		if (!(ExamsList.getSelectionModel().getSelectedIndex() >= 0))
+			return;
 		Instance.sendMessage(Command.getExamCode.ordinal() + "@"
 				+ ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCodeGenerating.fxml"));
@@ -65,7 +67,7 @@ public class teacherExamList implements Initializable {
 		secController.init(Instance.getClientConsole().getMessage().toString(), useString, passString);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Exams list");
+		Window.setTitle("Generate Code");
 		Window.setScene(scene);
 		Window.show();
 	}
@@ -75,7 +77,7 @@ public class teacherExamList implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExam.fxml"));
 		Parent Main = loader.load();
 		CheckExamController secController = loader.getController();
-		secController.init(useString, passString);
+		secController.init(useString, passString, false);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Check Exams list");

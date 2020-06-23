@@ -31,7 +31,7 @@ public class TeacherShowStudentsExam {
 		Scene scene = new Scene(loader.load());
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		CheckExamController ses = loader.getController();
-		ses.init(CheckExamController.username, CheckExamController.password);
+		ses.init(CheckExamController.username, CheckExamController.password, false);
 		Window.setTitle("Check Exams list");
 		Window.setScene(scene);
 		Window.show();

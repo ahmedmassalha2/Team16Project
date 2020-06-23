@@ -67,7 +67,7 @@ public class principalMainStudentsController implements Initializable {
 		CheckExamController secController = loader.getController();
 		CheckExamController.isTeacher = false;
 		CheckExamController.backto = principalMainStudentsController.backTo;
-		secController.init("", "");
+		secController.init("", "", true);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Exams list");
