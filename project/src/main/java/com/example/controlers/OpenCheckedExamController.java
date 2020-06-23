@@ -69,13 +69,17 @@ public class OpenCheckedExamController {
 	static String exId;
 	static String dicriptionsTech = "";
 	static boolean isTeacher = true;
+	static String back_ = "/com/example/project/CheckExam.fxml";
 
 	@FXML
 	void goBack(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExam.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(back_));
 		Parent Main = loader.load();
-		CheckExamController secController = loader.getController();
-		secController.init(CheckExamController.username, CheckExamController.password, false);
+
+		if (back_.equals("/com/example/project/CheckExam.fxml")) {
+			CheckExamController secController = loader.getController();
+			secController.init(CheckExamController.username, CheckExamController.password, false);
+		}
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Check Exams list");

@@ -160,7 +160,6 @@ public class examCreateController implements Initializable {
 		filFilter(userString, paString);
 		coursesFilt.getSelectionModel().select(datas[4]);
 
-
 	}
 
 	public void init(String teacherName, String teacherPass) throws IOException {
@@ -204,19 +203,17 @@ public class examCreateController implements Initializable {
 			errorTXT.setText("Fill exam duration");
 			return;
 		}
-		if (techNotations.getText().isEmpty()) {
-			errorTXT.setText("Enter information for teachers");
-			return;
-		}
-		if (studNotations.getText().isEmpty()) {
-			errorTXT.setText("Enter information for students");
-			return;
-		}
+
+		/*
+		 * if (techNotations.getText().isEmpty()) {
+		 * errorTXT.setText("Enter information for teachers"); return; } if
+		 * (studNotations.getText().isEmpty()) {
+		 * errorTXT.setText("Enter information for students"); return; }
+		 */
 		Duration = durationTXT.getText();
-		stInfo = studNotations.getText();
-		techInfo = techNotations.getText();
+		stInfo = studNotations.getText().isBlank() ? " " : studNotations.getText();
+		techInfo = techNotations.getText().isBlank() ? " " : techNotations.getText();
 		Instance.sendMessage(Command.AddExam.ordinal() + "@" + examsQuestionsController.getData());
-		// reset vars
 		cancel(event);
 	}
 

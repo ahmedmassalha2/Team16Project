@@ -57,6 +57,7 @@ public class principalStudentInfoContoller implements Initializable {
 	static List<checkedExam> exams = new ArrayList<>();
 	static String backTo = "/com/example/project/principalMainStudents.fxml";
 	static String thisPageFXML = "";
+	static boolean isprinc = false;
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
@@ -116,6 +117,8 @@ public class principalStudentInfoContoller implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		if (isprinc)
+			examBTN.setVisible(false);
 		setData();
 	}
 }
