@@ -17,6 +17,7 @@ import com.example.ServerClientEntities.commandRunner;
 import com.example.entities.Course;
 import com.example.entities.Exam;
 import com.example.entities.Question;
+import com.example.entities.Student;
 import com.example.entities.Subject;
 import com.example.entities.Teacher;
 import com.example.entities.checkedExam;
@@ -52,7 +53,7 @@ public class teacherOps {
 				for (Exam exam : course.getExams()) {
 					String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
 							+ " writen by " + exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString()
-							+ " hours";
+							+ " minutes";
 					examsdisc.add(discString);
 				}
 			}
@@ -409,7 +410,8 @@ public class teacherOps {
 
 	}
 
-	public static String submitHanedExam(String teacherID, String disc, String lines) throws IOException {
+	public static String submitHanedExam(String teacherID, String disc, String lines, String studenId, String courseId)
+			throws IOException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		Query query = session.createQuery("from Teacher where id = :id");
@@ -417,21 +419,31 @@ public class teacherOps {
 		List list = query.list();
 		if (list.size() != 0) {
 			Teacher teacher = (Teacher) query.getSingleResult();
-			handedExam exam = new handedExam(new ObjectMapper().readValue(disc, ArrayList.class), lines, teacher);
-
+			List<String> infoList = new ObjectMapper().readValue(disc, ArrayList.class);
+			handedExam exam = new handedExam(infoList.get(0), infoList.get(2), infoList.get(1), teacher);
 			exam.setTeacher(teacher);
-
 			teacher.getHandExams().add(exam);
-			// File someFile = new File("teacher.doc");
-			// FileOutputStream fos = new FileOutputStream(someFile);
+			exam.setLines(new ArrayList<String>());
+			List<String> l = new ObjectMapper().readValue(lines, ArrayList.class);
+			for (String s : l) {
+				exam.getLines().add(s);
+			}
 
-			// fos.write(teacher.getHandExams().get(0).getLines());
-			// fos.flush();
-			// fos.close();
-			teacher.getHandExams().add(exam);
+			exam.setExJson(lines);
 			session.update(teacher);
 			session.save(exam);
-			// session.getTransaction().commit();
+			Query query2 = session.createQuery("from Student where idNum = :idNum");
+			query2.setParameter("idNum", studenId);
+			List list2 = query2.list();
+			if (list2.size() != 0) {
+				Query query3 = session.createQuery("from Exam where exam_code = :exam_code");
+				query3.setParameter("exam_code", courseId);
+				Student student = (Student) query2.getSingleResult();
+				int n = ((Exam) query3.getSingleResult()).getId();
+				student.getHandedExamsIds().add(String.valueOf(n));
+				session.update(student);
+			}
+			session.getTransaction().commit();
 			session.close();
 			return "";
 		}
@@ -453,14 +465,9 @@ public class teacherOps {
 				String d = "";
 				int i = 0;
 				System.out.println("exam dis");
-				System.out.println(exam.getExDisc());
-				for (String s : exam.getExDisc()) {
-					if (i == exam.getExDisc().size() - 1)
-						d += s;
-					else
-						d += s + "\n";
-					i++;
-				}
+				d = "Exam ID: " + exam.getId() + "\n" + exam.getStID() + "\n" + exam.getExamIn() + "\n"
+						+ exam.getDuration();
+				System.out.println("dis: " + d);
 				disc.add(d);
 			}
 			String toret = generalOps.getJsonString(disc);
@@ -469,6 +476,21 @@ public class teacherOps {
 		}
 		session.close();
 		return " ";
+	}
+
+	public static String getHanedByID(String examId) throws JsonMappingException, JsonProcessingException {
+		List<handedExam> exams = dataBase.getAll(handedExam.class);
+		System.out.println(exams.get(exams.size() - 1).getLines());
+
+		// TODO Auto-generated method stub
+
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		handedExam exam = session.get(handedExam.class, Integer.parseInt(examId));
+		String examD = exam.getExJson();
+		session.close();
+		return examD;
+
 	}
 
 }

@@ -38,7 +38,7 @@ public class ExamOps {
 		for (Exam exam : dataBase.getAll(Exam.class)) {
 
 			String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName() + " writen by "
-					+ exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString() + " hours";
+					+ exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString() + " minutes";
 			examsdisc.add(discString);
 		}
 		dataBase.closeSess();
@@ -76,7 +76,7 @@ public class ExamOps {
 
 				String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
 						+ " writen by " + exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString()
-						+ " hours";
+						+ " minutes";
 				examsdisc.add(discString);
 			}
 			ObjectMapper mapper = new ObjectMapper();
@@ -288,14 +288,20 @@ public class ExamOps {
 				session.close();
 				return "";
 			}
-			// String nameOFCourse = ((Exam)
-			// query2.getSingleResult()).getCourse().getName();
+
 			int nameOFCourse = ((Exam) query2.getSingleResult()).getId();
 			System.out.println(student.getGrades().size());
 			for (checkedExam exam : student.getGrades()) {
-				// System.out.println(exam.getCourse().getName());
-				// exam.getCourse().getName().equals(nameOFCourse)
+
 				if (exam.getCourse() != null && exam.getExamId() == nameOFCourse) {
+					session.close();
+					return "doneIt";
+				}
+
+			}
+			for (String exam : student.getHandedExamsIds()) {
+				System.out.println(exam + "      " + nameOFCourse);
+				if (Integer.parseInt(exam) == nameOFCourse) {
 					session.close();
 					return "doneIt";
 				}

@@ -81,7 +81,7 @@ public class studentExamPageController implements Initializable {
 	static String cName = "";
 	static String stInfo = "";
 	static String teacherName = "";
-	static int secondsExam = 4;
+	static int secondsExam = 60;
 	static int mintsExam = 60;
 	static String setTeacher = "";
 	static boolean studentInExam = false;
@@ -98,10 +98,8 @@ public class studentExamPageController implements Initializable {
 	@FXML
 	void addExam(ActionEvent event) throws IOException {
 
-		// System.out.println("took for you " + (Integer.parseInt(duration) -
-		// mintsExam));
-		// Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" +
-		// studentExamQuestionsController.getData());
+		System.out.println("took for you " + (Integer.parseInt(duration) - mintsExam));
+		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData());
 		toQuestions.setVisible(true);
 		errorTXT.setVisible(false);
 		resetAll();
@@ -237,17 +235,14 @@ public class studentExamPageController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-		/*	Platform.runLater(() -> {
-				// Code that will run in the JavaFX thread
-				try {
-					
-					addExam(null);
-				
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-			});*/
+			/*
+			 * Platform.runLater(() -> { // Code that will run in the JavaFX thread try {
+			 * 
+			 * addExam(null);
+			 * 
+			 * } catch (IOException e) { // TODO Auto-generated catch block
+			 * e.printStackTrace(); } });
+			 */
 		}
 
 	}
