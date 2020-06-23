@@ -53,6 +53,7 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 		secController.init();
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Exams List");
 		Window.setScene(scene);
 		Window.show();
 
@@ -73,7 +74,7 @@ public class PrincipalTeacherExamFilterController implements Initializable {
 		secController.initByExam(Instance.getClientConsole().getMessage().toString());
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Window.setTitle("Create exam main page");
+		Window.setTitle("View Exam");
 		Window.setScene(scene);
 		Window.show();
 	}
