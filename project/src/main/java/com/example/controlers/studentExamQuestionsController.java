@@ -302,7 +302,7 @@ public class studentExamQuestionsController implements Initializable {
 			while (true) {
 				seconds.setText(Integer.toString(studentExamPageController.secondsExam));
 				minuts.setText(Integer.toString(studentExamPageController.mintsExam));
-				if (studentExamPageController.mintsExam < 58 && studentExamPageController.secondsExam <= 0) {
+				if (studentExamPageController.mintsExam < 0 && studentExamPageController.secondsExam <= 0) {
 					minuts.setText("00");
 					seconds.setText("00");
 					errorTXT.setVisible(true);

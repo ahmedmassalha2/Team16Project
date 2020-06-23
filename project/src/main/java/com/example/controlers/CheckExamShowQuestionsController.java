@@ -172,7 +172,7 @@ public class CheckExamShowQuestionsController implements Initializable {
 			selc1.setSelected(true);
 			ans1.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 		}
-		if (ans2.getText().equals(studentAnswers.get(current)) && !rightAnswers.get(current).equals(ans3.getText())) {
+		if (ans2.getText().equals(studentAnswers.get(current)) && !rightAnswers.get(current).equals(ans2.getText())) {
 			selc2.setSelected(true);
 			ans2.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 		}

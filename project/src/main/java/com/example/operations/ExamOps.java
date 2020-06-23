@@ -225,7 +225,7 @@ public class ExamOps {
 
 		String examString = "" + exam.getTeacher().getUsername() + "@" + exam.getStudent().getFirstName() + " "
 				+ exam.getStudent().getLastName() + "@" + exam.getTimeString() + "@" + StudentInfoPerQuestion + "@"
-				+ Grade + "@" + QuestionIds + "@" + exam.getTeacherExamComments() + "@" + studentAnswers + "@"
+				+ Grade + "@" + QuestionIds + "@" + exam.getTeacherExp() + "@" + studentAnswers + "@"
 				+ mapper.writeValueAsString(rightAnswers) + "@" + mapper.writeValueAsString(discriptions) + "@"
 				+ mapper.writeValueAsString(exam.getTeacherInfoPerQuestion()) + "@"
 				+ mapper.writeValueAsString(exam.getQuestionsGrades()) + "@" + mapper.writeValueAsString(answersList)

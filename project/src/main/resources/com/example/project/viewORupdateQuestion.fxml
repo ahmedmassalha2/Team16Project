@@ -72,7 +72,7 @@
                            </font>
                         </Text>
                         <ComboBox fx:id="filterCombo" layoutX="312.0" layoutY="142.0" onAction="#getSNumber" prefHeight="25.0" prefWidth="99.0" />
-                        <Button fx:id="deletBTN" layoutX="409.0" layoutY="364.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="30.0" prefWidth="67.0" style="-fx-background-radius: 30;" text="Delete">
+                        <Button fx:id="deletBTN" layoutX="409.0" layoutY="364.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="30.0" prefWidth="67.0" style="-fx-background-radius: 30;" text="Delete" visible="false">
                            <font>
                               <Font name="Arial" size="13.0" />
                            </font>

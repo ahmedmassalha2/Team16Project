@@ -203,7 +203,10 @@ public class examCreateController implements Initializable {
 			errorTXT.setText("Fill exam duration");
 			return;
 		}
-
+		if (!Instance.containCH(durationTXT.getText())) {
+			errorTXT.setText("Exam duration only in minutes");
+			return;
+		}
 		/*
 		 * if (techNotations.getText().isEmpty()) {
 		 * errorTXT.setText("Enter information for teachers"); return; } if

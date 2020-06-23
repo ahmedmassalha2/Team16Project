@@ -69,6 +69,7 @@ public class generalOps {
 
 	public static String deleteQuestion(String subjectNumber, String questionNumber) {
 		dataBase.getInstance();
+		System.out.println(subjectNumber + "       " + questionNumber);
 		Session session = dataBase.getSession();
 		Query query = session.createQuery(
 				"from Question where question_number = :question_number and subjectNumber = :subjectNumber");
@@ -77,9 +78,16 @@ public class generalOps {
 		List list = query.list();
 
 		if (list.size() != 0) {
-			session.delete(session.get(Question.class, ((Question) query.getSingleResult()).getId()));
-			session.getTransaction().commit();
+			Question question = (Question) query.getSingleResult();
+			if (question.getExams().size() != 0) {
+				session.close();
+				return "delted";
+			}
 
+			session.delete(session.get(Question.class, question.getId()));
+			session.flush();
+			session.getTransaction().commit();
+			session.close();
 			return "delted";
 		}
 		session.close();
@@ -233,7 +241,7 @@ public class generalOps {
 		System.out.println(json);
 		return json;
 	}
-	
+
 	public static String thisTeacherStudentChecked(String string) throws JsonProcessingException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
@@ -280,7 +288,7 @@ public class generalOps {
 			}
 		}
 
-		//session.update(object);
+		// session.update(object);
 		session.close();
 		dataBase.closeSess();
 		ObjectMapper mapper = new ObjectMapper();

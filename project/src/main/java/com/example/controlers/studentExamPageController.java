@@ -217,7 +217,7 @@ public class studentExamPageController implements Initializable {
 					mints--;
 					mintsExam = mints;
 					minuts.setText(Integer.toString(mints));
-					if (mints < 58) {
+					if (mints < 0) {
 						seconds.setText("00");
 						minuts.setText("00");
 						toQuestions.setVisible(false);

@@ -5,9 +5,11 @@
 package com.example.controlers;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,7 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
-public class studentCheckedExamsController {
+public class studentCheckedExamsController implements Initializable {
 	static String backTo = "";
 	@FXML // fx:id="backBTN"
 	private Button backBTN; // Value injected by FXMLLoader
@@ -34,6 +37,7 @@ public class studentCheckedExamsController {
 	@FXML // fx:id="ExamsList"
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
 	static String thisFXML = "/com/example/project/studentCheckedExams.fxml";
+	static List<String> exams = new ArrayList<>();
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
@@ -68,6 +72,14 @@ public class studentCheckedExamsController {
 	}
 
 	public void init(List<String> examsDisc) {
+		ExamsList.getItems().removeAll(ExamsList.getItems());
+		exams = examsDisc;
 		ExamsList.getItems().addAll(examsDisc);
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		ExamsList.getItems().addAll(exams);
 	}
 }

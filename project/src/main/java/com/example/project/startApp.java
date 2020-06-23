@@ -2,8 +2,7 @@ package com.example.project;
 
 import java.io.IOException;
 
-import com.example.ServerClientEntities.Instance;
-import com.example.ServerClientEntities.SimpleChatClient;
+
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,14 +19,20 @@ public class startApp extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		stageM = stage;
-		SimpleChatClient chatClient = new SimpleChatClient("localhost", Integer.valueOf(3333));
-		Instance.clientConsole = chatClient;
-		chatClient.openConnection();
-		stage.setTitle("Sign in page");
-		scene = new Scene(loadFXML("/com/example/project/logIn"));
+		stage.setTitle("Connection page");
+		scene = new Scene(loadFXML("/com/example/project/mainConnectionToServer"));
 		stage.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
 		stage.setScene(scene);
 		stage.show();
+
+		/*
+		 * SimpleChatClient chatClient = new SimpleChatClient("localhost",
+		 * Integer.valueOf(3333)); Instance.clientConsole = chatClient;
+		 * chatClient.openConnection(); stage.setTitle("Sign in page"); scene = new
+		 * Scene(loadFXML("/com/example/project/logIn")); stage.getIcons().add(new
+		 * Image("/com/example/project/images/uni_pic.jpg")); stage.setScene(scene);
+		 * stage.show();
+		 */
 	}
 
 	static void setRoot(String fxml) throws IOException {

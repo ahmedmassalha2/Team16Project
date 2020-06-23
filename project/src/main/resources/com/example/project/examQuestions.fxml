@@ -68,7 +68,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </TextArea>
-                  <TextField fx:id="poitns" layoutX="118.0" layoutY="164.0" prefHeight="25.0" prefWidth="33.0" promptText="pts" />
+                  <TextField fx:id="poitns" layoutX="111.0" layoutY="164.0" prefHeight="25.0" prefWidth="45.0" promptText="pts" />
                   <Button fx:id="updatebtn" layoutX="276.0" layoutY="333.0" mnemonicParsing="false" onAction="#update" text="update" visible="false" />
                   <Button fx:id="deletebtn" layoutX="219.0" layoutY="333.0" mnemonicParsing="false" onAction="#delete" text="delete" visible="false" />
                   <Text fx:id="ErrorTXT2" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="insert points-&gt;" textAlignment="JUSTIFY" visible="false" wrappingWidth="157.33331298828125" x="-40.0" y="182.0">
