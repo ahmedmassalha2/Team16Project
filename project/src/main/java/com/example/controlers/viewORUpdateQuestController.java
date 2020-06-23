@@ -126,9 +126,7 @@ public class viewORUpdateQuestController {
 		load(data);
 		if (IsTeacher == false) {
 			// incase of principal
-			deletBTN.setVisible(false);
-			submitBTN.setVisible(false);
-			filterCombo.setDisable(true);
+			disable();
 			backString = "/com/example/project/princQuestionList.fxml";
 			return;
 		}
@@ -136,6 +134,20 @@ public class viewORUpdateQuestController {
 		loadSubjects(disc, password);
 		// subjName.setText(l.get(1));
 
+	}
+
+	public void disable() {
+		deletBTN.setVisible(false);
+		submitBTN.setVisible(false);
+		filterCombo.setDisable(true);
+		ans1.setEditable(false);
+		ans2.setEditable(false);
+		ans3.setEditable(false);
+		ans4.setEditable(false);
+		selc1.setDisable(true);
+		selc2.setDisable(true);
+		selc3.setDisable(true);
+		selc4.setDisable(true);
 	}
 
 	public void load(String data) throws IOException {

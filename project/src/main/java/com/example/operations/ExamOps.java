@@ -160,14 +160,15 @@ public class ExamOps {
 		return "good";
 	}
 
-	public static String getWholeExam(String examNum) throws IOException {
+	public static String getWholeExam(String examNum, int id) throws IOException {
 
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		List<String> examsdisc = new ArrayList<String>();
 		ObjectMapper mapper = new ObjectMapper();
-		Query query = session.createQuery("from Exam where exam_num = :exam_num");
+		Query query = session.createQuery("from Exam where exam_num = :exam_num and id = :id");
 		query.setParameter("exam_num", examNum);
+		query.setParameter("id", id);
 		Exam exam = (Exam) query.getSingleResult();
 		String StudentInfoPerQuestion = mapper.writeValueAsString(exam.getStudentInfoPerQuestion());
 		String TeachertInfoPerQuestion = mapper.writeValueAsString(exam.getTeacherInfoPerQuestion());
@@ -185,7 +186,7 @@ public class ExamOps {
 				+ "@" + exam.getStudentExamComments() + "@" + exam.getTeacherExamComments() + "@"
 				+ exam.getTeacherGeneratedExam();
 
-		return examString + "@" + examToWord(examNum);
+		return examString + "@" + examToWord(examNum, id);
 
 	}
 
@@ -257,9 +258,9 @@ public class ExamOps {
 		Session session = dataBase.getSession();
 		Exam q = session.get(Exam.class, Integer.valueOf(id));
 		if (q != null) {
-			String args = getWholeExam(q.getExamNumber());
+			String args = getWholeExam(q.getExamNumber(), Integer.valueOf(id));
 			if (!isOnHand.equals("")) {
-				String ret = examToWord(q.getExamNumber()) + "@" + args;
+				String ret = examToWord(q.getExamNumber(), Integer.valueOf(id)) + "@" + args;
 				session.close();
 				return ret;
 			}
@@ -546,14 +547,15 @@ public class ExamOps {
 		return json;
 	}
 
-	public static String examToWord(String examNum) throws IOException {
+	public static String examToWord(String examNum, int id) throws IOException {
 
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		List<String> examsdisc = new ArrayList<String>();
 		ObjectMapper mapper = new ObjectMapper();
-		Query query = session.createQuery("from Exam where exam_num = :exam_num");
+		Query query = session.createQuery("from Exam where exam_num = :exam_num and id = :id");
 		query.setParameter("exam_num", examNum);
+		query.setParameter("id", id);
 		Exam exam = (Exam) query.getSingleResult();
 		String examString = "";
 		List<Question> questions = exam.getQuestions();

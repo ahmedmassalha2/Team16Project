@@ -83,11 +83,7 @@ public class addQuestionController {
 			ErrorTXT.setText(Instance.valQuestion(questionString, subjNumber));
 			return;
 		}
-		/*
-		 * if (checkQuestion(questNumber, subjNumber) == -1) {
-		 * ErrorTXT.setText("question exists, you can edit it in the question list");
-		 * return; }
-		 */
+
 		String an1 = ans1.getText();
 		if (an1.isBlank()) {
 			ErrorTXT.setText("Must fill first answer");
