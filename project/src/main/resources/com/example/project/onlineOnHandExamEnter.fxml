@@ -35,5 +35,13 @@
             <DropShadow />
          </effect>
       </Button>
+      <Button fx:id="backBtn" layoutX="253.0" layoutY="303.0" mnemonicParsing="false" onAction="#goBack" prefHeight="42.0" prefWidth="126.0" style="-fx-background-radius: 30;" text="Back">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>

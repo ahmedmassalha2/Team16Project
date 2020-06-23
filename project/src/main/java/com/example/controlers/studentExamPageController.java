@@ -195,7 +195,6 @@ public class studentExamPageController implements Initializable {
 
 	@FXML
 	void printT(ActionEvent event) {
-		System.out.println("sssssssssssssssssssssssss");
 	}
 
 	public class examTimer implements Runnable {

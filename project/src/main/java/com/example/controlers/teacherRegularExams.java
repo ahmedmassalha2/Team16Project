@@ -46,7 +46,7 @@ public class teacherRegularExams implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExam.fxml"));
 		Parent Main = loader.load();
 		CheckExamController secController = loader.getController();
-		secController.init(teacherMainPageController.username, teacherMainPageController.password);
+		secController.init(teacherMainPageController.username, teacherMainPageController.password, false);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Check Exams list");
