@@ -47,16 +47,10 @@ public class mainConnectionToServer {
 			ErrorTXT.setText("Please Insert Port!");
 		}
 
-		SimpleChatClient chatClient = new SimpleChatClient("localhost", Integer.valueOf(3333));
-		Instance.clientConsole = chatClient;
-		chatClient.openConnection();
-		if (!chatClient.isConnected()) {
-			ErrorTXT.setText("Server not available");
-			return;
-		}
-
 		try {
-
+			SimpleChatClient chatClient = new SimpleChatClient(IP, Integer.valueOf(Port));
+			Instance.clientConsole = chatClient;
+			chatClient.openConnection();
 			Parent Main = FXMLLoader.load(getClass().getResource("/com/example/project/logIn.fxml"));
 			Scene scene = new Scene(Main);
 			Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -68,6 +62,7 @@ public class mainConnectionToServer {
 			e.printStackTrace();
 		}
 		;
+
 	}
 
 }

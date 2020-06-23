@@ -460,7 +460,8 @@ public class ExamOps {
 		return "";
 	}
 
-	public static String examSubmmited(String studentId, List<String> answersList, String examCode, String teacherId) {
+	public static String examSubmmited(String studentId, List<String> answersList, String examCode, String teacherId,
+			String time2) {
 
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
@@ -473,7 +474,8 @@ public class ExamOps {
 		Query query3 = session.createQuery("from Teacher where id = :id");
 		query3.setParameter("id", Integer.valueOf(teacherId));
 		Teacher teacher = (Teacher) query3.getSingleResult();
-		checkedExam chExam = new checkedExam(teacher, exam.getSubject(), null, exam.getTimeString(), student, 0.0, "");
+		checkedExam chExam = new checkedExam(teacher, exam.getSubject(), null, exam.getTimeString() + " " + time2,
+				student, 0.0, "");
 		chExam.setStudentAnswers(answersList);
 		chExam.setStudent(student);
 		chExam.setTeacher(teacher);

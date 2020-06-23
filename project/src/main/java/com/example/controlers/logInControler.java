@@ -27,6 +27,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class logInControler implements Initializable {
@@ -163,4 +164,8 @@ public class logInControler implements Initializable {
 		return "";
 	}
 
+	@FXML
+	void logOut(MouseEvent event) throws IOException {
+		Instance.getClientConsole().closeConnection();
+	}
 }
