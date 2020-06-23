@@ -62,9 +62,12 @@ public class logInControler implements Initializable {
 		if (reString.equals("")) {
 			errorTXT.setVisible(true);
 			errorTXT.setText("User not found");
+			return;
 		}
-
-		else {
+		if (reString.equals("You already loged in")) {
+			errorTXT.setVisible(true);
+			errorTXT.setText("You already loged in");
+		} else {
 			goTo(event, "/com/example/project/" + getController(tyString) + ".fxml", reString);
 		}
 	}

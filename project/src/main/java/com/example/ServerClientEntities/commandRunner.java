@@ -19,6 +19,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class commandRunner {
+	public static List<String> userStrings = new ArrayList<>();
+
 	public static String run(String command) throws SQLException, IOException {
 		dataBase.getInstance();
 		System.out.println(command);
@@ -28,6 +30,8 @@ public class commandRunner {
 		switch (command_) {
 		case accExist:
 			return accOps.logIn(commandArr[1], commandArr[2], commandArr[4]);
+		case logOut:
+			return accOps.logOut(commandArr[1]);
 
 		case teacherExams:
 			return teacherOps.getExams(commandArr[1], commandArr[2]);
@@ -154,7 +158,8 @@ public class commandRunner {
 		case thisTeacherStudentChecked:
 			return generalOps.thisTeacherStudentChecked(commandArr[1]);
 		case submitHanedExam:
-			return teacherOps.submitHanedExam(commandArr[1], commandArr[2], commandArr[3], commandArr[4],commandArr[5]);
+			return teacherOps.submitHanedExam(commandArr[1], commandArr[2], commandArr[3], commandArr[4],
+					commandArr[5]);
 		case getHandedExams:
 			return teacherOps.getHandedExams(commandArr[1], commandArr[2]);
 		case getHanedByID:

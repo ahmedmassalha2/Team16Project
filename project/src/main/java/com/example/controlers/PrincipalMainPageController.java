@@ -43,11 +43,8 @@ public class PrincipalMainPageController implements Initializable {
 	private Button studentsBTN; // Value injected by FXMLLoader
 
 	@FXML
-	void logOut(ActionEvent event) {
-
-		Platform.exit();
-		System.exit(0);
-
+	void logOut(ActionEvent event) throws IOException {
+		Instance.signOut(username);
 	}
 
 	@FXML
@@ -106,13 +103,13 @@ public class PrincipalMainPageController implements Initializable {
 	@FXML
 	void studentsList(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/principalMainStudents.fxml"));
-		principalMainStudentsController.backTo ="/com/example/project/PrincipalMainPage.fxml";
+		principalMainStudentsController.backTo = "/com/example/project/PrincipalMainPage.fxml";
 		Parent Main = loader.load();
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Students informations");
 		Window.setScene(scene);
 		Window.show();
-		
+
 	}
 }

@@ -1,11 +1,14 @@
 package com.example.ServerClientEntities;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.server.AbstractServer;
 import com.example.server.ConnectionToClient;
 
 public class EchoServer extends AbstractServer {
+	List<String> userStrings;
 
 	public EchoServer(int port) {
 		super(port);
