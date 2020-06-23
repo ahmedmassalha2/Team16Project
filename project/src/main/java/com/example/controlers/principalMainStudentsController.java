@@ -85,6 +85,7 @@ public class principalMainStudentsController implements Initializable {
 		String[] datas = Instance.getClientConsole().getMessage().toString().split("@");
 		principalStudentInfoContoller.name = datas[0];
 		principalStudentInfoContoller.stId = datas[1];
+		principalStudentInfoContoller.isprinc = true;
 		principalStudentInfoContoller.courses = new ObjectMapper().readValue(datas[3], ArrayList.class);
 		principalStudentInfoContoller.exams = new ObjectMapper().readValue(datas[2],
 				new TypeReference<List<checkedExam>>() {
@@ -94,6 +95,7 @@ public class principalMainStudentsController implements Initializable {
 
 		System.out.println("dd: " + datas[2]);
 		principalStudentInfoContoller secController = loader.getController();
+
 		secController.setData();
 
 		Scene scene = new Scene(Main);

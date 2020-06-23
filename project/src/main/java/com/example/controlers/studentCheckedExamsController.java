@@ -5,6 +5,7 @@
 package com.example.controlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class studentCheckedExamsController {
 
 	@FXML // fx:id="ExamsList"
 	private ListView<String> ExamsList; // Value injected by FXMLLoader
+	static String thisFXML = "/com/example/project/studentCheckedExams.fxml";
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
@@ -46,8 +48,23 @@ public class studentCheckedExamsController {
 	}
 
 	@FXML
-	void openExam(ActionEvent event) {
+	void openExam(ActionEvent event) throws IOException, SQLException {
+		if (!(ExamsList.getSelectionModel().getSelectedIndex() >= 0))
+			return;
+		Instance.sendMessage(Command.getCheckedExamById.ordinal() + "@"
+				+ ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2]);
 
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/OpenCheckedExam.fxml"));
+		Parent Main = loader.load();
+		OpenCheckedExamController secController = loader.getController();
+		OpenCheckedExamController.isTeacher = false;
+		OpenCheckedExamController.back_ = thisFXML;
+		secController.initByExam(Instance.getClientConsole().getMessage().toString());
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Student exam");
+		Window.setScene(scene);
+		Window.show();
 	}
 
 	public void init(List<String> examsDisc) {
