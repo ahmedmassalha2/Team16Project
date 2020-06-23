@@ -131,7 +131,7 @@ public class studentExamPageController implements Initializable {
 	}
 
 	public void initByExam(String data) throws IOException, SQLException {
-		secondsExam = 4;
+		secondsExam = 60;
 		String[] datas = data.split("@");
 		studentExamPageController.userString = datas[0];
 		studentExamPageController.paString = datas[1];
@@ -225,7 +225,7 @@ public class studentExamPageController implements Initializable {
 						errorTXT.setVisible(true);
 						break;
 					}
-					second = 4;
+					second = 60;
 
 				}
 				try {
@@ -235,14 +235,7 @@ public class studentExamPageController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-			/*
-			 * Platform.runLater(() -> { // Code that will run in the JavaFX thread try {
-			 * 
-			 * addExam(null);
-			 * 
-			 * } catch (IOException e) { // TODO Auto-generated catch block
-			 * e.printStackTrace(); } });
-			 */
+
 		}
 
 	}
