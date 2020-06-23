@@ -254,7 +254,6 @@ public class generalOps {
 			query.setParameter("id", ex.getId());
 			Exam exam = (Exam) query.getSingleResult();
 			if (exam.getTeacherGeneratedExam() != null) {
-				System.out.println("HEYYY THERE");
 				Query query2 = session.createQuery("from Teacher where username = :username");
 				query2.setParameter("username", string);
 				Teacher teacher = (Teacher) query2.getSingleResult();
@@ -268,16 +267,10 @@ public class generalOps {
 						if (exa.getTeacher().getId() == teacher.getId()
 								|| exam.getTeacher().getId() == teacher.getId()) {
 							if (exa.isChecked()) {
-
-								System.out.println("Teacaher name: " + teacher.getUsername());
-								System.out.println("Exam id: " + exa.getId());
-								System.out.println("Teacher id: " + exa.getTeacher().getId());
-								System.out.println(
-										"Teacher generated id: " + Integer.parseInt(exam.getTeacherGeneratedExam()));
 								String discString = "Exam id: " + exa.getId() + "\nName: "
 										+ exa.getStudent().getFirstName() + " " + exa.getStudent().getLastName()
 										+ "\nGrade: " + exa.getGrade() + "\nDuration: " + exa.getTimeString()
-										+ " minutes";
+										+ " minutes\nCourse" + ex.getCourseName();
 								examsdisc.add(discString);
 
 							}

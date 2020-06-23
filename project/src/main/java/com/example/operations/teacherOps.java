@@ -41,19 +41,12 @@ public class teacherOps {
 			Teacher teacher = (Teacher) query.getSingleResult();
 			List<Exam> l = teacher.getExams();
 			List<String> examsdisc = new ArrayList<String>();
-			/*
-			 * for (Exam exam : l) {
-			 * 
-			 * String discString = "Exam id: " + exam.getId() + "\nExam in " +
-			 * exam.getSubject().getName() + " writen by " + exam.getTeacher().getUsername()
-			 * + "\nDuration: " + exam.getTimeString() + " hours";
-			 * examsdisc.add(discString); }
-			 */
+
 			for (Course course : teacher.getCourses()) {
 				for (Exam exam : course.getExams()) {
 					String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName()
 							+ " writen by " + exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString()
-							+ " minutes";
+							+ " minutes\nCourse: " + exam.getCourseName();
 					examsdisc.add(discString);
 				}
 			}
@@ -395,7 +388,7 @@ public class teacherOps {
 
 				String discString = "Exam id: " + exam.getId() + "\nName: " + exam.getStudent().getFirstName() + " "
 						+ exam.getStudent().getLastName() + "\nGrade: " + exam.getGrade() + "\nDuration: "
-						+ exam.getTimeString() + " minutes";
+						+ exam.getTimeString() + " minutes\nCourse: " + exam.getCourse().getName();
 				if (!exam.isChecked())
 					examsdisc.add(discString);
 			}

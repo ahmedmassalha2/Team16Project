@@ -97,9 +97,10 @@ public class studentExamPageController implements Initializable {
 
 	@FXML
 	void addExam(ActionEvent event) throws IOException {
-
+		String realtime = String.valueOf(Integer.parseInt(duration) - mintsExam);
 		System.out.println("took for you " + (Integer.parseInt(duration) - mintsExam));
-		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData());
+		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData()
+				+ "@Real time duration: " + realtime);
 		toQuestions.setVisible(true);
 		errorTXT.setVisible(false);
 		resetAll();
