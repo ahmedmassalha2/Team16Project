@@ -313,6 +313,14 @@ public class examsQuestionsController {
 			ErrorTXT2.setVisible(true);
 			return;
 		}
+
+		try {
+			Double num = Double.parseDouble(poitns.getText());
+		} catch (NumberFormatException e) {
+			ErrorTXT2.setVisible(true);
+			ErrorTXT2.setText("Points only digits");
+			return;
+		}
 		points.add(Current, Double.parseDouble(poitns.getText()));
 		System.out.println("here");
 		questDiscriptions.add(Current, questionDisc.getText());
@@ -323,7 +331,7 @@ public class examsQuestionsController {
 		anStrings.add(ans3.getText());
 		anStrings.add(ans4.getText());
 		answers.add(Current, (ArrayList<String>) anStrings);
-		//rightAnswers.add(Current, getRightAnswer());
+		// rightAnswers.add(Current, getRightAnswer());
 		teachersInfo.add(Current, teacherInfo.getText());
 		studentsInfo.add(Current, studentInfo.getText());
 		questionsFilt.getItems().remove("Id: " + questIDs.get(Current) + "\n" + questionDisc.getText());
@@ -386,7 +394,7 @@ public class examsQuestionsController {
 		teachersInfo.remove(Current);
 		studentsInfo.remove(Current);
 		points.remove(Current);
-		//rightAnswers.remove(Current);
+		// rightAnswers.remove(Current);
 		reset();
 		Current--;
 		if (Current < 0) {

@@ -167,6 +167,10 @@ public class OpenCheckedExamController {
 		teacherComments.setText(teacherCommentsExam);
 		lastGrade.setText(Lgrade);
 		studNotations.setText(dicriptionsTech);
+		if (isTeacher == false) {
+			teacherComments.setVisible(false);
+			studNotations.setText("Teacher comment:\n" + teacherCommentsExam);
+		}
 	}
 
 	public static void resetAll() {
