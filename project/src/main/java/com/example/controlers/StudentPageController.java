@@ -75,10 +75,8 @@ public class StudentPageController implements Initializable {
 	}
 
 	@FXML
-	void goBack(ActionEvent event) {
-
-		Platform.exit();
-		System.exit(0);
+	void goBack(ActionEvent event) throws IOException {
+		Instance.signOut(username);
 	}
 
 	@FXML

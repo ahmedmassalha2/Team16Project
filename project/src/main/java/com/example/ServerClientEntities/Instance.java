@@ -13,6 +13,11 @@ public class Instance {
 		return clientConsole;
 	}
 
+	public static void signOut(String username) throws IOException {
+		sendMessage(Command.logOut.ordinal() + "@" + username);
+		clientConsole.closeConnection();
+	}
+
 	public static void setClientConsole(SimpleChatClient clientConsole) {
 		Instance.clientConsole = clientConsole;
 	}
@@ -51,7 +56,7 @@ public class Instance {
 		int rand_int1 = rand.nextInt(9);
 		int rand_int2 = rand.nextInt(9);
 		int rand_int3 = rand.nextInt(9);
-		if(num == 2) {
+		if (num == 2) {
 			return "" + rand_int1 + rand_int2;
 		}
 		return "" + rand_int1 + rand_int2 + rand_int3;
