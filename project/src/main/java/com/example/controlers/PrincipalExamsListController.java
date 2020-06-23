@@ -69,6 +69,7 @@ public class PrincipalExamsListController implements Initializable {
 		Parent Main = loader.load();
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Main Page");
 		Window.setScene(scene);
 		Window.show();
 
