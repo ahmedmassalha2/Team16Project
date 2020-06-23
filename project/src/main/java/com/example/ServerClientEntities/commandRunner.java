@@ -154,9 +154,11 @@ public class commandRunner {
 		case thisTeacherStudentChecked:
 			return generalOps.thisTeacherStudentChecked(commandArr[1]);
 		case submitHanedExam:
-			return teacherOps.submitHanedExam(commandArr[1], commandArr[2], commandArr[3]);
+			return teacherOps.submitHanedExam(commandArr[1], commandArr[2], commandArr[3], commandArr[4],commandArr[5]);
 		case getHandedExams:
 			return teacherOps.getHandedExams(commandArr[1], commandArr[2]);
+		case getHanedByID:
+			return teacherOps.getHanedByID(commandArr[1]);
 		}
 
 		return command;

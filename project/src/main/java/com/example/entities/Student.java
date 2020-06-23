@@ -36,6 +36,10 @@ public class Student {
 	private String password;
 	@ElementCollection
 	private List<String> todoList;
+
+	@ElementCollection
+	private List<String> handedExamsIds;
+
 	private String firstName;
 	private String lastName;
 
@@ -130,6 +134,14 @@ public class Student {
 		}
 	}
 
+	public List<String> getHandedExamsIds() {
+		return handedExamsIds;
+	}
+
+	public void setHandedExamsIds(List<String> handedExamsIds) {
+		this.handedExamsIds = handedExamsIds;
+	}
+
 	public Student(String idNum, String privelage, String username, String password, String firstName,
 			String lastName) {
 		super();
@@ -142,6 +154,7 @@ public class Student {
 		this.lastName = lastName;
 		this.todoList = new ArrayList<String>();
 		this.courses = new ArrayList<Course>();
+		this.handedExamsIds = new ArrayList<String>();
 	}
 
 	public Student() {
