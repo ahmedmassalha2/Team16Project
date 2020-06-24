@@ -46,7 +46,8 @@ public class teacherOps {
 
 		for (checkedExam ex : exams) {
 			Query query2 = session.createQuery("from Exam where id = :id");
-			query2.setParameter("id", ex.getId());
+			query2.setParameter("id", ex.getExamId());
+			System.out.println("Checked ex id: "+ex.getId());
 			Exam e = (Exam) query2.getSingleResult();
 			System.out.println("Checked exam course: " + ex.getCourse().getName());
 			System.out.println("Exam: " + e.getCourseName());
