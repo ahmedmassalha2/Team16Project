@@ -78,7 +78,7 @@ public class StudentStartExamPageController implements Initializable {
 				return;
 			}
 		}
-
+		studentExamPageController.examCode = examCode.getText();
 		StudentStartExamPageController.examC = examCode.getText();
 		Instance.sendMessage(Command.getTechIdByExCode.ordinal() + "@" + examCode.getText());
 		StudentStartExamPageController.teacherID = Instance.getClientConsole().getMessage().toString();

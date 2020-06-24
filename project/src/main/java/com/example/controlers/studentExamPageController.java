@@ -85,6 +85,11 @@ public class studentExamPageController implements Initializable {
 	static int mintsExam = 60;
 	static String setTeacher = "";
 	static boolean studentInExam = false;
+	static boolean firstTime = true;
+	static int lastAddition = 0;
+	static String examCode = "";
+	private Thread t = null;
+	static boolean done = false;
 
 	public void showData() {
 		examDur.setText(duration);
@@ -96,7 +101,7 @@ public class studentExamPageController implements Initializable {
 	}
 
 	@FXML
-	void addExam(ActionEvent event) throws IOException {
+	void addExam(ActionEvent event) throws IOException, InterruptedException {
 		String realtime = String.valueOf(Integer.parseInt(duration) - mintsExam);
 		System.out.println("took for you " + (Integer.parseInt(duration) - mintsExam));
 		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData()
@@ -104,6 +109,8 @@ public class studentExamPageController implements Initializable {
 		toQuestions.setVisible(true);
 		errorTXT.setVisible(false);
 		resetAll();
+		if (t != null)
+			t.join();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMainPage.fxml"));
 		Scene scene = new Scene(loader.load());
 		Stage Window = event != null ? (Stage) ((Node) event.getSource()).getScene().getWindow()
@@ -152,7 +159,7 @@ public class studentExamPageController implements Initializable {
 			studentExamPageController.mintsExam = Integer.parseInt(duration) - 1;
 			studentExamQuestionsController.studentInExam = true;
 			examTimer myTimer = new examTimer();
-			Thread t = new Thread(myTimer);
+			t = new Thread(myTimer);
 			t.start();
 		}
 		studentExamQuestionsController.loadDiscriptions();
@@ -170,7 +177,7 @@ public class studentExamPageController implements Initializable {
 			errorTXT.setVisible(false);
 			backBtn.setVisible(false);
 			examTimer myTimer = new examTimer();
-			Thread t = new Thread(myTimer);
+			t = new Thread(myTimer);
 			t.start();
 		}
 	}
@@ -210,6 +217,44 @@ public class studentExamPageController implements Initializable {
 		@Override
 		public void run() {
 			while (true) {
+				if (done) {
+					break;
+				}
+				if (firstTime) {
+					try {
+						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode);
+						String respone = Instance.getClientConsole().getMessage().toString();
+						if (!respone.equals("NoEx")) {
+							try {
+								int val = Integer.parseInt(respone);
+								mints += Integer.parseInt(respone);
+								mintsExam = mints;
+								firstTime = false;
+								lastAddition = Integer.parseInt(respone);
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
+
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode);
+						String respone = Instance.getClientConsole().getMessage().toString();
+						if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
+							mints += Integer.parseInt(respone);
+							mintsExam = mints;
+							lastAddition = Integer.parseInt(respone);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
 				second--;
 				secondsExam = second;
 				seconds.setText(Integer.toString(second));
