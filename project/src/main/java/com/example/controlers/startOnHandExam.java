@@ -57,13 +57,22 @@ public class startOnHandExam {
 	static String duration = "";
 	static String course = "";
 	static String teacherId = "";
+	static boolean firstTime = true;
+	static int lastAddition = 0;
+	private Thread t = null;
+	static boolean done = false;
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException {
 		if (!validations())
 			return;
 		exCode = examCode.getText();
-		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText());
+		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText() + "@onhand");
+		String respone = Instance.getClientConsole().getMessage().toString();
+		if (respone.equals("exam not available")) {
+			errorTxt.setText("exam not available");
+			return;
+		}
 		Instance.sendMessage(
 				Command.getExamById.ordinal() + "@" + Instance.getClientConsole().getMessage().toString() + "@onhand");
 		String[] args = Instance.getClientConsole().getMessage().toString().split("@");
@@ -71,19 +80,26 @@ public class startOnHandExam {
 		mintsExam = Integer.parseInt(duration) - 1;
 		course = args[5];
 		teacherId = args[12];
-
+		firstTime = true;
+		lastAddition = 0;
+		done = false;
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Download file");
 		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
 		fc.getExtensionFilters().addAll(new ExtensionFilter("Word file", "*.doc"));
 		File file = fc.showSaveDialog(null);
+		if (file == null)
+			return;
 		PrintWriter p = new PrintWriter(file);
 		p.write(args[0]);
 		p.close();
-		examTimer myTimer = new examTimer();
-		Thread t = new Thread(myTimer);
-		t.start();
 		submitExambtn.setVisible(true);
+		backBtn.setVisible(false);
+		examCode.setEditable(false);
+		examTimer myTimer = new examTimer();
+		this.t = new Thread(myTimer);
+		t.start();
+
 	}
 
 	public boolean validations() throws IOException {
@@ -106,16 +122,20 @@ public class startOnHandExam {
 			errorTxt.setText("Invalid ID or exam code");
 			return false;
 		}
+		errorTxt.setText("");
 		return true;
 	}
 
 	@FXML
-	void submit(ActionEvent event) throws IOException {
+	void submit(ActionEvent event) throws IOException, InterruptedException {
+
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Download file");
 		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
 		fc.getExtensionFilters().addAll(new ExtensionFilter("Word file", "*.doc"));
 		File file = fc.showOpenDialog(null);
+		if (file == null)
+			return;
 		String examDis = "Student ID: " + idNum.getText() + "\n" + "Duration: " + duration + "\n" + "Exam in: "
 				+ course;
 		System.out.println(examDis);
@@ -134,10 +154,10 @@ public class startOnHandExam {
 			Instance.sendMessage(
 					Command.submitHanedExam.ordinal() + "@" + teacherId + "@" + generalOps.getJsonString(exDis) + "@"
 							+ generalOps.getJsonString(exLines) + "@" + idNum.getText() + "@" + examCode.getText());
+			done = true;
+			// goBack(event);
 
-			goBack(event);
 		}
-
 	}
 
 	@FXML
@@ -180,6 +200,39 @@ public class startOnHandExam {
 		@Override
 		public void run() {
 			while (true) {
+				if (done) {
+					break;
+				}
+				if (firstTime) {
+					try {
+						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
+						String respone = Instance.getClientConsole().getMessage().toString();
+						if (!respone.equals("NoEx")) {
+							mints += Integer.parseInt(respone);
+							mintsExam = mints;
+							firstTime = false;
+							lastAddition = Integer.parseInt(respone);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
+						String respone = Instance.getClientConsole().getMessage().toString();
+						if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
+							mints += Integer.parseInt(respone);
+							mintsExam = mints;
+							lastAddition = Integer.parseInt(respone);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
 				second--;
 				secondsExam = second;
 				seconds.setText(Integer.toString(second));
@@ -203,20 +256,24 @@ public class startOnHandExam {
 				}
 			}
 
-			Platform.runLater(() -> {
-				List<String> exDis = new ArrayList<>();
-				exDis.add(idNum.getText());
-				exDis.add(duration);
-				exDis.add(course);
-				List<String> lines = new ArrayList<>();
-				lines.add("Student with id: " + idNum.getText() + " Didn't finish in time");
-				try {
-					Instance.sendMessage(Command.submitHanedExam.ordinal() + "@" + teacherId + "@"
-							+ generalOps.getJsonString(exDis) + "@" + generalOps.getJsonString(lines) + "@"
-							+ idNum.getText() + "@" + examCode.getText());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			Platform.runLater(() ->
+
+			{
+				if (!done) {
+					List<String> exDis = new ArrayList<>();
+					exDis.add(idNum.getText());
+					exDis.add(duration);
+					exDis.add(course);
+					List<String> lines = new ArrayList<>();
+					lines.add("Student with id: " + idNum.getText() + " Didn't finish in time");
+					try {
+						Instance.sendMessage(Command.submitHanedExam.ordinal() + "@" + teacherId + "@"
+								+ generalOps.getJsonString(exDis) + "@" + generalOps.getJsonString(lines) + "@"
+								+ idNum.getText() + "@" + examCode.getText());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				back();
 

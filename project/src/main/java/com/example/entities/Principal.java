@@ -25,11 +25,15 @@ public class Principal {
 	private String lastName;
 	@ElementCollection
 	private List<String> todoList;
+	
+	@ElementCollection
+	private List<String> examExtends;
 
 	public Principal(String privelage, String username, String password,String firstName, String lastName) {
 		this.privelage = privelage;
 		this.username = username;
 		this.todoList = new ArrayList<String>();
+		this.examExtends=new ArrayList<String>();
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -89,6 +93,14 @@ public class Principal {
 
 	public void setTodoList(List<String> todoList) {
 		this.todoList = todoList;
+	}
+
+	public List<String> getExamExtends() {
+		return examExtends;
+	}
+
+	public void setExamExtends(List<String> examExtends) {
+		this.examExtends = examExtends;
 	}
 
 	public void addTodoItem(String item) {

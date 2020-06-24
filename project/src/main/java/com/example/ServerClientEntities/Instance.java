@@ -63,4 +63,9 @@ public class Instance {
 
 	}
 
+	public static void show(String string) {
+		// TODO Auto-generated method stub
+		System.out.println("in instance");
+	}
+
 }

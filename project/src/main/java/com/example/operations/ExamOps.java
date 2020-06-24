@@ -354,7 +354,7 @@ public class ExamOps {
 		return "";
 	}
 
-	public static String getExamIdBycode(String code) {
+	public static String getExamIdBycode(String code, String type) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		System.out.println("searching id for code: " + code);
@@ -363,6 +363,14 @@ public class ExamOps {
 		List list = query.list();
 		if (list.size() != 0) {
 			Exam exam = (Exam) query.getSingleResult();
+			if (type.equals("onhand") && !exam.isOnHand()) {
+				session.close();
+				return "exam not available";
+			}
+			if (type.equals("onapp") && !exam.isOnAPP()) {
+				session.close();
+				return "exam not available";
+			}
 			String id = Integer.toString(exam.getId());
 			System.out.println("id is: " + id);
 			session.close();
@@ -372,13 +380,15 @@ public class ExamOps {
 		return "";
 	}
 
-	public static String setExamByExamNum(String examNum, String examCode, String teacherName, String onHand) {
+	public static String setExamByExamNum(String examNum, String examCode, String teacherName, String onHand,
+			String course) {
 		dataBase.getInstance();
 
 		Session session = dataBase.getSession();
 		System.out.println("Exam num = " + examNum);
-		Query query = session.createQuery("from Exam where exam_num = :exam_num");
+		Query query = session.createQuery("from Exam where exam_num = :exam_num and course_name = :course_name");
 		query.setParameter("exam_num", examNum);
+		query.setParameter("course_name", course);
 		List list = query.list();
 
 		if (list.size() != 0) {
@@ -577,5 +587,29 @@ public class ExamOps {
 		}
 		return examString;
 
+	}
+
+	public static String ENDEXAM(String examNum, String examCode, String course) {
+		dataBase.getInstance();
+
+		Session session = dataBase.getSession();
+		System.out.println("Exam num = " + examNum);
+		Query query = session.createQuery(
+				"from Exam where exam_num = :exam_num and course_name = :course_name and exam_code = :exam_code");
+		query.setParameter("exam_num", examNum);
+		query.setParameter("course_name", course);
+		query.setParameter("exam_code", examCode);
+		List list = query.list();
+		if (list.size() != 0) {
+			Exam exam = (Exam) query.getSingleResult();
+			exam.setExamCode(null);
+			exam.setExamExt(null);
+			session.update(exam);
+			session.getTransaction().commit();
+			session.close();
+			return "closed";
+		}
+		session.close();
+		return "Exam not started, if you wish, you can start it";
 	}
 }

@@ -78,7 +78,7 @@ public class StudentStartExamPageController implements Initializable {
 				return;
 			}
 		}
-
+		studentExamPageController.examCode = examCode.getText();
 		StudentStartExamPageController.examC = examCode.getText();
 		Instance.sendMessage(Command.getTechIdByExCode.ordinal() + "@" + examCode.getText());
 		StudentStartExamPageController.teacherID = Instance.getClientConsole().getMessage().toString();
@@ -88,8 +88,13 @@ public class StudentStartExamPageController implements Initializable {
 		Parent Main = loader.load();
 		studentExamPageController secController = loader.getController();
 		studentExamPageController.studentInExam = true;
-		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText());
-		Instance.sendMessage(Command.getExamById.ordinal() + "@" + Instance.getClientConsole().getMessage().toString());
+		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText() + "@onapp");
+		String respone = Instance.getClientConsole().getMessage().toString();
+		if (respone.equals("exam not available")) {
+			errorTxt.setText("exam not available");
+			return;
+		}
+		Instance.sendMessage(Command.getExamById.ordinal() + "@" + respone);
 		String dataString = Instance.getClientConsole().getMessage().toString();
 		studentExamPageController.studentIDString = idNum.getText();
 		Instance.sendMessage(Command.getNameByUsrName.ordinal() + "@" + usrName);

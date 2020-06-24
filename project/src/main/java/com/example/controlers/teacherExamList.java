@@ -64,7 +64,8 @@ public class teacherExamList implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examCodeGenerating.fxml"));
 		Parent Main = loader.load();
 		ExamCodeGenerateController secController = loader.getController();
-		secController.init(Instance.getClientConsole().getMessage().toString(), useString, passString);
+		String course = ExamsList.getSelectionModel().getSelectedItem().split("\n")[3].split(" ")[1];
+		secController.init(Instance.getClientConsole().getMessage().toString(), useString, passString,course);
 		Scene scene = new Scene(Main);
 		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Window.setTitle("Generate Code");

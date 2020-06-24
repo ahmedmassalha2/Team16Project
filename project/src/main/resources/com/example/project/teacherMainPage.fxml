@@ -21,10 +21,10 @@
                      <children>
                         <ImageView fitHeight="408.0" fitWidth="602.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/teacher-3679814_960_720.jpg" />
+                              <Image url="@images/teacher.png" />
                            </image>
                         </ImageView>
-                      <Button fx:id="myExamsBTN" layoutX="399.0" layoutY="93.0" mnemonicParsing="false" onAction="#showExamsList" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Exams">
+                      <Button fx:id="myExamsBTN" layoutX="206.0" layoutY="156.0" mnemonicParsing="false" onAction="#showExamsList" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Exams">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
@@ -32,7 +32,7 @@
                               <DropShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="showQues" layoutX="400.0" layoutY="140.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Questions dataBase">
+                        <Button fx:id="showQues" layoutX="207.0" layoutY="203.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Questions dataBase">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
@@ -40,7 +40,7 @@
                               <DropShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="signoutBTN" layoutX="399.0" layoutY="227.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Sign out">
+                        <Button fx:id="signoutBTN" layoutX="206.0" layoutY="290.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="Sign out">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
@@ -48,12 +48,12 @@
                               <DropShadow />
                            </effect>
                         </Button>
-                        <Text fx:id="usernameTXT" fill="WHITE" layoutX="22.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="214.3333134651184">
+                        <Text fx:id="usernameTXT" layoutX="22.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="214.3333134651184">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Text>
-                        <Button fx:id="todoBtn" layoutX="399.0" layoutY="184.0" mnemonicParsing="false" onAction="#showToDo" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="ToDo list">
+                        <Button fx:id="todoBtn" layoutX="206.0" layoutY="247.0" mnemonicParsing="false" onAction="#showToDo" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 30;" text="ToDo list">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
