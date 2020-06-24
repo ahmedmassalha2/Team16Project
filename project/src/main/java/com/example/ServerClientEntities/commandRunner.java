@@ -164,6 +164,9 @@ public class commandRunner {
 			return teacherOps.getHandedExams(commandArr[1], commandArr[2]);
 		case getHanedByID:
 			return teacherOps.getHanedByID(commandArr[1]);
+		case TeacherExamsByCourse:
+			return teacherOps.TeacherExamsByCourse(commandArr[1], commandArr[2]);
+
 		}
 
 		return command;
