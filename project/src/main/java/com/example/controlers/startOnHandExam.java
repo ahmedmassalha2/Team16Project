@@ -57,6 +57,9 @@ public class startOnHandExam {
 	static String duration = "";
 	static String course = "";
 	static String teacherId = "";
+	static boolean firstTime = true;
+	static int lastAddition = 0;
+	private Thread t = null;
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException {
@@ -76,7 +79,8 @@ public class startOnHandExam {
 		mintsExam = Integer.parseInt(duration) - 1;
 		course = args[5];
 		teacherId = args[12];
-
+		firstTime = true;
+		lastAddition = 0;
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Download file");
 		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
@@ -89,8 +93,9 @@ public class startOnHandExam {
 		p.close();
 		submitExambtn.setVisible(true);
 		backBtn.setVisible(false);
+		examCode.setEditable(false);
 		examTimer myTimer = new examTimer();
-		Thread t = new Thread(myTimer);
+		this.t = new Thread(myTimer);
 		t.start();
 
 	}
@@ -120,7 +125,7 @@ public class startOnHandExam {
 	}
 
 	@FXML
-	void submit(ActionEvent event) throws IOException {
+	void submit(ActionEvent event) throws IOException, InterruptedException {
 
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Download file");
@@ -147,7 +152,7 @@ public class startOnHandExam {
 			Instance.sendMessage(
 					Command.submitHanedExam.ordinal() + "@" + teacherId + "@" + generalOps.getJsonString(exDis) + "@"
 							+ generalOps.getJsonString(exLines) + "@" + idNum.getText() + "@" + examCode.getText());
-
+			t.join();
 			goBack(event);
 
 		}
@@ -193,6 +198,36 @@ public class startOnHandExam {
 		@Override
 		public void run() {
 			while (true) {
+				if (firstTime) {
+					try {
+						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
+						String respone = Instance.getClientConsole().getMessage().toString();
+						if (!respone.equals("NoEx")) {
+							mints += Integer.parseInt(respone);
+							mintsExam = mints;
+							firstTime = false;
+							lastAddition = Integer.parseInt(respone);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
+						String respone = Instance.getClientConsole().getMessage().toString();
+						if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
+							mints += Integer.parseInt(respone);
+							mintsExam = mints;
+							lastAddition = Integer.parseInt(respone);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
 				second--;
 				secondsExam = second;
 				seconds.setText(Integer.toString(second));
@@ -216,7 +251,9 @@ public class startOnHandExam {
 				}
 			}
 
-			Platform.runLater(() -> {
+			Platform.runLater(() ->
+
+			{
 				List<String> exDis = new ArrayList<>();
 				exDis.add(idNum.getText());
 				exDis.add(duration);

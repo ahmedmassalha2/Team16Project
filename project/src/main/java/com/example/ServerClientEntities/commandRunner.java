@@ -172,6 +172,8 @@ public class commandRunner {
 			return princOps.DELLREQ(commandArr[1]);
 		case APPROVEXT:
 			return princOps.APPROVEXT(commandArr[1],commandArr[2]);
+		case checkExt:
+			return generalOps.checkExt(commandArr[1]);
 		}
 
 		return command;
