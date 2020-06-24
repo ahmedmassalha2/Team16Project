@@ -271,7 +271,10 @@ public class generalOps {
 										+ exa.getStudent().getFirstName() + " " + exa.getStudent().getLastName()
 										+ "\nGrade: " + exa.getGrade() + "\nDuration: " + exa.getTimeString()
 										+ " minutes\nCourse " + ex.getCourseName();
-								examsdisc.add(discString);
+								if(exa.isChecked()) {
+									examsdisc.add(discString);
+								}
+								
 
 							}
 						}

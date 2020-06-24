@@ -56,8 +56,11 @@ public class teacherOps {
 
 					String discString = "Exam id: " + ex.getId() + "\nName: " + ex.getStudent().getFirstName() + " "
 							+ ex.getStudent().getLastName() + "\nGrade: " + ex.getGrade() + "\nDuration: "
-							+ ex.getTimeString() + " minutes";
-					examsdisc.add(discString);
+							+ ex.getTimeString() + " minutes\n" + "Course: "+ex.getCourse().getName();
+					if(ex.isChecked()) {
+						examsdisc.add(discString);
+					}
+					
 				}
 			}
 
