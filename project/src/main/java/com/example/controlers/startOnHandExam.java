@@ -61,6 +61,7 @@ public class startOnHandExam {
 	static int lastAddition = 0;
 	private Thread t = null;
 	static boolean done = false;
+	static int checks = 0;
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException {
@@ -203,34 +204,45 @@ public class startOnHandExam {
 				if (done) {
 					break;
 				}
-				if (firstTime) {
-					try {
-						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
-						String respone = Instance.getClientConsole().getMessage().toString();
-						if (!respone.equals("NoEx")) {
-							mints += Integer.parseInt(respone);
-							mintsExam = mints;
-							firstTime = false;
-							lastAddition = Integer.parseInt(respone);
+				if (checks >= 4) {
+					if (firstTime) {
+						try {
+							Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
+							String respone = Instance.getClientConsole().getMessage().toString();
+							if (!respone.equals("NoEx")) {
+								mints += Integer.parseInt(respone);
+								mintsExam = mints;
+								firstTime = false;
+								lastAddition = Integer.parseInt(respone);
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
-						String respone = Instance.getClientConsole().getMessage().toString();
-						if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
-							mints += Integer.parseInt(respone);
-							mintsExam = mints;
-							lastAddition = Integer.parseInt(respone);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					} else {
+						try {
+							Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
+							String respone = Instance.getClientConsole().getMessage().toString();
+							try {
+								Integer.parseInt(respone);
+								if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
+									mints += Integer.parseInt(respone);
+									mintsExam = mints;
+									lastAddition = Integer.parseInt(respone);
+								}
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
 
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+					checks = 0;
+				} else {
+					checks++;
 				}
 
 				second--;
