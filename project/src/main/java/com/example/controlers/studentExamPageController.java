@@ -15,7 +15,6 @@ import com.example.ServerClientEntities.Instance;
 import com.example.project.startApp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
@@ -27,8 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -102,6 +100,7 @@ public class studentExamPageController implements Initializable {
 
 	@FXML
 	void addExam(ActionEvent event) throws IOException, InterruptedException {
+		done = true;
 		String realtime = String.valueOf(Integer.parseInt(duration) - mintsExam);
 		System.out.println("took for you " + (Integer.parseInt(duration) - mintsExam));
 		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData()
