@@ -60,6 +60,7 @@ public class startOnHandExam {
 	static boolean firstTime = true;
 	static int lastAddition = 0;
 	private Thread t = null;
+	static boolean done = false;
 
 	@FXML
 	void enterExam(ActionEvent event) throws IOException {
@@ -81,6 +82,7 @@ public class startOnHandExam {
 		teacherId = args[12];
 		firstTime = true;
 		lastAddition = 0;
+		done = false;
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Download file");
 		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
@@ -152,8 +154,8 @@ public class startOnHandExam {
 			Instance.sendMessage(
 					Command.submitHanedExam.ordinal() + "@" + teacherId + "@" + generalOps.getJsonString(exDis) + "@"
 							+ generalOps.getJsonString(exLines) + "@" + idNum.getText() + "@" + examCode.getText());
-			t.join();
-			goBack(event);
+			done = true;
+			// goBack(event);
 
 		}
 	}
@@ -198,6 +200,9 @@ public class startOnHandExam {
 		@Override
 		public void run() {
 			while (true) {
+				if (done) {
+					break;
+				}
 				if (firstTime) {
 					try {
 						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode.getText());
@@ -254,19 +259,21 @@ public class startOnHandExam {
 			Platform.runLater(() ->
 
 			{
-				List<String> exDis = new ArrayList<>();
-				exDis.add(idNum.getText());
-				exDis.add(duration);
-				exDis.add(course);
-				List<String> lines = new ArrayList<>();
-				lines.add("Student with id: " + idNum.getText() + " Didn't finish in time");
-				try {
-					Instance.sendMessage(Command.submitHanedExam.ordinal() + "@" + teacherId + "@"
-							+ generalOps.getJsonString(exDis) + "@" + generalOps.getJsonString(lines) + "@"
-							+ idNum.getText() + "@" + examCode.getText());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (!done) {
+					List<String> exDis = new ArrayList<>();
+					exDis.add(idNum.getText());
+					exDis.add(duration);
+					exDis.add(course);
+					List<String> lines = new ArrayList<>();
+					lines.add("Student with id: " + idNum.getText() + " Didn't finish in time");
+					try {
+						Instance.sendMessage(Command.submitHanedExam.ordinal() + "@" + teacherId + "@"
+								+ generalOps.getJsonString(exDis) + "@" + generalOps.getJsonString(lines) + "@"
+								+ idNum.getText() + "@" + examCode.getText());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				back();
 

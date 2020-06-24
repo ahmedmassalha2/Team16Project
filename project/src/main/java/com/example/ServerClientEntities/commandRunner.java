@@ -126,10 +126,10 @@ public class commandRunner {
 			return ExamOps.getExamIdBycode(commandArr[1], commandArr[2]);
 
 		case setExamByExamNum:
-			if (commandArr.length == 5) {
-				return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3], "onhand");
+			if (commandArr.length == 6) {
+				return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3], "onhand", commandArr[5]);
 			}
-			return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3], "");
+			return ExamOps.setExamByExamNum(commandArr[1], commandArr[2], commandArr[3], "", commandArr[4]);
 		case getNameByUsrName:
 			return ExamOps.getIdByUsrName(commandArr[1]);
 		case getTechIdByExCode:
@@ -171,9 +171,11 @@ public class commandRunner {
 		case DELLREQ:
 			return princOps.DELLREQ(commandArr[1]);
 		case APPROVEXT:
-			return princOps.APPROVEXT(commandArr[1],commandArr[2]);
+			return princOps.APPROVEXT(commandArr[1], commandArr[2]);
 		case checkExt:
 			return generalOps.checkExt(commandArr[1]);
+		case ENDEXAM:
+			return ExamOps.ENDEXAM(commandArr[1], commandArr[2],commandArr[3]);
 		}
 
 		return command;
