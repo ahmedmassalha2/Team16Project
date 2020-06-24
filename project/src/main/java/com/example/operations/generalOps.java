@@ -289,4 +289,24 @@ public class generalOps {
 		System.out.println(json);
 		return json;
 	}
+
+	public static String checkExt(String examCode) {
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Exam where exam_code = :exam_code");
+		query.setParameter("exam_code", examCode);
+		List list = query.list();
+
+		if (list.size() != 0) {
+			Exam exam = (Exam) query.getSingleResult();
+			String time = "NoEx";
+			if (exam.getExamExt() != null)
+				time = exam.getExamExt();
+			session.close();
+			return time;
+		}
+		session.close();
+		return "NoEx";
+
+	}
 }
