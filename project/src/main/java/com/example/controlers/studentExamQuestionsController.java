@@ -107,11 +107,12 @@ public class studentExamQuestionsController implements Initializable {
 	static int exTimeMin = 0;
 	static String teacherID = "";
 	static boolean studentInExam = false;
+	static Thread t = null;
 	@FXML // fx:id="errorTXT"
 	private Text errorTXT; // Value injected by FXMLLoader
 
 	@FXML
-	void backToMain(ActionEvent event) throws IOException {
+	void backToMain(ActionEvent event) throws IOException, InterruptedException {
 		setView();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamPage.fxml"));
 		Parent Main = loader.load();
@@ -126,7 +127,7 @@ public class studentExamQuestionsController implements Initializable {
 	}
 
 	@FXML
-	void changeCurrDowner(ActionEvent event) throws IOException {
+	void changeCurrDowner(ActionEvent event) throws IOException, InterruptedException {
 		if (Current - 1 < 0) {
 			backToMain(event);
 			return;
@@ -270,7 +271,7 @@ public class studentExamQuestionsController implements Initializable {
 			exTimeSec = studentExamPageController.secondsExam;
 			exTimeMin = studentExamPageController.mintsExam;
 			examTimer myTimer = new examTimer();
-			Thread t = new Thread(myTimer);
+			t = new Thread(myTimer);
 			t.start();
 		}
 

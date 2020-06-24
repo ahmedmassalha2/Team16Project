@@ -169,18 +169,12 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.fxml</include>
-					<include>**/*.jpg</include>
-					<include>**/*.png</include>
-				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
 					<include>**/*.java</include>
 					<include>**/*.gwt.xml</include>
-					<include>**/*.fxml</include>
 				</includes>
 			</resource>
 		</resources>

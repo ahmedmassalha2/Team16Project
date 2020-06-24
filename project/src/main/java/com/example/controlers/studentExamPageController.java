@@ -8,13 +8,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.example.ServerClientEntities.Command;
 import com.example.ServerClientEntities.Instance;
+import com.example.operations.generalOps;
 import com.example.project.startApp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
@@ -88,6 +91,7 @@ public class studentExamPageController implements Initializable {
 	static String examCode = "";
 	private Thread t = null;
 	static boolean done = false;
+	static int checks = 0;
 
 	public void showData() {
 		examDur.setText(duration);
@@ -100,7 +104,7 @@ public class studentExamPageController implements Initializable {
 
 	@FXML
 	void addExam(ActionEvent event) throws IOException, InterruptedException {
-		done = true;
+
 		String realtime = String.valueOf(Integer.parseInt(duration) - mintsExam);
 		System.out.println("took for you " + (Integer.parseInt(duration) - mintsExam));
 		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData()
@@ -108,21 +112,11 @@ public class studentExamPageController implements Initializable {
 		toQuestions.setVisible(true);
 		errorTXT.setVisible(false);
 		resetAll();
-		if (t != null)
-			t.join();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMainPage.fxml"));
-		Scene scene = new Scene(loader.load());
-		Stage Window = event != null ? (Stage) ((Node) event.getSource()).getScene().getWindow()
-				: (Stage) mainPane.getScene().getWindow();
-		if (Window == null)
-			Window = startApp.stageM;
-		Window.setTitle("Main page");
-		Window.setScene(scene);
-		Window.show();
+		done = true;
 	}
 
 	@FXML
-	void showQuestions(ActionEvent event) throws IOException {
+	void showQuestions(ActionEvent event) throws IOException, InterruptedException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/studentExamQuestions.fxml"));
 		Parent Main = loader.load();
 		studentExamQuestionsController secController = loader.getController();
@@ -171,13 +165,11 @@ public class studentExamPageController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		done = false;
 		if (studentInExam) {
 			toQuestions.setVisible(true);
 			errorTXT.setVisible(false);
 			backBtn.setVisible(false);
-			examTimer myTimer = new examTimer();
-			t = new Thread(myTimer);
-			t.start();
 		}
 	}
 
@@ -197,11 +189,29 @@ public class studentExamPageController implements Initializable {
 		stInfo = "";
 		teacherName = "";
 		setTeacher = "";
+		done = false;
 		studentExamQuestionsController.resetAll();
 	}
 
 	@FXML
 	void printT(ActionEvent event) {
+	}
+
+	public void back() {
+		secondsExam = 60;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/StudentMainPage.fxml"));
+		Scene scene;
+		try {
+			scene = new Scene(loader.load());
+			Stage Window = startApp.stageM;
+
+			Window.setTitle("Main page");
+			Window.setScene(scene);
+			Window.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public class examTimer implements Runnable {
@@ -219,41 +229,47 @@ public class studentExamPageController implements Initializable {
 				if (done) {
 					break;
 				}
-				if (firstTime) {
-					try {
-						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode);
-						String respone = Instance.getClientConsole().getMessage().toString();
-						if (!respone.equals("NoEx")) {
-							try {
-								int val = Integer.parseInt(respone);
+				if (checks == 4) {
+					if (firstTime) {
+						try {
+							Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode);
+							String respone = Instance.getClientConsole().getMessage().toString();
+							if (!respone.equals("NoEx")) {
+								try {
+									int val = Integer.parseInt(respone);
+									mints += Integer.parseInt(respone);
+									mintsExam = mints;
+									firstTime = false;
+									lastAddition = Integer.parseInt(respone);
+								} catch (Exception e) {
+									// TODO: handle exception
+								}
+
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						try {
+							Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode);
+							String respone = Instance.getClientConsole().getMessage().toString();
+							if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
 								mints += Integer.parseInt(respone);
 								mintsExam = mints;
-								firstTime = false;
 								lastAddition = Integer.parseInt(respone);
-							} catch (Exception e) {
-								// TODO: handle exception
 							}
-
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
 					}
+					checks = 0;
 				} else {
-					try {
-						Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode);
-						String respone = Instance.getClientConsole().getMessage().toString();
-						if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
-							mints += Integer.parseInt(respone);
-							mintsExam = mints;
-							lastAddition = Integer.parseInt(respone);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
+					checks++;
 				}
+				System.out.println(second);
 				second--;
 				secondsExam = second;
 				seconds.setText(Integer.toString(second));
@@ -279,6 +295,14 @@ public class studentExamPageController implements Initializable {
 					e.printStackTrace();
 				}
 			}
+
+			Platform.runLater(() ->
+
+			{
+
+				back();
+
+			});
 
 		}
 

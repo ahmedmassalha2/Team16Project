@@ -45,6 +45,8 @@ public class examRequestController implements Initializable {
 		String query = examsList.getItems().get(examsList.getSelectionModel().getSelectedIndex());
 		String examCode = query.split("\n")[0].split(":")[1];
 		String examTimeEx = query.split("\n")[2].split(" ")[1];
+		Instance.sendMessage(Command.DELLREQ.ordinal() + "@"
+				+ examsList.getItems().get(examsList.getSelectionModel().getSelectedIndex()));
 		examsList.getItems().remove(examsList.getSelectionModel().getSelectedIndex());
 		Instance.sendMessage(Command.APPROVEXT.ordinal() + "@" + examCode + "@" + examTimeEx);
 	}
