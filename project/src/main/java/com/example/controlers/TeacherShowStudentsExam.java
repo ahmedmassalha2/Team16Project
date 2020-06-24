@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,7 +30,7 @@ public class TeacherShowStudentsExam {
 	@FXML // fx:id="filterBtn"
 	private ComboBox<String> filterBtn; // Value injected by FXMLLoader
 
-	private static List<String> examsDiscription;
+	private static List<String> examsDiscription = new ArrayList<String>();
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
@@ -51,11 +52,15 @@ public class TeacherShowStudentsExam {
 		String selection = filterBtn.getSelectionModel().getSelectedItem();
 
 		if (selection.equals("ALL")) {
-			ExamsList.getItems().removeAll(ExamsList.getItems());
-			ExamsList.getItems().addAll(examsDiscription);
+			Instance.sendMessage(
+					Command.thisTeacherStudentChecked.ordinal() + "@" + teacherMainPageController.username);
+			init(new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(), ArrayList.class));
+			//ExamsList.getItems().removeAll(ExamsList.getItems());
+			//ExamsList.getItems().addAll(examsDiscription);
 		} else {
 
-			Instance.sendMessage(Command.TeacherExamsByCourse.ordinal() + "@" + teacherMainPageController.username + "@" + selection);
+			Instance.sendMessage(Command.TeacherExamsByCourse.ordinal() + "@" + teacherMainPageController.username + "@"
+					+ selection);
 			String json = Instance.getClientConsole().getMessage().toString();
 			if (json.equals("")) {
 				ExamsList.getItems().removeAll(ExamsList.getItems());
@@ -69,9 +74,8 @@ public class TeacherShowStudentsExam {
 		}
 	}
 
-	
-
 	public void init(List<String> examsDisc) {
+		this.examsDiscription.clear();
 		this.examsDiscription = examsDisc;
 		ExamsList.getItems().removeAll(ExamsList.getItems());
 		ExamsList.getItems().addAll(examsDisc);
