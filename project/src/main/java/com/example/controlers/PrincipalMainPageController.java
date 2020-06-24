@@ -41,6 +41,19 @@ public class PrincipalMainPageController implements Initializable {
 	private Button todoBTN; // Value injected by FXMLLoader
 	@FXML // fx:id="studentsBTN"
 	private Button studentsBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="examExtends"
+	private Button examExtends; // Value injected by FXMLLoader
+
+	@FXML
+	void examExtendsReq(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/examRequestList.fxml"));
+		Parent Main = loader.load();
+		Scene scene = new Scene(Main);
+		Stage Window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Window.setTitle("Requests");
+		Window.setScene(scene);
+		Window.show();
+	}
 
 	@FXML
 	void logOut(ActionEvent event) throws IOException {

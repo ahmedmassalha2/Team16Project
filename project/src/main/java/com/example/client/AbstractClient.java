@@ -321,8 +321,9 @@ public abstract class AbstractClient implements Runnable {
 	 * implemented by subclasses, who should respond to messages.
 	 *
 	 * @param msg the message sent.
+	 * @throws IOException 
 	 */
-	protected abstract void handleMessageFromServer(Object msg);
+	protected abstract void handleMessageFromServer(Object msg) throws IOException;
 
 // METHODS TO BE USED FROM WITHIN THE FRAMEWORK ONLY ----------------
 

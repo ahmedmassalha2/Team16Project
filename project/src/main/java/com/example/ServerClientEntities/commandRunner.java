@@ -123,7 +123,7 @@ public class commandRunner {
 		case getTechName:
 			return generalOps.getTechName(commandArr[1]);
 		case getExamIdBycode:
-			return ExamOps.getExamIdBycode(commandArr[1]);
+			return ExamOps.getExamIdBycode(commandArr[1], commandArr[2]);
 
 		case setExamByExamNum:
 			if (commandArr.length == 5) {
@@ -164,6 +164,14 @@ public class commandRunner {
 			return teacherOps.getHandedExams(commandArr[1], commandArr[2]);
 		case getHanedByID:
 			return teacherOps.getHanedByID(commandArr[1]);
+		case EXTENDEX:
+			return princOps.EXTENDEX(commandArr[1]);
+		case GETREQ:
+			return princOps.GETREQ();
+		case DELLREQ:
+			return princOps.DELLREQ(commandArr[1]);
+		case APPROVEXT:
+			return princOps.APPROVEXT(commandArr[1],commandArr[2]);
 		}
 
 		return command;

@@ -22,6 +22,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,6 +40,32 @@ public class ExamCodeGenerateController implements Initializable {
 	private Button backBtn; // Value injected by FXMLLoader
 	@FXML // fx:id="onHandBTN"
 	private Button onHandBTN; // Value injected by FXMLLoader
+	@FXML // fx:id="extendBTN"
+	private Button extendBTN; // Value injected by FXMLLoader
+
+	@FXML // fx:id="timeExtentios"
+	private TextField timeExtentios; // Value injected by FXMLLoader
+
+	@FXML // fx:id="Explain"
+	private TextArea Explain; // Value injected by FXMLLoader
+	@FXML // fx:id="errorTXT"
+	private Text errorTXT; // Value injected by FXMLLoader
+
+	@FXML
+	void examExtension(ActionEvent event) throws IOException {
+		if (timeExtentios.getText().isBlank()) {
+			errorTXT.setText("Enter needed time");
+			return;
+		}
+		if (Explain.getText().isBlank()) {
+			errorTXT.setText("Enter Explaination");
+			return;
+		}
+		String query = "Exam code number:" + examCode + "\nTeacher: " + usrName + "\nTime: " + timeExtentios.getText()
+				+ "\nExplain:\n" + Explain.getText();
+		Instance.sendMessage(Command.EXTENDEX.ordinal()+"@"+query);
+
+	}
 
 	@FXML
 	void goBack(ActionEvent event) throws IOException {

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -37,5 +39,16 @@
             <DropShadow />
          </effect>
       </Button>
+      <Button fx:id="extendBTN" layoutX="117.0" layoutY="173.0" mnemonicParsing="false" onAction="#examExtension" style="-fx-background-radius: 30;" text="Extend exam time">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <TextField fx:id="timeExtentios" layoutX="278.0" layoutY="63.0" promptText="Time in mins" />
+      <TextArea fx:id="Explain" layoutX="278.0" layoutY="99.0" prefHeight="119.0" prefWidth="188.0" />
+      <Text fx:id="errorTXT" layoutX="59.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="123.0" />
    </children>
 </AnchorPane>
