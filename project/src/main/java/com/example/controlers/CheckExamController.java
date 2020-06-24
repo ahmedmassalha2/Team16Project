@@ -112,6 +112,8 @@ public class CheckExamController implements Initializable {
 		CheckExamController.username = usrName;
 		CheckExamController.password = password;
 		CheckExamController.isPrincipal = isP;
+		//if (!(ExamsList.getSelectionModel().getSelectedIndex() >= 0))
+			//return;
 		setvisibilty();
 		if (isTeacher)
 			Instance.sendMessage(Command.getTeacherExamGenerated.ordinal() + "@" + usrName + "@" + password);

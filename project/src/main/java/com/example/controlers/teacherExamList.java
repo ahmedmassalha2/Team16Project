@@ -75,6 +75,8 @@ public class teacherExamList implements Initializable {
 
 	@FXML
 	void checkExams(ActionEvent event) throws IOException {
+		//if (!(ExamsList.getSelectionModel().getSelectedIndex() >= 0))
+			//return;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/CheckExam.fxml"));
 		Parent Main = loader.load();
 		CheckExamController secController = loader.getController();

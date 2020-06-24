@@ -270,7 +270,7 @@ public class generalOps {
 								String discString = "Exam id: " + exa.getId() + "\nName: "
 										+ exa.getStudent().getFirstName() + " " + exa.getStudent().getLastName()
 										+ "\nGrade: " + exa.getGrade() + "\nDuration: " + exa.getTimeString()
-										+ " minutes\nCourse" + ex.getCourseName();
+										+ " minutes\nCourse " + ex.getCourseName();
 								examsdisc.add(discString);
 
 							}

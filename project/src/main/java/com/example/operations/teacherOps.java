@@ -29,6 +29,45 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class teacherOps {
+
+	public static String TeacherExamsByCourse(String usrName, String course) throws JsonProcessingException {
+
+		dataBase.getInstance();
+		Session session = dataBase.getSession();
+		Query query = session.createQuery("from Teacher where username = :username");
+		query.setParameter("username", usrName);
+		Teacher teacher = (Teacher) query.getSingleResult();
+		List<checkedExam> exams = dataBase.getAll(checkedExam.class);
+		List<Exam> exa = teacher.getExams();
+		List<String> examsdisc = new ArrayList<String>();
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println("Course: " + course);
+		System.out.println("Teacher name: " + teacher.getUsername());
+
+		for (checkedExam ex : exams) {
+			Query query2 = session.createQuery("from Exam where id = :id");
+			query2.setParameter("id", ex.getId());
+			Exam e = (Exam) query2.getSingleResult();
+			System.out.println("Checked exam course: " + ex.getCourse().getName());
+			System.out.println("Exam: " + e.getCourseName());
+			if (ex.getCourse().getName().equals(course)) {
+				if (ex.getTeacher().getId() == teacher.getId() || e.getTeacher().getId() == teacher.getId()) {
+
+					String discString = "Exam id: " + ex.getId() + "\nName: " + ex.getStudent().getFirstName() + " "
+							+ ex.getStudent().getLastName() + "\nGrade: " + ex.getGrade() + "\nDuration: "
+							+ ex.getTimeString() + " minutes";
+					examsdisc.add(discString);
+				}
+			}
+
+		}
+		dataBase.closeSess();
+		String json = mapper.writeValueAsString(examsdisc);
+		System.out.println(json);
+		return json;
+
+	}
+
 	public static String getExams(String user, String paString) throws JsonProcessingException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();

@@ -164,6 +164,9 @@ public class commandRunner {
 			return teacherOps.getHandedExams(commandArr[1], commandArr[2]);
 		case getHanedByID:
 			return teacherOps.getHanedByID(commandArr[1]);
+
+		case TeacherExamsByCourse:
+			return teacherOps.TeacherExamsByCourse(commandArr[1], commandArr[2]);
 		case EXTENDEX:
 			return princOps.EXTENDEX(commandArr[1]);
 		case GETREQ:
@@ -176,6 +179,7 @@ public class commandRunner {
 			return generalOps.checkExt(commandArr[1]);
 		case ENDEXAM:
 			return ExamOps.ENDEXAM(commandArr[1], commandArr[2],commandArr[3]);
+
 		}
 
 		return command;

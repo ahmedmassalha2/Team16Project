@@ -10,7 +10,8 @@ public enum Command {
 	isStudentExistById, getExamCourseByCode, isStudentExistInCourse, getExamIdBycode, setExamByExamNum,getNameByUsrName,
   getTechIdByExCode, studentSubmmit,getAllStudents, getTeacherExamGenerated, getCheckedExamById,teachAPPROVE,getALLChecked, getStudentByIDNUM,
 	getSTIDNum, studentChecked, thisTeacherStudentChecked, submitHanedExam, getHandedExams, getHanedByID, logOut,
-	EXTENDEX, GETREQ, DELLREQ, APPROVEXT, checkExt, ENDEXAM
+	EXTENDEX, GETREQ, DELLREQ, APPROVEXT, checkExt, ENDEXAM,TeacherExamsByCourse
+
 
 
 }
