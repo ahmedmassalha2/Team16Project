@@ -38,7 +38,8 @@ public class ExamOps {
 		for (Exam exam : dataBase.getAll(Exam.class)) {
 
 			String discString = "Exam id: " + exam.getId() + "\nExam in " + exam.getSubject().getName() + " writen by "
-					+ exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString() + " minutes";
+					+ exam.getTeacher().getUsername() + "\nDuration: " + exam.getTimeString() + " minutes\nCourse: "
+					+ exam.getCourseName();
 			examsdisc.add(discString);
 		}
 		dataBase.closeSess();
