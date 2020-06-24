@@ -229,7 +229,7 @@ public class studentExamPageController implements Initializable {
 				if (done) {
 					break;
 				}
-				if (checks == 4) {
+				if (checks >= 4) {
 					if (firstTime) {
 						try {
 							Instance.sendMessage(Command.checkExt.ordinal() + "@" + examCode);
@@ -269,7 +269,6 @@ public class studentExamPageController implements Initializable {
 				} else {
 					checks++;
 				}
-				System.out.println(second);
 				second--;
 				secondsExam = second;
 				seconds.setText(Integer.toString(second));
