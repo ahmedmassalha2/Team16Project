@@ -54,9 +54,10 @@ public class TeacherShowStudentsExam {
 		if (selection.equals("ALL")) {
 			Instance.sendMessage(
 					Command.thisTeacherStudentChecked.ordinal() + "@" + teacherMainPageController.username);
-			init(new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(), ArrayList.class));
-			//ExamsList.getItems().removeAll(ExamsList.getItems());
-			//ExamsList.getItems().addAll(examsDiscription);
+			List<String> res = new ObjectMapper().readValue(Instance.getClientConsole().getMessage().toString(),
+					ArrayList.class);
+			ExamsList.getItems().removeAll(ExamsList.getItems());
+			ExamsList.getItems().addAll(res);
 		} else {
 
 			Instance.sendMessage(Command.TeacherExamsByCourse.ordinal() + "@" + teacherMainPageController.username + "@"
@@ -91,7 +92,7 @@ public class TeacherShowStudentsExam {
 			List<String> ll = new ObjectMapper().readValue(json, ArrayList.class);
 			System.out.println("ll: " + ll);
 			filterBtn.getItems().removeAll(filterBtn.getItems());
-			filterBtn.getItems().add("ALL");
+			ll.add(0, "ALL");
 			filterBtn.getItems().addAll(ll);
 			filterBtn.getSelectionModel().select(0);
 			// loadAll();

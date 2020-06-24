@@ -245,49 +245,37 @@ public class generalOps {
 	public static String thisTeacherStudentChecked(String string) throws JsonProcessingException {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
-		List<Exam> exams = dataBase.getAll(Exam.class);
-		List<String> examsdisc = new ArrayList<>();
-		List<checkedExam> checked = dataBase.getAll(checkedExam.class);
-		System.out.println("teacher: " + string);
-		for (Exam ex : exams) {
-			Query query = session.createQuery("from Exam where id = :id");
-			query.setParameter("id", ex.getId());
-			Exam exam = (Exam) query.getSingleResult();
-			if (exam.getTeacherGeneratedExam() != null) {
-				Query query2 = session.createQuery("from Teacher where username = :username");
-				query2.setParameter("username", string);
-				Teacher teacher = (Teacher) query2.getSingleResult();
-				if (exam.getTeacher().getId() == teacher.getId()
-						|| Integer.parseInt(exam.getTeacherGeneratedExam()) == teacher.getId()) {
-					System.out.println("TEACHER ID: " + teacher.getId());
-					Query query3 = session.createQuery("from checkedExam where id = :id");
-					query3.setParameter("id", exam.getId());
-
-					for (checkedExam exa : checked) {
-						if (exa.getTeacher().getId() == teacher.getId()
-								|| exam.getTeacher().getId() == teacher.getId()) {
-							if (exa.isChecked()) {
-								String discString = "Exam id: " + exa.getId() + "\nName: "
-										+ exa.getStudent().getFirstName() + " " + exa.getStudent().getLastName()
-										+ "\nGrade: " + exa.getGrade() + "\nDuration: " + exa.getTimeString()
-										+ " minutes\nCourse " + ex.getCourseName();
-								if(exa.isChecked()) {
-									examsdisc.add(discString);
-								}
-								
-
-							}
-						}
-
-					}
-				}
-			}
-		}
-
-		// session.update(object);
-		session.close();
-		dataBase.closeSess();
+		Query query = session.createQuery("from Teacher where username = :username");
+		query.setParameter("username", string);
+		Teacher teacher = (Teacher) query.getSingleResult();
+		List<checkedExam> exams = dataBase.getAll(checkedExam.class);
+		// List<Exam> exa = teacher.getExams();
+		List<String> examsdisc = new ArrayList<String>();
 		ObjectMapper mapper = new ObjectMapper();
+		// System.out.println("Course: " + course);
+		System.out.println("Teacher name: " + teacher.getUsername());
+
+		for (checkedExam ex : exams) {
+			Query query2 = session.createQuery("from Exam where id = :id");
+			query2.setParameter("id", ex.getExamId());
+			System.out.println("Checked ex id: " + ex.getId());
+			Exam e = (Exam) query2.getSingleResult();
+			System.out.println("Checked exam course: " + ex.getCourse().getName());
+			System.out.println("Exam: " + e.getCourseName());
+
+			if (ex.getTeacher().getId() == teacher.getId() || e.getTeacher().getId() == teacher.getId()) {
+
+				String discString = "Exam id: " + ex.getId() + "\nName: " + ex.getStudent().getFirstName() + " "
+						+ ex.getStudent().getLastName() + "\nGrade: " + ex.getGrade() + "\nDuration: "
+						+ ex.getTimeString() + " minutes\n" + "Course: " + ex.getCourse().getName();
+				if (ex.isChecked()) {
+					examsdisc.add(discString);
+				}
+
+			}
+
+		}
+		dataBase.closeSess();
 		String json = mapper.writeValueAsString(examsdisc);
 		System.out.println(json);
 		return json;
