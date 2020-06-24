@@ -354,7 +354,7 @@ public class ExamOps {
 		return "";
 	}
 
-	public static String getExamIdBycode(String code) {
+	public static String getExamIdBycode(String code, String type) {
 		dataBase.getInstance();
 		Session session = dataBase.getSession();
 		System.out.println("searching id for code: " + code);
@@ -363,6 +363,14 @@ public class ExamOps {
 		List list = query.list();
 		if (list.size() != 0) {
 			Exam exam = (Exam) query.getSingleResult();
+			if (type.equals("onhand") && !exam.isOnHand()) {
+				session.close();
+				return "exam not available";
+			}
+			if (type.equals("onapp") && !exam.isOnAPP()) {
+				session.close();
+				return "exam not available";
+			}
 			String id = Integer.toString(exam.getId());
 			System.out.println("id is: " + id);
 			session.close();

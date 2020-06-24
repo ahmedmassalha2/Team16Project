@@ -26,8 +26,8 @@
          <center>
             <Group scaleX="1.5" scaleY="1.5">
                <children>
-                  <TextField fx:id="IPADDRESS" layoutX="140.0" layoutY="17.0" promptText="IP Address of Server" />
-                  <TextField fx:id="PORT" layoutX="140.0" layoutY="65.0" promptText="Port Of Connection" />
+                  <TextField fx:id="IPADDRESS" layoutX="140.0" layoutY="17.0" promptText="IP Address of Server" text="localhost" />
+                  <TextField fx:id="PORT" layoutX="140.0" layoutY="65.0" promptText="Port Of Connection" text="3333" />
                   <Text fx:id="ErrorTXT" fill="RED" layoutX="93.0" layoutY="108.8134765625" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="237.0">
                      <font>
                         <Font name="System Bold" size="15.0" />

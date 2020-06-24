@@ -63,7 +63,12 @@ public class startOnHandExam {
 		if (!validations())
 			return;
 		exCode = examCode.getText();
-		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText());
+		Instance.sendMessage(Command.getExamIdBycode.ordinal() + "@" + examCode.getText() + "@onhand");
+		String respone = Instance.getClientConsole().getMessage().toString();
+		if (respone.equals("exam not available")) {
+			errorTxt.setText("exam not available");
+			return;
+		}
 		Instance.sendMessage(
 				Command.getExamById.ordinal() + "@" + Instance.getClientConsole().getMessage().toString() + "@onhand");
 		String[] args = Instance.getClientConsole().getMessage().toString().split("@");
@@ -77,13 +82,17 @@ public class startOnHandExam {
 		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
 		fc.getExtensionFilters().addAll(new ExtensionFilter("Word file", "*.doc"));
 		File file = fc.showSaveDialog(null);
+		if (file == null)
+			return;
 		PrintWriter p = new PrintWriter(file);
 		p.write(args[0]);
 		p.close();
+		submitExambtn.setVisible(true);
+		backBtn.setVisible(false);
 		examTimer myTimer = new examTimer();
 		Thread t = new Thread(myTimer);
 		t.start();
-		submitExambtn.setVisible(true);
+
 	}
 
 	public boolean validations() throws IOException {
@@ -106,16 +115,20 @@ public class startOnHandExam {
 			errorTxt.setText("Invalid ID or exam code");
 			return false;
 		}
+		errorTxt.setText("");
 		return true;
 	}
 
 	@FXML
 	void submit(ActionEvent event) throws IOException {
+
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Download file");
 		fc.setInitialFileName("myExam");// description:"Word file",_extensions:"*.doc"
 		fc.getExtensionFilters().addAll(new ExtensionFilter("Word file", "*.doc"));
 		File file = fc.showOpenDialog(null);
+		if (file == null)
+			return;
 		String examDis = "Student ID: " + idNum.getText() + "\n" + "Duration: " + duration + "\n" + "Exam in: "
 				+ course;
 		System.out.println(examDis);
@@ -136,8 +149,8 @@ public class startOnHandExam {
 							+ generalOps.getJsonString(exLines) + "@" + idNum.getText() + "@" + examCode.getText());
 
 			goBack(event);
-		}
 
+		}
 	}
 
 	@FXML

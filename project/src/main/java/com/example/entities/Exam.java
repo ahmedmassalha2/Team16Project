@@ -71,6 +71,9 @@ public class Exam {
 	@Column(name = "teacher_exam_generator")
 	private String teacherGeneratedExam;
 
+	@Column(name = "exam_extension")
+	private String examExt;
+
 	public Exam(Teacher teacher, Subject subject, List<Question> questions, String timeString, Course course_) {
 		this.teacher = teacher;
 		this.subject = subject;
@@ -231,11 +234,6 @@ public class Exam {
 		}
 	}
 
-	/*
-	 * public String getTeacherName() { return teacherName; } public void
-	 * setTeacherName(String teacherName) { this.teacherName =
-	 * teacher.getUsername(); }
-	 */
 	public String getSubjectName() {
 		return subjectName;
 	}
@@ -258,6 +256,14 @@ public class Exam {
 
 	public void setOnAPP(boolean onAPP) {
 		this.onAPP = onAPP;
+	}
+
+	public String getExamExt() {
+		return examExt;
+	}
+
+	public void setExamExt(String examExt) {
+		this.examExt = examExt;
 	}
 
 }

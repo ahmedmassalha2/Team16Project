@@ -49,7 +49,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Text>
-                        <Text layoutX="226.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GBA:">
+                        <Text layoutX="226.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GPA:">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

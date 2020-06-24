@@ -1,10 +1,15 @@
 package com.example.ServerClientEntities;
 
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import com.example.controlers.showMessageController;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class ChatClientCLI {
 
@@ -46,7 +51,7 @@ public class ChatClientCLI {
 
 	}
 
-	public void displayMessage(Object message) {
+	public void displayMessage(Object message){
 		if (isRunning) {
 			System.out.print("(Interrupted)\n");
 		}
