@@ -38,7 +38,6 @@ public class teacherOps {
 		query.setParameter("username", usrName);
 		Teacher teacher = (Teacher) query.getSingleResult();
 		List<checkedExam> exams = dataBase.getAll(checkedExam.class);
-		List<Exam> exa = teacher.getExams();
 		List<String> examsdisc = new ArrayList<String>();
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println("Course: " + course);
@@ -47,7 +46,7 @@ public class teacherOps {
 		for (checkedExam ex : exams) {
 			Query query2 = session.createQuery("from Exam where id = :id");
 			query2.setParameter("id", ex.getExamId());
-			System.out.println("Checked ex id: "+ex.getId());
+			System.out.println("Checked ex id: " + ex.getId());
 			Exam e = (Exam) query2.getSingleResult();
 			System.out.println("Checked exam course: " + ex.getCourse().getName());
 			System.out.println("Exam: " + e.getCourseName());
@@ -56,11 +55,11 @@ public class teacherOps {
 
 					String discString = "Exam id: " + ex.getId() + "\nName: " + ex.getStudent().getFirstName() + " "
 							+ ex.getStudent().getLastName() + "\nGrade: " + ex.getGrade() + "\nDuration: "
-							+ ex.getTimeString() + " minutes\n" + "Course: "+ex.getCourse().getName();
-					if(ex.isChecked()) {
+							+ ex.getTimeString() + " minutes\n" + "Course: " + ex.getCourse().getName();
+					if (ex.isChecked()) {
 						examsdisc.add(discString);
 					}
-					
+
 				}
 			}
 
