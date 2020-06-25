@@ -56,7 +56,10 @@
       </Button>
       <TextField fx:id="timeExtentios" layoutX="334.0" layoutY="24.0" promptText="Time in mins" visible="false" />
       <TextArea fx:id="Explain" layoutX="334.0" layoutY="62.0" prefHeight="119.0" prefWidth="188.0" promptText="Explain you're time extinsion request" visible="false" />
-      <Text fx:id="errorTXT" fill="RED" layoutX="143.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="161.0" />
+      <Text fx:id="errorTXT" fill="RED" layoutX="160.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="161.0">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font></Text>
       <Button fx:id="endBTN" layoutX="460.0" layoutY="194.0" mnemonicParsing="false" onAction="#endExam" style="-fx-background-radius: 30;" text="End Exam">
          <font>
             <Font name="Arial" size="13.0" />

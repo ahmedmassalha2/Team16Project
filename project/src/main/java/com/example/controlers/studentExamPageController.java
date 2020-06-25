@@ -92,6 +92,9 @@ public class studentExamPageController implements Initializable {
 	private Thread t = null;
 	static boolean done = false;
 	static int checks = 0;
+	int addition;
+	int firsDuration;
+	static int minTotal = 0;
 
 	public void showData() {
 		examDur.setText(duration);
@@ -105,7 +108,7 @@ public class studentExamPageController implements Initializable {
 	@FXML
 	void addExam(ActionEvent event) throws IOException, InterruptedException {
 
-		String realtime = String.valueOf(Integer.parseInt(duration) - mintsExam);
+		String realtime = String.valueOf(firsDuration + addition - minTotal);
 		System.out.println("took for you " + (Integer.parseInt(duration) - mintsExam));
 		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData()
 				+ "@Real time duration: " + realtime);
@@ -132,11 +135,14 @@ public class studentExamPageController implements Initializable {
 	}
 
 	public void initByExam(String data) throws IOException, SQLException {
+		addition = 0;
+		studentExamPageController.minTotal = 0;
 		secondsExam = 60;
 		String[] datas = data.split("@");
 		studentExamPageController.userString = datas[0];
 		studentExamPageController.paString = datas[1];
 		studentExamPageController.duration = datas[2];
+		firsDuration = Integer.parseInt(duration);
 		studentExamPageController.subName = datas[3];
 		studentExamPageController.cName = datas[4];
 		studentExamQuestionsController.studentsInfo = new ObjectMapper().readValue(datas[5], ArrayList.class);
@@ -237,6 +243,7 @@ public class studentExamPageController implements Initializable {
 							if (!respone.equals("NoEx")) {
 								try {
 									int val = Integer.parseInt(respone);
+									addition += val;
 									mints += Integer.parseInt(respone);
 									mintsExam = mints;
 									firstTime = false;
@@ -256,6 +263,7 @@ public class studentExamPageController implements Initializable {
 							String respone = Instance.getClientConsole().getMessage().toString();
 							if (!respone.equals("NoEx") && Integer.parseInt(respone) != lastAddition) {
 								mints += Integer.parseInt(respone);
+								addition += Integer.parseInt(respone);
 								mintsExam = mints;
 								lastAddition = Integer.parseInt(respone);
 							}
@@ -273,7 +281,9 @@ public class studentExamPageController implements Initializable {
 				secondsExam = second;
 				seconds.setText(Integer.toString(second));
 				minuts.setText(Integer.toString(mints));
+
 				if (second <= 0) {
+					minTotal++;
 					mints--;
 					mintsExam = mints;
 					minuts.setText(Integer.toString(mints));
