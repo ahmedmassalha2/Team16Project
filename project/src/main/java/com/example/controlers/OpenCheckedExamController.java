@@ -107,6 +107,7 @@ public class OpenCheckedExamController {
 		}
 		Instance.sendMessage(Command.teachAPPROVE.ordinal() + "@" + exId + "@" + lastGrade.getText() + "@"
 				+ studNotations.getText());
+		resetAll();
 		goBack(event);
 	}
 
@@ -138,6 +139,7 @@ public class OpenCheckedExamController {
 		OpenCheckedExamController.grade = datas[4];
 		OpenCheckedExamController.exId = datas[13];
 		OpenCheckedExamController.teacherCommentsExam = datas[6];
+		teacherComments.setText(datas[6]);
 		CheckExamShowQuestionsController.discriptions = new ObjectMapper().readValue(datas[9], ArrayList.class);
 		CheckExamShowQuestionsController.studentAnswers = new ObjectMapper().readValue(datas[7], ArrayList.class);
 		CheckExamShowQuestionsController.rightAnswers = new ObjectMapper().readValue(datas[8], ArrayList.class);

@@ -21,7 +21,7 @@
                <center>
                   <Group>
                      <children>
-                        <TextField fx:id="userName" layoutX="189.0" layoutY="131.0" promptText="user name" style="-fx-background-radius: 30;" text="azmi_abu">
+                        <TextField fx:id="userName" layoutX="189.0" layoutY="131.0" promptText="user name" style="-fx-background-radius: 30;">
                            <effect>
                               <DropShadow />
                            </effect>
@@ -47,7 +47,7 @@
                               <DropShadow />
                            </effect>
                         </ComboBox>
-                        <PasswordField fx:id="Password" layoutX="188.0" layoutY="172.0" promptText="Password" style="-fx-background-radius: 30;" text="123">
+                        <PasswordField fx:id="Password" layoutX="188.0" layoutY="172.0" promptText="Password" style="-fx-background-radius: 30;">
                            <effect>
                               <DropShadow />
                            </effect>
