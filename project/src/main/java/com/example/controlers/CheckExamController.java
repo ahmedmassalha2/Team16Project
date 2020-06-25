@@ -125,15 +125,6 @@ public class CheckExamController implements Initializable {
 		List<String> l = new ObjectMapper().readValue(json, ArrayList.class);
 		ExamsList.getItems().addAll(l);
 		System.out.println("Teacher usrName " + usrName);
-		/*
-		 * for(String s : l) {
-		 * 
-		 * studentFirstName = "" +
-		 * ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[1].
-		 * toString(); studentLastName = "" +
-		 * ExamsList.getSelectionModel().getSelectedItem().split("\n")[0].split(" ")[2].
-		 * toString(); System.out.println("first name: "+studentFirstName); }
-		 */
 
 	}
 

@@ -464,6 +464,7 @@ public class ExamOps {
 				res += grades.get(i);
 			total += grades.get(i);
 		}
+		examToCheck.setTeacherExp(exam.getStudentExamComments());
 		examToCheck.setGrade((res / total) * 100);
 		session.save(examToCheck);
 		session.getTransaction().commit();

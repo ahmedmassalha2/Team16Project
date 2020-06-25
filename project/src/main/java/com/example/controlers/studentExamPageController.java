@@ -108,7 +108,7 @@ public class studentExamPageController implements Initializable {
 	@FXML
 	void addExam(ActionEvent event) throws IOException, InterruptedException {
 
-		String realtime = String.valueOf(firsDuration + addition - minTotal);
+		String realtime = String.valueOf(firsDuration + addition - minTotal + 1);
 		System.out.println("took for you " + (Integer.parseInt(duration) - mintsExam));
 		Instance.sendMessage(Command.studentSubmmit.ordinal() + "@" + studentExamQuestionsController.getData()
 				+ "@Real time duration: " + realtime);
@@ -308,7 +308,14 @@ public class studentExamPageController implements Initializable {
 			Platform.runLater(() ->
 
 			{
-
+				if (!done) {
+					try {
+						addExam(null);
+					} catch (IOException | InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				back();
 
 			});
