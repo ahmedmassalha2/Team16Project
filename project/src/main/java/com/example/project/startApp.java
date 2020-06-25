@@ -22,15 +22,6 @@ public class startApp extends Application {
 		stage.getIcons().add(new Image("/com/example/project/images/uni_pic.jpg"));
 		stage.setScene(scene);
 		stage.show();
-
-		/*
-		 * SimpleChatClient chatClient = new SimpleChatClient("localhost",
-		 * Integer.valueOf(3333)); Instance.clientConsole = chatClient;
-		 * chatClient.openConnection(); stage.setTitle("Sign in page"); scene = new
-		 * Scene(loadFXML("/com/example/project/logIn")); stage.getIcons().add(new
-		 * Image("/com/example/project/images/uni_pic.jpg")); stage.setScene(scene);
-		 * stage.show();
-		 */
 	}
 
 	static void setRoot(String fxml) throws IOException {
